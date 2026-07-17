@@ -51,7 +51,7 @@ export interface Testimonial {
   author: {
     name: string
     description: string
-    avatar: {
+    avatar?: {
       src: string
       srcset?: string
     }

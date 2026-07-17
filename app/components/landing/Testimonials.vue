@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import type { PageData } from '~/data/types'
+import { ref, computed } from 'vue'
 
 defineProps<{
   page: PageData
 }>()
+
+const autoplayEnabled = ref(true)
+
+const autoplayConfig = computed(() => {
+  return autoplayEnabled.value ? { delay: 5000 } : false
+})
 </script>
 
 <template>
@@ -15,12 +22,14 @@ defineProps<{
     <UCarousel
       v-slot="{ item }"
       :items="page.testimonials"
-      :autoplay="{ delay: 4000 }"
+      :autoplay="autoplayConfig"
       loop
       dots
       :ui="{
         viewport: '-mx-4 sm:-mx-12 lg:-mx-16 bg-elevated/50 max-w-(--ui-container)'
       }"
+      @mouseenter="autoplayEnabled = false"
+      @mouseleave="autoplayEnabled = true"
     >
       <UPageCTA
         :description="item.quote"

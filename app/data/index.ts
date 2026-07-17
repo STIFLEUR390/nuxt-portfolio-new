@@ -109,6 +109,39 @@ export const indexPage: PageData = {
           'Documentation technique complète : spécifications, guides, procédures de déploiement',
           'Veille technologique active et proposition d\'améliorations pour la pérennité des solutions'
         ]
+      },
+      {
+        position: 'Développeur Full-Stack Freelance',
+        date: '2023 - 2024',
+        company: { name: 'KwikTalk', logo: 'i-lucide-message-square', url: '#', color: '#3b82f6' },
+        highlights: [
+          'Conception et développement d\'une plateforme SaaS de messagerie et appels VoIP de A à Z',
+          'Architecture Laravel backend avec API REST, WebSockets et intégration paiement Stripe',
+          'Interface utilisateur temps réel avec Vue.js et Inertia.js',
+          'Déploiement Dockerisé avec CI/CD et monitoring Sentry'
+        ]
+      },
+      {
+        position: 'Développeur Full-Stack Freelance',
+        date: '2023',
+        company: { name: 'E-Key Market', logo: 'i-lucide-shopping-cart', url: '#', color: '#3b82f6' },
+        highlights: [
+          'Développement d\'une marketplace multi-vendeurs avec Laravel et Vue.js',
+          'Système de catalogue, panier, commandes et paiements multi-prestataires',
+          'Dashboard vendeur avec statistiques et gestion des annonces en temps réel',
+          'Architecture modulaire et performante pour supporter la montée en charge'
+        ]
+      },
+      {
+        position: 'Modernisation Frontend Freelance',
+        date: '2024',
+        company: { name: 'TCF Canada Suite', logo: 'i-lucide-file-text', url: '#', color: '#3b82f6' },
+        highlights: [
+          'Modernisation complète d\'une application legacy : migration Vue 2 → Vue 3 + Nuxt + Tailwind CSS',
+          'Refonte de l\'interface utilisateur pour une meilleure expérience et accessibilité',
+          'Optimisation des performances : réduction de 60% du temps de chargement',
+          'Documentation et formation de l\'équipe sur la nouvelle stack'
+        ]
       }
     ]
   },
@@ -117,33 +150,21 @@ export const indexPage: PageData = {
       quote: 'Hérold a réalisé notre plateforme SaaS de A à Z. Son expertise Laravel + Vue.js nous a permis d\'avoir un produit stable, rapide et évolutif. Professionnel, à l\'écoute et très réactif.',
       author: {
         name: 'Client KwikTalk',
-        description: 'Fondateur de KwikTalk',
-        avatar: {
-          src: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
-        }
+        description: 'Fondateur de KwikTalk'
       }
     },
     {
       quote: 'Un développeur qui comprend à la fois le backend, le frontend et les enjeux métier. Rare et précieux. Notre marketplace lui doit beaucoup.',
       author: {
         name: 'Client E-Key Market',
-        description: 'Responsable produit',
-        avatar: {
-          src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
-        }
+        description: 'Responsable produit'
       }
     },
     {
       quote: 'Hérold a su moderniser notre application legacy avec Nuxt et Tailwind. Résultat : une interface plus rapide, plus agréable et une équipe enfin sereine sur la maintenance.',
       author: {
         name: 'Client TCF Canada Suite',
-        description: 'Chef de projet',
-        avatar: {
-          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
-        }
+        description: 'Chef de projet'
       }
     }
   ],

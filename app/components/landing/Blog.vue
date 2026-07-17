@@ -20,7 +20,7 @@ const posts = computed(() => getSortedPosts().slice(0, 3))
     }"
   >
     <UBlogPosts
-      orientation="vertical"
+      orientation="horizontal"
       class="gap-4 lg:gap-y-4"
     >
       <Motion

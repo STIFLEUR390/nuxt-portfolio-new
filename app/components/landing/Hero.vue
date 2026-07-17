@@ -86,12 +86,15 @@ const animate = {
             variant="outline"
             size="lg"
           />
+        </div>
+        <div class="flex items-center justify-center gap-3 mt-3">
           <UButton
             :label="page.hero.links[2]?.label"
             :to="global.cvUrl"
             variant="ghost"
-            size="lg"
+            size="sm"
             color="neutral"
+            icon="i-lucide-download"
           />
         </div>
       </Motion>
