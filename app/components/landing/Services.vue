@@ -17,7 +17,10 @@ defineProps<{
       description: 'text-left mt-2 text-sm sm:text-md lg:text-sm text-muted'
     }"
   >
-    <div class="flex flex-col lg:grid lg:grid-cols-3 gap-4">
+    <div
+      v-if="page.services"
+      class="flex flex-col lg:grid lg:grid-cols-3 gap-4"
+    >
       <Motion
         :initial="{ opacity: 0, transform: 'translateY(10px)' }"
         :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
@@ -87,7 +90,7 @@ defineProps<{
           variant="subtle"
           class="h-full"
           :ui="{
-            body: 'flex flex-col gap-3 p-5 lg:col-span-2'
+            body: 'flex flex-col gap-3 p-5'
           }"
         >
           <UIcon

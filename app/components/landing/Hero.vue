@@ -87,7 +87,10 @@ const animate = {
             size="lg"
           />
         </div>
-        <div class="flex items-center justify-center gap-3 mt-3">
+        <div
+          v-if="page.hero?.links?.[2]"
+          class="flex items-center justify-center gap-3 mt-3"
+        >
           <UButton
             :label="page.hero.links[2]?.label"
             :to="global.cvUrl"

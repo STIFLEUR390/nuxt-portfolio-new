@@ -57,13 +57,34 @@ defineOgImage('Portfolio', { title, description })
         :while-in-view="{ opacity: 1 }"
         :transition="{ delay: 0.3 }"
         :in-view-options="{ once: true }"
-        class="flex flex-row justify-center items-center py-10 -space-x-8"
+        class="flex flex-row justify-center items-center py-10 -space-x-6"
       >
         <PolaroidItem
           v-for="(image, index) in page.images"
           :key="index"
           :image="image"
           :index
+        />
+      </Motion>
+
+      <Motion
+        :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+        :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+        :transition="{ delay: 0.5 }"
+        :in-view-options="{ once: true }"
+        class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8"
+      >
+        <UButton
+          label="Discutons de votre projet"
+          to="/contact"
+          color="neutral"
+          size="lg"
+        />
+        <UButton
+          label="Voir mes réalisations"
+          to="/projects"
+          variant="outline"
+          size="lg"
         />
       </Motion>
     </UPageSection>

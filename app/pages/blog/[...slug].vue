@@ -63,19 +63,21 @@ const formatDate = (dateString: string) => {
           :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
           :in-view-options="{ once: true }"
         >
-          <ULink
-            to="/blog"
-            class="text-sm flex items-center gap-1 text-muted hover:text-highlighted transition-colors"
-          >
-            <UIcon name="i-lucide-chevron-left" />
-            Blog
-          </ULink>
+          <div class="flex flex-col gap-3">
+            <ULink
+              to="/blog"
+              class="text-sm flex items-center gap-1 text-muted hover:text-highlighted transition-colors"
+            >
+              <UIcon name="i-lucide-chevron-left" />
+              Blog
+            </ULink>
+          </div>
         </Motion>
 
         <Motion
           :initial="{ opacity: 0, transform: 'translateY(10px)' }"
           :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-          :transition="{ delay: 0.1 }"
+          :transition="{ delay: 0.15 }"
           :in-view-options="{ once: true }"
           class="flex flex-col gap-3 mt-8"
         >
@@ -120,7 +122,25 @@ const formatDate = (dateString: string) => {
             :value="page.body"
           />
 
-          <div class="flex items-center justify-end gap-2 text-sm text-muted">
+          <div class="flex items-center justify-between gap-2 text-sm text-muted mt-8 pt-6 border-t border-default">
+            <div class="flex items-center gap-2">
+              <UButton
+                size="sm"
+                variant="ghost"
+                color="neutral"
+                icon="i-lucide-twitter"
+                :to="'https://twitter.com/intent/tweet?text=' + encodeURIComponent(page.title) + '&url=' + encodeURIComponent(articleLink)"
+                target="_blank"
+              />
+              <UButton
+                size="sm"
+                variant="ghost"
+                color="neutral"
+                icon="i-lucide-linkedin"
+                :to="'https://linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(articleLink)"
+                target="_blank"
+              />
+            </div>
             <UButton
               size="sm"
               variant="link"

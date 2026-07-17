@@ -107,7 +107,7 @@ export interface BlogPost {
   minRead: number
   author: {
     name: string
-    avatar: {
+    avatar?: {
       src: string
       alt: string
     }
@@ -121,6 +121,7 @@ export interface ProjectItem {
   description: string
   image: string
   url: string
+  demo?: string
   tags: string[]
   date: string
 }

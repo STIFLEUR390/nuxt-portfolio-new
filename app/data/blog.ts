@@ -8,11 +8,7 @@ const _posts: BlogPost[] = [
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 5,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Web Scraping avec AdonisJS : archiver les sujets du TCF Canada
 
@@ -76,11 +72,7 @@ Ce projet montre ma capacité à :
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 6,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Architecture Laravel : Repository, Service, Policy — Ce que j'ai appris sur HookBridge
 
@@ -169,11 +161,7 @@ Si vous démarrez un projet Laravel qui va durer, prenez le temps de poser cette
     image: 'https://images.unsplash.com/photo-1622043171820-77b7d8d58f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 6,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Keycloak : créer un thème WhatsApp personnalisé de A à Z
 
@@ -249,11 +237,7 @@ Un thème Keycloak professionnel, dockerisé, documenté, avec 5+ templates pers
     image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 5,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Construire 7 plugins Claude Code pour le développement fullstack
 
@@ -322,11 +306,7 @@ Si vous utilisez Claude Code, créez ne serait-ce qu'un plugin pour votre stack 
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 7,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# GraphQL vs REST avec Laravel : mon retour d'expérience
 
@@ -418,11 +398,7 @@ GraphQL brille vraiment quand le client a des besoins de données complexes et v
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 5,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Ajouter MeiliSearch à un portfolio Nuxt pour une recherche full-text instantanée
 
@@ -502,11 +478,7 @@ Si vous avez un site avec du contenu textuel, ajoutez MeiliSearch. C'est le meil
     image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 6,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Créer une marketplace Vue 3 de A à Z : architecture, état, routing
 
@@ -595,11 +567,7 @@ Un frontend e-commerce complet, modulaire, responsive, avec une architecture d'�
     image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 5,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Explorer l'API OpenLibrary avec JavaScript et Vue.js
 
@@ -684,11 +652,7 @@ Ce projet montre :
     image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 8,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Livewire vs Sanctum : deux philosophies d'authentification Laravel
 
@@ -803,11 +767,7 @@ Les deux sont excellents. Le choix dépend du contexte, pas du dogme.`,
     image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 5,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Du premier commit au déploiement : itérations sur mon portfolio Nuxt
 
@@ -882,11 +842,7 @@ Mon conseil : publiez votre V1 rapidement, même imparfaite. Les retours (les v�
     image: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 7,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Laravel 13 + Inertia.js v3 : pourquoi j'ai choisi cette stack pour KwikTalk
 
@@ -980,11 +936,7 @@ Si vous hésitez entre Livewire et une SPA complète pour votre prochain projet 
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     minRead: 8,
     author: {
-      name: 'Franck Hérold TAMTO TAMKO',
-      avatar: {
-        src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=80&h=80&auto=format&fit=crop',
-        alt: 'Franck Hérold TAMTO TAMKO'
-      }
+      name: 'Franck Hérold TAMTO TAMKO'
     },
     body: `# Opinionated API Starter : ce que j'ai mis dans Kit et pourquoi
 

@@ -90,23 +90,38 @@ defineOgImage('Portfolio', { title, description })
             </div>
           </template>
           <template #footer>
-            <ULink
-              :to="project.url"
-              class="text-sm text-primary flex items-center gap-1 group-hover:gap-2 transition-all"
-            >
-              Voir le projet
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-4 text-primary transition-all group-hover:translate-x-0.5"
-              />
-            </ULink>
+            <div class="flex items-center gap-3">
+              <ULink
+                :to="project.url"
+                class="text-sm text-primary flex items-center gap-1 group-hover:gap-2 transition-all"
+              >
+                Voir le code
+                <UIcon
+                  name="i-lucide-arrow-right"
+                  class="size-4 text-primary transition-all group-hover:translate-x-0.5"
+                />
+              </ULink>
+              <span
+                v-if="project.demo"
+                class="text-xs text-muted/50"
+              >
+                ·
+              </span>
+              <ULink
+                v-if="project.demo"
+                :to="project.demo"
+                class="text-sm text-primary flex items-center gap-1 group-hover:gap-2 transition-all"
+                target="_blank"
+              >
+                Démo en direct
+                <UIcon
+                  name="i-lucide-external-link"
+                  class="size-3.5"
+                />
+              </ULink>
+            </div>
           </template>
-          <img
-            :src="project.image"
-            :alt="project.title"
-            class="object-cover w-full aspect-video rounded-lg"
-            loading="lazy"
-          >
+          <ProjectImage :project />
         </UPageCard>
       </Motion>
     </UPageSection>
