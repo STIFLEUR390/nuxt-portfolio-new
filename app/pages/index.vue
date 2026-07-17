@@ -1,46 +1,30 @@
 <script setup lang="ts">
-const { locale } = useI18n()
+import { indexPage } from '~/data/index'
 
-const title = computed(() => locale.value === 'fr' ? 'Développeur Web' : 'Web Developer')
-const description = computed(() => locale.value === 'fr'
-  ? 'Je crée des applications modernes avec Nuxt, Vue et l\'écosystème JavaScript.'
-  : 'I build modern applications with Nuxt, Vue and the JavaScript ecosystem.')
+const page = indexPage
+
+useSeoMeta({
+  title: page.seo?.title || page.title,
+  ogTitle: page.seo?.title || page.title,
+  description: page.seo?.description || page.description,
+  ogDescription: page.seo?.description || page.description,
+  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/portfolio-light.png'
+})
 </script>
 
 <template>
-  <UPage>
-    <UPageHero
-      :title="title"
-      :description="description"
-      orientation="horizontal"
-    >
-      <UAvatar
-        src="https://github.com/nuxt.png"
-        alt="Avatar"
-        size="3xl"
-        class="ring-4 ring-default shadow-2xl"
-      />
-    </UPageHero>
-
+  <UPage v-if="page">
+    <LandingHero :page />
     <UPageSection
-      id="projets"
-      headline="Projets"
-      title="Ce que j'ai construit"
-      description="Une sélection de mes projets récents."
-      :features="[
-        { title: 'Projet 1', description: 'Description du projet 1', icon: 'i-lucide-folder' },
-        { title: 'Projet 2', description: 'Description du projet 2', icon: 'i-lucide-folder' },
-        { title: 'Projet 3', description: 'Description du projet 3', icon: 'i-lucide-folder' }
-      ]"
-    />
-
-    <UPageCTA
-      title="Travaillons ensemble"
-      description="Vous avez un projet en tête ? N'hésitez pas à me contacter."
-      :links="[
-        { label: 'Me contacter', color: 'neutral' },
-        { label: 'Voir mon CV', color: 'neutral', variant: 'subtle', trailingIcon: 'i-lucide-arrow-right' }
-      ]"
-    />
+      :ui="{
+        container: 'pt-0! lg:grid lg:grid-cols-2 lg:gap-8'
+      }"
+    >
+      <LandingAbout :page />
+      <LandingWorkExperience :page />
+    </UPageSection>
+    <LandingBlog :page />
+    <LandingTestimonials :page />
+    <LandingFAQ :page />
   </UPage>
 </template>

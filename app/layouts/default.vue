@@ -1,78 +1,36 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
+const colorMode = useColorMode()
 
-const items = computed<NavigationMenuItem[]>(() => [{
-  label: 'Accueil',
-  to: '/'
-}, {
-  label: 'Projets',
-  to: '/projets'
-}, {
-  label: 'À propos',
-  to: '/a-propos'
-}, {
-  label: 'Blog',
-  to: '/blog'
-}, {
-  label: 'Contact',
-  to: '/contact'
-}])
+const color = computed(() => colorMode.value === 'dark' ? '#020618' : 'white')
 
-const links = [{
-  label: 'GitHub',
-  to: 'https://github.com',
-  icon: 'i-simple-icons-github',
-  target: '_blank'
-}, {
-  label: 'LinkedIn',
-  to: 'https://linkedin.com',
-  icon: 'i-simple-icons-linkedin',
-  target: '_blank'
-}, {
-  label: 'Twitter',
-  to: 'https://twitter.com',
-  icon: 'i-simple-icons-x',
-  target: '_blank'
-}]
+useHead({
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { key: 'theme-color', name: 'theme-color', content: color }
+  ],
+  link: [
+    { rel: 'icon', href: '/favicon.ico' }
+  ],
+  htmlAttrs: {
+    lang: 'en'
+  }
+})
+
+useSeoMeta({
+  titleTemplate: '%s - Nuxt Portfolio Template',
+  twitterCard: 'summary_large_image'
+})
 </script>
 
 <template>
-  <UHeader>
-    <template #title>
-      <span class="font-bold">Portfolio</span>
-    </template>
-
-    <UNavigationMenu :items="items" />
-
-    <template #right>
-      <UColorModeButton />
-    </template>
-
-    <template #body>
-      <UNavigationMenu :items="items" orientation="vertical" class="-mx-2.5" />
-    </template>
-  </UHeader>
-
-  <UMain>
-    <slot />
+  <UMain class="relative">
+    <div>
+      <UContainer class="sm:border-x border-default pt-10">
+        <AppHeader :links="navLinks" />
+        <slot />
+        <AppFooter />
+      </UContainer>
+    </div>
   </UMain>
-
-  <UFooter>
-    <template #left>
-      <p class="text-muted text-sm">
-        &copy; {{ new Date().getFullYear() }} Tous droits réservés.
-      </p>
-    </template>
-    <template #right>
-      <UButton
-        v-for="link in links"
-        :key="link.label"
-        :icon="link.icon"
-        :to="link.to"
-        :target="link.target"
-        color="neutral"
-        variant="ghost"
-      />
-    </template>
-  </UFooter>
 </template>

@@ -1,9 +1,38 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
 
-  modules: ['@nuxt/ui', '@nuxtjs/i18n'],
+  modules: [
+    '@nuxt/ui',
+    '@nuxtjs/i18n',
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxt/ui',
+    '@vueuse/nuxt',
+    'nuxt-og-image',
+    'motion-v/nuxt'
+  ],
+  devtools: {
+    enabled: true
+  },
+
   css: ['~/assets/css/main.css'],
+  compatibilityDate: '2025-07-15',
+  nitro: {
+    prerender: {
+      routes: [
+        '/'
+      ],
+      crawlLinks: true
+    }
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
+      }
+    }
+  },
 
   i18n: {
     locales: [
@@ -11,5 +40,9 @@ export default defineNuxtConfig({
       { code: 'en', name: 'English' }
     ],
     defaultLocale: 'fr'
+  },
+
+  ogImage: {
+    zeroRuntime: true
   }
 })
