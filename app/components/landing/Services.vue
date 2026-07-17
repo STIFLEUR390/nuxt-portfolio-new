@@ -24,26 +24,16 @@ defineProps<{
         :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
         :transition="{ delay: 0 }"
         :in-view-options="{ once: true }"
-        class="group lg:col-span-2"
+        class="lg:col-span-2"
       >
-        <UCard
-          variant="subtle"
-          class="h-full"
-          :ui="{
-            body: 'flex flex-col gap-3 p-5'
-          }"
-        >
-          <UIcon
-            :name="page.services[0]?.icon"
-            class="size-6 text-primary"
-          />
-          <h3 class="font-semibold text-base text-highlighted">
+        <div class="h-full rounded-xl bg-primary/5 border border-primary/10 p-6 flex flex-col gap-2 justify-center">
+          <h3 class="font-semibold text-lg text-highlighted">
             {{ page.services[0]?.title }}
           </h3>
-          <p class="text-sm text-muted leading-relaxed">
+          <p class="text-sm text-muted leading-relaxed max-w-lg">
             {{ page.services[0]?.description }}
           </p>
-        </UCard>
+        </div>
       </Motion>
 
       <Motion

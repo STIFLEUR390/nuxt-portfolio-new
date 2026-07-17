@@ -9,7 +9,6 @@ defineProps<{
 <template>
   <UPageSection
     :title="'Stack & expertise'"
-    :description="'Une stack technique cohérente et moderne, hiérarchisée par niveau de maîtrise.'"
     :ui="{
       container: 'px-0 pt-0!'
     }"
