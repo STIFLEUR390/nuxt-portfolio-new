@@ -1,6 +1,6 @@
-export function copyToClipboard(toCopy: string, message: string = 'Copied to clipboard') {
-  const toast = useToast()
-  navigator.clipboard.writeText(toCopy).then(() => {
-    toast.add({ title: message, color: 'success', icon: 'i-lucide-check-circle' })
-  })
+export function copyToClipboard(toCopy: string, message = 'Copié dans le presse-papier') {
+  const toast = useAppToast()
+  navigator.clipboard.writeText(toCopy)
+    .then(() => toast.success(message))
+    .catch(() => toast.error('Erreur', 'Impossible de copier dans le presse-papier'))
 }

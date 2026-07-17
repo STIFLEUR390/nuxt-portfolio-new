@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { FormError, FormSubmitEvent } from '@nuxt/ui'
+
 const { global } = useAppConfig()
 
 useSeoMeta({
@@ -7,8 +9,6 @@ useSeoMeta({
 })
 
 defineOgImage('Portfolio', { title: 'Contact', description: 'Contactez-moi' })
-
-import type { FormError, FormSubmitEvent } from '@nuxt/ui'
 
 const state = reactive({
   name: '',
@@ -32,7 +32,7 @@ function validate(state: Partial<Schema>): FormError[] {
   return errors
 }
 
-const toast = useToast()
+const toast = useAppToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch('/api/contact', {
@@ -46,9 +46,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     state.subject = ''
     state.message = ''
 
-    toast.add({ title: 'Message envoyé !', description: 'Merci, je vous répondrai rapidement.', color: 'success' })
+    toast.success('Message envoyé !', 'Merci, je vous répondrai rapidement.')
   } catch {
-    toast.add({ title: 'Erreur', description: 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.', color: 'error' })
+    toast.error('Erreur', 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.')
   }
 }
 </script>

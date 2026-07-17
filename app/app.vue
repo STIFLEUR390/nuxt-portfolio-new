@@ -7,6 +7,8 @@ const color = computed(() => colorMode.value === 'dark' ? '#020618' : 'white')
 const { locale } = useI18n()
 const head = useLocaleHead()
 
+const toaster = { position: 'bottom-right', duration: 5000, expand: true } as const
+
 useHead(() => ({
   meta: [
     { charset: 'utf-8' },
@@ -30,7 +32,10 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp :locale="locales[locale]">
+  <UApp
+    :locale="locales[locale]"
+    :toaster="toaster"
+  >
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
