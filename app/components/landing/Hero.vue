@@ -110,9 +110,9 @@ const animate = {
           </span>
           Disponible
         </span>
-        <span class="text-muted/50">·</span>
+        <span class="text-muted">·</span>
         <span>4+ ans d'expérience</span>
-        <span class="text-muted/50">·</span>
+        <span class="text-muted">·</span>
         <span>Freelance</span>
       </div>
     </template>

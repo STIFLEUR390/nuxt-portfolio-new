@@ -57,7 +57,7 @@ defineOgImage('Portfolio', { title, description })
             <template #footer>
               <div class="flex items-center gap-2 text-xs text-muted">
                 <span>{{ new Date(post.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' }) }}</span>
-                <span class="text-muted/50">·</span>
+                <span class="text-muted">·</span>
                 <span>{{ post.minRead }} min</span>
               </div>
             </template>

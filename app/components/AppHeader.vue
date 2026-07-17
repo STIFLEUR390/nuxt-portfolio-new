@@ -18,7 +18,7 @@ const availableLocales = computed(() => {
       :items="links"
       variant="link"
       color="neutral"
-      class="bg-muted/80 backdrop-blur-sm rounded-full px-2 sm:px-4 border border-muted/50 shadow-lg shadow-neutral-950/5"
+      class="bg-muted/80 backdrop-blur-sm rounded-full px-2 sm:px-4 border border-muted/50"
       :ui="{
         link: 'px-2 py-1',
         linkLeadingIcon: 'hidden'
@@ -31,8 +31,7 @@ const availableLocales = computed(() => {
             :key="loc.code"
             variant="ghost"
             color="neutral"
-            size="xs"
-            class="px-1.5"
+            size="sm"
             @click="setLocale(loc.code)"
           >
             {{ loc.code === 'fr' ? 'FR' : 'EN' }}

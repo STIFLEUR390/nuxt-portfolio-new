@@ -103,7 +103,7 @@ defineOgImage('Portfolio', { title, description })
               </ULink>
               <span
                 v-if="project.demo"
-                class="text-xs text-muted/50"
+                class="text-xs text-muted"
               >
                 ·
               </span>

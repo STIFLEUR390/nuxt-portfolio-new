@@ -22,7 +22,7 @@ defineOgImage('Portfolio', {
     <LandingHero :page />
 
     <div
-      class="flex items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-muted py-4 sm:py-5 border-b border-default/60 mb-8 sm:mb-10"
+      class="flex items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm text-muted py-4 sm:py-5 border-b border-default/60 mb-8 sm:mb-10 flex-wrap"
     >
       <span class="flex items-center gap-1.5">
         <UIcon
@@ -31,7 +31,7 @@ defineOgImage('Portfolio', {
         />
         Douala, Cameroun
       </span>
-      <span class="text-muted/20">·</span>
+      <span class="text-muted">·</span>
       <span class="flex items-center gap-1.5">
         <UIcon
           name="i-lucide-layers"
@@ -39,7 +39,7 @@ defineOgImage('Portfolio', {
         />
         Full-Stack
       </span>
-      <span class="text-muted/20">·</span>
+      <span class="text-muted">·</span>
       <span class="flex items-center gap-1.5">
         <UIcon
           name="i-lucide-clock"
@@ -66,10 +66,7 @@ defineOgImage('Portfolio', {
         >
           <div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <p class="text-xs font-medium text-primary uppercase tracking-wider">
-                Tarifs
-              </p>
-              <h3 class="text-lg sm:text-xl font-semibold text-highlighted mt-1">
+              <h3 class="text-lg sm:text-xl font-semibold text-highlighted">
                 Projets à partir de <span class="text-primary">3 000 €</span>
               </h3>
               <p class="text-sm text-muted mt-1 max-w-md">
@@ -113,10 +110,7 @@ defineOgImage('Portfolio', {
         :in-view-options="{ once: true }"
       >
         <div class="text-center py-10 sm:py-14">
-          <p class="text-xs font-medium text-primary uppercase tracking-wider">
-            Collaboration
-          </p>
-          <h2 class="text-2xl sm:text-3xl font-semibold text-highlighted mt-2 max-w-lg mx-auto text-balance">
+          <h2 class="text-2xl sm:text-3xl font-semibold text-highlighted max-w-lg mx-auto text-balance">
             Prêt à construire quelque chose de solide ?
           </h2>
           <p class="text-sm text-muted mt-3 max-w-md mx-auto text-pretty">
