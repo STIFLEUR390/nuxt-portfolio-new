@@ -19,6 +19,13 @@ export default defineNuxtConfig({
   ui: {
     content: true
   },
+
+  runtimeConfig: {
+    usesendApiKey: '',
+    usesendBaseUrl: '',
+    fromEmail: '',
+    contactEmail: ''
+  },
   compatibilityDate: '2025-07-15',
   nitro: {
     prerender: {

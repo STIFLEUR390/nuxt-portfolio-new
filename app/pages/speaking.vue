@@ -15,6 +15,9 @@ const state = ref({
   message: ''
 })
 
+const submitted = ref(false)
+const errorMsg = ref('')
+
 function validate(state: { name: string, email: string, subject: string, message: string }): { name: string, message: string }[] {
   const errors: { name: string, message: string }[] = []
   if (!state.name) errors.push({ name: 'name', message: 'Le nom est requis' })
@@ -24,9 +27,21 @@ function validate(state: { name: string, email: string, subject: string, message
   return errors
 }
 
-function onSubmit() {
-  const mailtoLink = `mailto:${global.email}?subject=${encodeURIComponent(state.value.subject)}&body=${encodeURIComponent(`De : ${state.value.name} (${state.value.email})\n\n${state.value.message}`)}`
-  window.location.href = mailtoLink
+async function onSubmit() {
+  submitted.value = false
+  errorMsg.value = ''
+
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: state.value
+    })
+
+    submitted.value = true
+    state.value = { name: '', email: '', subject: '', message: '' }
+  } catch {
+    errorMsg.value = 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.'
+  }
 }
 </script>
 
@@ -69,41 +84,75 @@ function onSubmit() {
         container: 'pt-0!'
       }"
     >
-      <UForm
-        :state="state"
-        :validate="validate"
-        class="max-w-xl mx-auto space-y-4"
-        @submit="onSubmit"
-      >
-        <UInput
-          v-model="state.name"
-          name="name"
-          placeholder="Votre nom"
+      <div class="max-w-xl mx-auto">
+        <p class="text-sm text-muted mb-6">
+          Ou utilisez le formulaire ci-dessous. Je vous répondrai dans les plus brefs délais.
+        </p>
+
+        <UAlert
+          v-if="submitted"
+          color="success"
+          variant="soft"
+          title="Message envoyé !"
+          description="Merci pour votre message. Je vous répondrai rapidement."
+          class="mb-6"
         />
-        <UInput
-          v-model="state.email"
-          name="email"
-          type="email"
-          placeholder="Votre email"
+
+        <UAlert
+          v-if="errorMsg"
+          color="error"
+          variant="soft"
+          :title="'Erreur'"
+          :description="errorMsg"
+          class="mb-6"
         />
-        <UInput
-          v-model="state.subject"
-          name="subject"
-          placeholder="Sujet"
-        />
-        <UTextarea
-          v-model="state.message"
-          name="message"
-          :rows="5"
-          placeholder="Votre message"
-        />
+
+        <UForm
+          v-if="!submitted"
+          :state="state"
+          :validate="validate"
+          class="space-y-4"
+          @submit="onSubmit"
+        >
+          <UInput
+            v-model="state.name"
+            name="name"
+            placeholder="Votre nom"
+          />
+          <UInput
+            v-model="state.email"
+            name="email"
+            type="email"
+            placeholder="Votre email"
+          />
+          <UInput
+            v-model="state.subject"
+            name="subject"
+            placeholder="Sujet"
+          />
+          <UTextarea
+            v-model="state.message"
+            name="message"
+            :rows="5"
+            placeholder="Votre message"
+          />
+          <UButton
+            type="submit"
+            label="Envoyer le message"
+            color="neutral"
+            block
+          />
+        </UForm>
+
         <UButton
-          type="submit"
-          label="Envoyer le message"
+          v-else
+          label="Envoyer un autre message"
           color="neutral"
+          variant="ghost"
           block
+          @click="submitted = false"
         />
-      </UForm>
+      </div>
     </UPageSection>
   </UPage>
 </template>
