@@ -9,14 +9,11 @@ useHead({
   ],
   link: [
     { rel: 'icon', href: '/favicon.ico' }
-  ],
-  htmlAttrs: {
-    lang: 'fr'
-  }
+  ]
 })
 
 useSeoMeta({
-  titleTemplate: '%s - Hérold H. · Full-Stack Developer',
+  titleTemplate: '%s - Franck Hérold TAMTO TAMKO · Full-Stack Developer',
   twitterCard: 'summary_large_image'
 })
 </script>

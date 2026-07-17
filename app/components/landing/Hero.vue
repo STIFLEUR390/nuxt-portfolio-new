@@ -50,7 +50,7 @@ const animate = {
         v-bind="animate"
         :transition="{ duration: 0.5, delay: 0.15, ease: 'easeOut' }"
       >
-        {{ page.title }}
+        <span class="font-serif">{{ page.title }}</span>
       </Motion>
     </template>
 

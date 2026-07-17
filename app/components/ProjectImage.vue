@@ -16,7 +16,7 @@ defineProps<{
         <span
           v-for="tag in project.tags.slice(0, 4)"
           :key="tag"
-          class="inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary/10 text-primary"
+          class="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary"
         >
           {{ tag }}
         </span>

@@ -26,7 +26,6 @@ useHead(() => ({
 }))
 
 useSeoMeta({
-  titleTemplate: '%s - Hérold H. · Full-Stack Developer',
   twitterCard: 'summary_large_image'
 })
 </script>
