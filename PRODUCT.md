@@ -10,31 +10,33 @@ web
 
 ## Users
 
-Potential clients evaluating a full-stack developer for hire. They arrive skeptical, need proof of competence, reassurance of reliability, and a compelling reason to reach out. The portfolio's job is to convert visitors into contacts.
+Founders, small business owners, product teams, recruiters, and technical decision-makers evaluating a full-stack developer for freelance work or selective full-time opportunities. They arrive skeptical and time-constrained; they need fast proof of competence, signs of reliability, and a clear path to contact.
 
 ## Product Purpose
 
-A personal portfolio that showcases Franck Hérold TAMTO TAMKO's skills, projects, and expertise as a full-stack developer. It is the primary sales tool for client acquisition: every section must convince (competence), reassure (reliability), and create desire (contact).
+A personal portfolio for Franck Hérold TAMTO TAMKO that showcases real product-building ability: web applications, SaaS platforms, APIs, integrations, and technical problem-solving. Its main role is client acquisition, with freelance work as the priority, while remaining credible for recruiters and hiring teams.
 
 ## Brand Personality
 
-Bold, technical, confident. Modern and tool-aware without being sterile. Precise, premium — every pixel intentional. The developer behind the code.
+Bold, technical, precise, and confident. Premium without feeling luxurious, modern without feeling trend-chasing, structured without feeling cold. The site should feel like it was built by someone who understands both engineering rigor and product presentation.
 
 ## Anti-references
 
-- Generic template portfolios (beige, safe, "AI made this")
-- Gradient text / SaaS clichés / glassmorphism decor
-- Editorial-magazine affectation on a dev portfolio (italic serif drop caps)
-- Tiny uppercase tracked labels above every section
-- Over-rounded corners on cards (codex tell >24px)
-- The hero-metric template (big number + small label)
+- Generic developer portfolio templates that feel anonymous or AI-generated
+- Gradient text, decorative glassmorphism, and visual gimmicks without purpose
+- Beige or lifestyle-personal-brand aesthetics that weaken technical credibility
+- Editorial-magazine styling that feels performative rather than useful
+- Tiny uppercase eyebrow labels above every section
+- Over-rounded cards and soft bubbly UI
+- Hero sections built around vanity metrics instead of proof
 
 ## Design Principles
 
-- **Practice what you preach.** The portfolio itself is the best reference of the developer's skill. No excuse for rough edges — the medium is the message.
-- **Convince, reassure, create desire.** Every element — typography, motion, layout, imagery — serves the conversion funnel. Nothing decorative for its own sake.
-- **Confidence through craft.** Dark-first, bold, premium. Restraint is not beige; confidence is not shouting. Precision earns trust.
+- **Practice what you preach.** The portfolio itself is proof of frontend quality, technical care, and product thinking.
+- **Convince, reassure, convert.** Every section should either prove competence, reduce doubt, or guide the visitor toward contact.
+- **Precision builds trust.** Clear structure, thoughtful spacing, restrained motion, and disciplined typography should communicate professionalism.
+- **Freelance first.** The portfolio should feel like a credible business-facing tool first, and a résumé companion second.
 
 ## Accessibility & Inclusion
 
-WCAG AA minimum. 4.5:1 body text contrast, keyboard-navigable throughout, reduced-motion alternative on all animations.
+WCAG AA minimum. Body text contrast at or above 4.5:1, full keyboard navigation, clear focus states, reduced-motion alternatives, and mobile-first readability.

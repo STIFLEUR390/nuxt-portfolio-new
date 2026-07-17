@@ -10,13 +10,13 @@
         "canonical": "oklch(0.546 0.245 263)",
         "tonalRamp": ["oklch(0.15 0.08 263)", "oklch(0.25 0.14 263)", "oklch(0.35 0.19 263)", "oklch(0.45 0.23 263)", "oklch(0.546 0.245 263)", "oklch(0.65 0.2 263)", "oklch(0.75 0.14 263)", "oklch(0.88 0.06 263)"]
       },
-      "neutral-bg": {
+      "surface-default": {
         "role": "neutral",
         "displayName": "Paper",
         "canonical": "oklch(1 0 0)",
         "tonalRamp": ["oklch(0.15 0 0)", "oklch(0.25 0 0)", "oklch(0.35 0 0)", "oklch(0.45 0 0)", "oklch(0.55 0 0)", "oklch(0.7 0 0)", "oklch(0.85 0 0)", "oklch(1 0 0)"]
       },
-      "dark-bg": {
+      "dark-surface-default": {
         "role": "neutral",
         "displayName": "Midnight Ink",
         "canonical": "oklch(0.025 0.015 263)",
@@ -24,16 +24,20 @@
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero headlines uniquement. Instrument Serif Regular 400." },
-      "body": { "displayName": "Body", "purpose": "Texte courant. Public Sans Regular 400." }
+      "display": { "displayName": "Display", "purpose": "Hero uniquement. Instrument Serif Regular 400." },
+      "headline": { "displayName": "Headline", "purpose": "Titres de sections. Public Sans Medium 500." },
+      "title": { "displayName": "Title", "purpose": "Cartes, items. Public Sans Semibold 600." },
+      "body": { "displayName": "Body", "purpose": "Texte courant. Public Sans Regular 400, 1rem minimum." },
+      "label": { "displayName": "Label", "purpose": "Métadonnées, tags. Public Sans Medium 500." }
     },
     "shadows": [
-      { "name": "nav-float", "value": "0 10px 15px -3px rgba(9, 9, 11, 0.05)", "purpose": "Navigation flottante. Diffuse et à peine perceptible." },
-      { "name": "hover-lift", "value": "0 4px 6px -1px rgba(0, 0, 0, 0.05)", "purpose": "Élévation au survol des cartes interactives." }
+      { "name": "nav-float", "value": "0 10px 15px -3px rgba(9, 9, 11, 0.05)", "purpose": "Navigation flottante uniquement." },
+      { "name": "hover-lift", "value": "0 4px 6px -1px rgba(0, 0, 0, 0.05)", "purpose": "Élévation au survol (optionnel)." }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Easing standard pour transitions d'état." },
-      { "name": "duration-reveal", "value": "600ms", "purpose": "Durée des animations d'entrée (hero, sections)." }
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Easing standard." },
+      { "name": "duration-state", "value": "200ms", "purpose": "Transitions d'état (hover, focus)." },
+      { "name": "duration-reveal", "value": "600ms", "purpose": "Animations d'entrée." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
@@ -48,7 +52,7 @@
       "refersTo": "button-primary",
       "description": "CTA principal. Fond bleu, texte blanc, coins 8px.",
       "html": "<button class=\"ds-btn-primary\">Démarrer un projet</button>",
-      "css": ".ds-btn-primary { background: #3b82f6; color: #fff; padding: 12px 24px; border: none; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: #2563eb; } .ds-btn-primary:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }"
+      "css": ".ds-btn-primary { background: #3b82f6; color: #fff; padding: 12px 24px; border: none; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 1rem; font-weight: 500; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: #2563eb; } .ds-btn-primary:active { filter: brightness(0.95); } .ds-btn-primary:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; filter: none; }"
     },
     {
       "name": "Outline Button",
@@ -56,7 +60,7 @@
       "refersTo": "button-outline",
       "description": "Action secondaire. Bordure grise, fond transparent.",
       "html": "<button class=\"ds-btn-outline\">En savoir plus</button>",
-      "css": ".ds-btn-outline { background: transparent; color: #18181b; padding: 12px 24px; border: 1px solid #e4e4e7; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-outline:hover { background: #f4f4f5; } .ds-btn-outline:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }"
+      "css": ".ds-btn-outline { background: transparent; color: #18181b; padding: 12px 24px; border: 1px solid #e4e4e7; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 1rem; font-weight: 500; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-outline:hover { background: #f4f4f5; } .ds-btn-outline:active { background: #e4e4e7; } .ds-btn-outline:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; } .ds-btn-outline:disabled { opacity: 0.5; cursor: not-allowed; }"
     },
     {
       "name": "Ghost Button",
@@ -64,66 +68,68 @@
       "refersTo": "button-ghost",
       "description": "Action tertiaire. Pas de fond ni bordure.",
       "html": "<button class=\"ds-btn-ghost\">Télécharger CV</button>",
-      "css": ".ds-btn-ghost { background: transparent; color: #71717a; padding: 12px 24px; border: none; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 0.9375rem; font-weight: 500; letter-spacing: 0; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-ghost:hover { background: #f4f4f5; } .ds-btn-ghost:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }"
+      "css": ".ds-btn-ghost { background: transparent; color: #71717a; padding: 12px 24px; border: none; border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 1rem; font-weight: 500; line-height: 1; cursor: pointer; transition: background 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-ghost:hover { background: #f4f4f5; } .ds-btn-ghost:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; } .ds-btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }"
     },
     {
       "name": "Navigation Pill",
       "kind": "nav",
       "refersTo": "nav-pill",
-      "description": "Barre de navigation fixe. Fond semi-transparent avec blur.",
+      "description": "Barre de navigation fixe. Fond semi-transparent avec blur, ombre légère.",
       "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-link--active\" href=\"#\">Accueil</a><a class=\"ds-nav-link\" href=\"#\">Projets</a><a class=\"ds-nav-link\" href=\"#\">Blog</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: 4px; background: rgba(244, 244, 245, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 9999px; border: 1px solid rgba(228, 228, 231, 0.5); box-shadow: 0 10px 15px -3px rgba(9, 9, 11, 0.05); font-family: 'Public Sans', sans-serif; } .ds-nav-link { padding: 4px 8px; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; color: #71717a; text-decoration: none; transition: background 0.2s, color 0.2s; } .ds-nav-link:hover { background: rgba(113, 113, 122, 0.1); } .ds-nav-link--active { color: #3b82f6; }"
+      "css": ".ds-nav { display: flex; align-items: center; gap: 4px; background: rgba(244, 244, 245, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 9999px; border: 1px solid rgba(228, 228, 231, 0.5); box-shadow: 0 10px 15px -3px rgba(9, 9, 11, 0.05); font-family: 'Public Sans', sans-serif; } .ds-nav-link { padding: 4px 8px; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; color: #71717a; text-decoration: none; transition: background 0.2s, color 0.2s; } .ds-nav-link:hover { background: rgba(113, 113, 122, 0.1); } .ds-nav-link--active { color: #3b82f6; } .ds-nav-link:focus-visible { outline: 2px solid #3b82f6; outline-offset: 4px; }"
     },
     {
       "name": "Service Card",
       "kind": "card",
       "refersTo": "card-default",
-      "description": "Carte de service. Fond elevated, pas de bordure ni ombre.",
-      "html": "<div class=\"ds-card\"><svg class=\"ds-card-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#3b82f6\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\" ry=\"2\"/><path d=\"M8 21h8\"/><path d=\"M12 17v4\"/></svg><h3 class=\"ds-card-title\">Développement Web</h3><p class=\"ds-card-desc\">Applications modernes avec Laravel, Vue et Nuxt.</p></div>",
-      "css": ".ds-card { background: #f4f4f5; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; font-family: 'Public Sans', sans-serif; } .ds-card-icon { width: 24px; height: 24px; flex-shrink: 0; } .ds-card-title { font-size: 1rem; font-weight: 600; color: #18181b; margin: 0; text-wrap: balance; } .ds-card-desc { font-size: 0.875rem; color: #71717a; margin: 0; line-height: 1.6; }"
+      "description": "Carte de service. Fond surface-subtle, pas de bordure ni ombre.",
+      "html": "<div class=\"ds-card\" tabindex=\"0\"><svg class=\"ds-card-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#3b82f6\" stroke-width=\"2\"><rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M8 21h8\"/><path d=\"M12 17v4\"/></svg><h3 class=\"ds-card-title\">Développement Web</h3><p class=\"ds-card-desc\">Apps modernes Laravel, Vue et Nuxt.</p></div>",
+      "css": ".ds-card { background: #f4f4f5; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; font-family: 'Public Sans', sans-serif; } .ds-card:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; } .ds-card-icon { width: 24px; height: 24px; flex-shrink: 0; } .ds-card-title { font-size: 1rem; font-weight: 600; color: #18181b; margin: 0; } .ds-card-desc { font-size: 0.875rem; color: #71717a; margin: 0; line-height: 1.6; }"
     },
     {
       "name": "Input Field",
       "kind": "input",
       "refersTo": "input-default",
-      "description": "Champ de formulaire. Propre, fonctionnel, focus bleu.",
-      "html": "<div class=\"ds-input-wrapper\"><label class=\"ds-input-label\">Email</label><div class=\"ds-input-container\"><svg class=\"ds-input-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"/><polyline points=\"22,6 12,13 2,6\"/></svg><input class=\"ds-input\" type=\"email\" placeholder=\"vous@exemple.com\"/></div></div>",
-      "css": ".ds-input-wrapper { font-family: 'Public Sans', sans-serif; } .ds-input-label { display: block; font-size: 0.875rem; font-weight: 500; color: #18181b; margin-bottom: 6px; } .ds-input-container { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #e4e4e7; border-radius: 8px; padding: 8px 14px; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input-container:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15); } .ds-input-icon { width: 16px; height: 16px; flex-shrink: 0; } .ds-input { flex: 1; border: none; outline: none; background: transparent; font-size: 0.9375rem; color: #18181b; font-family: inherit; } .ds-input::placeholder { color: #a1a1aa; }"
+      "description": "Champ de formulaire. Bordure grise, focus bleu.",
+      "html": "<div class=\"ds-input-group\"><label class=\"ds-label\">Email</label><div class=\"ds-input-box\"><svg class=\"ds-input-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"/><polyline points=\"22,6 12,13 2,6\"/></svg><input class=\"ds-input\" type=\"email\" placeholder=\"vous@exemple.com\"/></div></div>",
+      "css": ".ds-input-group { font-family: 'Public Sans', sans-serif; } .ds-label { display: block; font-size: 0.875rem; font-weight: 500; color: #18181b; margin-bottom: 6px; } .ds-input-box { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #e4e4e7; border-radius: 8px; padding: 8px 14px; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input-box:hover { border-color: #d4d4d8; } .ds-input-box:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15); } .ds-input-icon { width: 16px; height: 16px; flex-shrink: 0; } .ds-input { flex: 1; border: none; outline: none; background: transparent; font-size: 1rem; color: #18181b; font-family: inherit; } .ds-input::placeholder { color: #71717a; }"
     },
     {
       "name": "Stack Badge",
       "kind": "chip",
       "refersTo": "badge-subtle",
-      "description": "Badge de technologie. Fond elevated, texte muted, pill.",
-      "html": "<span class=\"ds-badge\"><svg class=\"ds-badge-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M2 12h20\"/><path d=\"M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z\"/></svg>Vue.js</span>",
+      "description": "Badge de technologie. Fond surface-subtle, pill.",
+      "html": "<span class=\"ds-badge\"><svg class=\"ds-badge-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M2 12h20\"/><path d=\"M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z\"/></svg>Vue.js</span>",
       "css": ".ds-badge { display: inline-flex; align-items: center; gap: 6px; background: #f4f4f5; color: #71717a; padding: 6px 12px; border-radius: 9999px; font-family: 'Public Sans', sans-serif; font-size: 0.875rem; font-weight: 500; line-height: 1; } .ds-badge-icon { width: 16px; height: 16px; }"
     },
     {
-      "name": "Accordion (FAQ)",
+      "name": "FAQ Accordion",
       "kind": "custom",
       "refersTo": "accordion-faq",
-      "description": "Item d'accordéon. Fond elevated, contour arrondi, icône plus tournante.",
-      "html": "<div class=\"ds-accordion\"><button class=\"ds-accordion-trigger\"><span>Quels sont vos délais ?</span><svg class=\"ds-accordion-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"/><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/></svg></button><div class=\"ds-accordion-content\"><p class=\"ds-accordion-text\">Selon la complexité du projet, comptez 2 à 6 semaines. Je vous donnerai un calendrier précis après avoir discuté de vos besoins.</p></div></div>",
-      "css": ".ds-accordion { background: rgba(244, 244, 245, 0.6); border-radius: 8px; margin-bottom: 8px; font-family: 'Public Sans', sans-serif; overflow: hidden; } .ds-accordion-trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px; background: transparent; border: none; cursor: pointer; font-size: 1rem; font-weight: 500; color: #18181b; text-align: left; transition: background 0.2s; } .ds-accordion-trigger:hover { background: rgba(113, 113, 122, 0.1); } .ds-accordion-icon { width: 16px; height: 16px; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-accordion-trigger[aria-expanded=\"true\"] .ds-accordion-icon { transform: rotate(135deg); } .ds-accordion-content { padding: 0 16px 16px; } .ds-accordion-text { font-size: 0.875rem; color: #71717a; line-height: 1.6; margin: 0; }"
+      "description": "Accordéon. Fond surface-subtle/60, plus tournant.",
+      "html": "<div class=\"ds-accordion\"><button class=\"ds-accordion-trigger\"><span>Délais de livraison ?</span><svg class=\"ds-accordion-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#71717a\" stroke-width=\"2\"><line x1=\"12\" y1=\"5\" x2=\"12\" y2=\"19\"/><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/></svg></button><div class=\"ds-accordion-body\"><p>Selon la complexité, comptez 2 à 6 semaines.</p></div></div>",
+      "css": ".ds-accordion { background: rgba(244, 244, 245, 0.6); border-radius: 8px; margin-bottom: 8px; font-family: 'Public Sans', sans-serif; } .ds-accordion-trigger { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px; background: transparent; border: none; cursor: pointer; font-size: 1rem; font-weight: 500; color: #18181b; text-align: left; transition: background 0.2s; } .ds-accordion-trigger:hover { background: rgba(113, 113, 122, 0.1); } .ds-accordion-trigger:focus-visible { outline: 2px solid #3b82f6; outline-offset: -2px; border-radius: 8px; } .ds-accordion-icon { width: 16px; height: 16px; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-accordion-trigger[aria-expanded=\"true\"] .ds-accordion-icon { transform: rotate(135deg); } .ds-accordion-body { padding: 0 16px 16px; } .ds-accordion-body p { font-size: 0.875rem; color: #71717a; line-height: 1.6; margin: 0; }"
     }
   ],
   "narrative": {
     "northStar": "Le Blueprint",
-    "overview": "Comme un plan d'architecte, ce portfolio construit la confiance par la clarté, la précision, et l'intention visible. Rien n'est décoratif — chaque espace, chaque trait, chaque transition sert une fonction : convaincre le visiteur que le développeur derrière ce code maîtrise son artisanat.",
+    "overview": "Comme un plan d'architecte, ce portfolio construit la confiance par la clarté, la précision, et l'intention visible. Rien n'est décoratif : chaque espace, chaque trait, chaque transition sert une fonction. L'objectif unique est de convaincre le visiteur que le développeur derrière ce code maîtrise son artisanat.",
     "keyCharacteristics": ["Architectural — structure visible, lignes nettes", "Confident — bleu affirmé sans excès", "Précis — pas de dégradés, pas d'effets gratuits", "Technique mais pas froid"],
     "rules": [
-      { "name": "La Règle du 15%", "body": "Le bleu primaire n'occupe jamais plus de 15% de la surface visible. Sa rareté est son autorité.", "section": "colors" },
-      { "name": "La Règle des Deux Mondes", "body": "Light et dark ont leurs propres valeurs de gris. Ne pas réutiliser les tokens light en dark.", "section": "colors" },
+      { "name": "La Règle du 15%", "body": "Le bleu primaire n'occupe jamais plus de 15% de la surface visible.", "section": "colors" },
+      { "name": "La Règle des Deux Mondes", "body": "Light et dark ont leurs propres valeurs de gris.", "section": "colors" },
       { "name": "La Règle des 75 Caractères", "body": "Le corps de texte ne dépasse jamais 75 caractères par ligne.", "section": "typography" },
       { "name": "La Règle du Serif Rare", "body": "Instrument Serif est réservé aux moments à fort impact visuel.", "section": "typography" },
-      { "name": "La Règle Plat-par-Défaut", "body": "Les surfaces sont plates au repos. L'élévation est un signal d'interaction ou de hiérarchie.", "section": "elevation" }
+      { "name": "La Règle Plat-par-Défaut", "body": "Les surfaces sont plates au repos. L'élévation est un signal, pas un décor.", "section": "elevation" }
     ],
     "dos": [
       "Utiliser le bleu primaire sur ≤ 15% de la surface",
-      "Privilégier les surfaces plates avec des changements de tonalité plutôt que des ombres",
+      "Créer la profondeur par les changements de tonalité plutôt que par les ombres",
       "Utiliser Instrument Serif uniquement pour les moments à fort impact",
-      "Animer avec des ease-out doux (duration 0.4-0.6s)",
-      "Respecter WCAG AA : contraste ≥ 4.5:1, focus visible, prefers-reduced-motion"
+      "Garder le body à 1rem minimum",
+      "Respecter un rythme vertical de 4rem minimum entre sections",
+      "Documenter tous les états interactifs : hover, active, focus, disabled",
+      "Respecter WCAG AA"
     ],
     "donts": [
       "Ne pas utiliser border-left/right > 1px comme accent décoratif",
@@ -132,7 +138,9 @@
       "Ne pas dépasser 16px de border-radius sur les cartes",
       "Ne pas associer border + box-shadow large sur le même élément",
       "Ne pas mettre d'eyebrow label en uppercase au-dessus de chaque section",
-      "Ne pas utiliser de fond beige/crème/sable"
+      "Ne pas utiliser de fond beige/crème/sable",
+      "Ne pas utiliser d'ombres sur les cartes au repos",
+      "Ne pas supprimer le focus visible"
     ]
   }
 }
