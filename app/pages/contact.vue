@@ -8,39 +8,47 @@ useSeoMeta({
 
 defineOgImage('Portfolio', { title: 'Contact', description: 'Contactez-moi' })
 
-const state = ref({
+import type { FormError, FormSubmitEvent } from '@nuxt/ui'
+
+const state = reactive({
   name: '',
   email: '',
   subject: '',
   message: ''
 })
 
-const submitted = ref(false)
-const errorMsg = ref('')
+type Schema = typeof state
 
-function validate(state: { name: string, email: string, subject: string, message: string }): { name: string, message: string }[] {
-  const errors: { name: string, message: string }[] = []
+const submitted = ref(false)
+
+function validate(state: Partial<Schema>): FormError[] {
+  const errors: FormError[] = []
   if (!state.name) errors.push({ name: 'name', message: 'Le nom est requis' })
   if (!state.email) errors.push({ name: 'email', message: 'L\'email est requis' })
+  if (!state.email?.includes('@')) errors.push({ name: 'email', message: 'Email invalide' })
   if (!state.subject) errors.push({ name: 'subject', message: 'Le sujet est requis' })
   if (!state.message) errors.push({ name: 'message', message: 'Le message est requis' })
+  if ((state.message?.length ?? 0) < 10) errors.push({ name: 'message', message: 'Minimum 10 caractères' })
   return errors
 }
 
-async function onSubmit() {
-  submitted.value = false
-  errorMsg.value = ''
-
+const toast = useToast()
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     await $fetch('/api/contact', {
       method: 'POST',
-      body: state.value
+      body: event.data
     })
 
     submitted.value = true
-    state.value = { name: '', email: '', subject: '', message: '' }
+    state.name = ''
+    state.email = ''
+    state.subject = ''
+    state.message = ''
+
+    toast.add({ title: 'Message envoyé !', description: 'Merci, je vous répondrai rapidement.', color: 'success' })
   } catch {
-    errorMsg.value = 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.'
+    toast.add({ title: 'Erreur', description: 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.', color: 'error' })
   }
 }
 </script>
@@ -89,69 +97,100 @@ async function onSubmit() {
           Ou utilisez le formulaire ci-dessous. Je vous répondrai dans les plus brefs délais.
         </p>
 
-        <UAlert
-          v-if="submitted"
-          color="success"
-          variant="soft"
-          title="Message envoyé !"
-          description="Merci pour votre message. Je vous répondrai rapidement."
-          class="mb-6"
-        />
-
-        <UAlert
-          v-if="errorMsg"
-          color="error"
-          variant="soft"
-          :title="'Erreur'"
-          :description="errorMsg"
-          class="mb-6"
-        />
-
         <UForm
           v-if="!submitted"
           :state="state"
           :validate="validate"
-          class="space-y-4"
+          class="space-y-6"
           @submit="onSubmit"
         >
-          <UInput
-            v-model="state.name"
+          <UFormField
+            label="Nom"
             name="name"
-            placeholder="Votre nom"
-          />
-          <UInput
-            v-model="state.email"
+            required
+            description="Votre nom ou celui de votre entreprise"
+          >
+            <UInput
+              v-model="state.name"
+              placeholder="Jean Dupont"
+              icon="i-lucide-user"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Email"
             name="email"
-            type="email"
-            placeholder="Votre email"
-          />
-          <UInput
-            v-model="state.subject"
+            required
+            description="Pour que je puisse vous répondre"
+          >
+            <UInput
+              v-model="state.email"
+              type="email"
+              placeholder="vous@exemple.com"
+              icon="i-lucide-at-sign"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Sujet"
             name="subject"
-            placeholder="Sujet"
-          />
-          <UTextarea
-            v-model="state.message"
+            required
+            description="De quoi s'agit-il ?"
+          >
+            <UInput
+              v-model="state.subject"
+              placeholder="Site web, SaaS, mission freelance..."
+              icon="i-lucide-file-text"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Message"
             name="message"
-            :rows="5"
-            placeholder="Votre message"
-          />
+            required
+            description="Décrivez votre projet ou votre demande"
+          >
+            <UTextarea
+              v-model="state.message"
+              :rows="5"
+              placeholder="Bonjour, je souhaiterais discuter d'un projet de..."
+              class="w-full"
+            />
+          </UFormField>
+
           <UButton
             type="submit"
             label="Envoyer le message"
             color="neutral"
             block
+            size="lg"
           />
         </UForm>
 
-        <UButton
+        <div
           v-else
-          label="Envoyer un autre message"
-          color="neutral"
-          variant="ghost"
-          block
-          @click="submitted = false"
-        />
+          class="text-center space-y-4"
+        >
+          <UIcon
+            name="i-lucide-circle-check"
+            class="size-12 text-success mx-auto"
+          />
+          <p class="text-lg font-medium">
+            Message envoyé !
+          </p>
+          <p class="text-sm text-muted">
+            Merci pour votre message. Je vous répondrai dans les plus brefs délais.
+          </p>
+          <UButton
+            label="Envoyer un autre message"
+            color="neutral"
+            variant="outline"
+            @click="submitted = false"
+          />
+        </div>
       </div>
     </UPageSection>
   </UPage>
