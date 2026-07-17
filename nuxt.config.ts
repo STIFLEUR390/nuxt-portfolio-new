@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/ui',
     '@vueuse/nuxt',
     'nuxt-og-image',
     'motion-v/nuxt'
@@ -15,6 +14,16 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  ui: {
+    content: true
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: ['motion-v', 'framer-motion', 'framer-motion/dom']
+    }
+  },
   compatibilityDate: '2025-07-15',
   nitro: {
     prerender: {
