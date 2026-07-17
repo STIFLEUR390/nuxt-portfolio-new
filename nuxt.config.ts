@@ -46,11 +46,23 @@ export default defineNuxtConfig({
 
   i18n: {
     locales: [
-      { code: 'fr', name: 'Français', file: 'fr.json' },
-      { code: 'en', name: 'English', file: 'en.json' }
+      {
+        code: 'fr',
+        language: 'fr-FR',
+        name: 'Français',
+        file: 'fr.json'
+      },
+      {
+        code: 'en',
+        language: 'en-US',
+        name: 'English',
+        file: 'en.json'
+      }
     ],
     langDir: 'locales',
     defaultLocale: 'fr',
+    strategy: 'prefix_except_default',
+    baseUrl: 'https://heroldev.com',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',

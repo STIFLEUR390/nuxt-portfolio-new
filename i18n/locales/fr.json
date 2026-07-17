@@ -7,6 +7,10 @@
     "contact": "Contact",
     "services": "Services"
   },
+  "seo": {
+    "title": "Hérold H. · Full-Stack Developer",
+    "description": "Développeur Full-Stack basé à Douala. Laravel, Vue.js, Nuxt, PostgreSQL."
+  },
   "hero": {
     "available": "Disponible pour missions freelance",
     "experience": "4+ ans d'expérience",
@@ -15,8 +19,23 @@
     "cta_mission": "Mission freelance",
     "cta_cv": "Télécharger mon CV"
   },
+  "trust": {
+    "exp": "4+ ans d'expérience",
+    "location": "Douala",
+    "role": "Full-Stack",
+    "tech": "Laravel / Vue / Nuxt"
+  },
+  "services": {
+    "title": "Services",
+    "description": "Ce que je peux construire pour vous."
+  },
+  "stack": {
+    "title": "Stack & expertise",
+    "description": "Une stack technique cohérente et moderne."
+  },
   "projects": {
     "title": "Projets",
+    "description": "Besoin, solution technique, livrable.",
     "view": "Voir le projet",
     "talk": "Discutons de votre projet",
     "email": "M'écrire"
@@ -25,36 +44,34 @@
     "title": "Articles récents",
     "read": "Lire l'article"
   },
-  "about": {
-    "title": "À propos"
+  "testimonials": {
+    "title": "Témoignages"
   },
-  "services": {
-    "title": "Services"
-  },
-  "stack": {
-    "title": "Stack & expertise"
+  "faq": {
+    "title": "Questions fréquentes"
   },
   "contact": {
     "title": "Contact",
-    "email_me": "M'écrire par email"
+    "description": "Disponible pour missions freelance, CDI ou CDD.",
+    "email_me": "M'écrire par email",
+    "form_name": "Votre nom",
+    "form_email": "Votre email",
+    "form_subject": "Sujet",
+    "form_message": "Votre message",
+    "form_submit": "Envoyer le message",
+    "validation_required": "Ce champ est requis"
   },
-  "footer": {
-    "credits": "© {year} Hérold H. · Full-Stack Developer"
+  "about": {
+    "title": "À propos"
   },
   "error": {
     "title": "Page non trouvée",
     "description": "Désolé, cette page n'existe pas."
   },
-  "faq": {
-    "title": "Questions fréquentes"
+  "footer": {
+    "credits": "© {year} Hérold H. · Full-Stack Developer"
   },
-  "testimonials": {
-    "title": "Témoignages"
-  },
-  "trust": {
-    "exp": "4+ ans d'expérience",
-    "location": "Douala",
-    "role": "Full-Stack",
-    "tech": "Laravel / Vue / Nuxt"
+  "language_switch": {
+    "to": "EN"
   }
 }
