@@ -122,33 +122,38 @@ const formatDate = (dateString: string) => {
             :value="page.body"
           />
 
-          <div class="flex items-center justify-between gap-2 text-sm text-muted mt-8 pt-6 border-t border-default">
-            <div class="flex items-center gap-2">
+          <ClientOnly>
+            <div class="flex items-center justify-between gap-2 text-sm text-muted mt-8 pt-6 border-t border-default">
+              <div class="flex items-center gap-2">
+                <UButton
+                  size="sm"
+                  variant="ghost"
+                  color="neutral"
+                  icon="i-simple-icons-x"
+                  :to="'https://x.com/intent/post?text=' + encodeURIComponent(page.title) + '&url=' + encodeURIComponent(articleLink)"
+                  target="_blank"
+                />
+                <UButton
+                  size="sm"
+                  variant="ghost"
+                  color="neutral"
+                  icon="i-lucide-linkedin"
+                  :to="'https://linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(articleLink)"
+                  target="_blank"
+                />
+              </div>
               <UButton
                 size="sm"
-                variant="ghost"
+                variant="link"
                 color="neutral"
-                icon="i-lucide-twitter"
-                :to="'https://twitter.com/intent/tweet?text=' + encodeURIComponent(page.title) + '&url=' + encodeURIComponent(articleLink)"
-                target="_blank"
-              />
-              <UButton
-                size="sm"
-                variant="ghost"
-                color="neutral"
-                icon="i-lucide-linkedin"
-                :to="'https://linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(articleLink)"
-                target="_blank"
+                label="Copier le lien"
+                @click="copyToClipboard(articleLink, 'Lien copié dans le presse-papier')"
               />
             </div>
-            <UButton
-              size="sm"
-              variant="link"
-              color="neutral"
-              label="Copier le lien"
-              @click="copyToClipboard(articleLink, 'Lien copié dans le presse-papier')"
-            />
-          </div>
+            <template #fallback>
+              <div class="h-10" />
+            </template>
+          </ClientOnly>
           <UContentSurround :surround />
         </UPageBody>
       </UPage>
