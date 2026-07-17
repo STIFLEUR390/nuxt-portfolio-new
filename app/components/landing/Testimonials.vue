@@ -28,6 +28,8 @@ const autoplayConfig = computed(() => {
       :ui="{
         viewport: '-mx-4 sm:-mx-12 lg:-mx-16 bg-elevated/50 max-w-(--ui-container)'
       }"
+      aria-roledescription="carousel"
+      aria-label="Témoignages clients"
       @mouseenter="autoplayEnabled = false"
       @mouseleave="autoplayEnabled = true"
     >

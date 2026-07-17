@@ -5,8 +5,6 @@ const color = computed(() => colorMode.value === 'dark' ? '#020618' : 'white')
 
 useHead({
   meta: [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
   link: [
@@ -24,13 +22,25 @@ useSeoMeta({
 </script>
 
 <template>
-  <UMain class="relative">
-    <div>
-      <UContainer class="sm:border-x border-default pt-10">
-        <AppHeader :links="navLinks" />
-        <slot />
-        <AppFooter />
-      </UContainer>
-    </div>
-  </UMain>
+  <div>
+    <a
+      href="#main-content"
+      class="skip-link"
+    >
+      Aller au contenu
+    </a>
+
+    <UMain
+      id="main-content"
+      class="relative"
+    >
+      <div>
+        <UContainer class="sm:border-x border-default pt-10">
+          <AppHeader :links="navLinks" />
+          <slot />
+          <AppFooter />
+        </UContainer>
+      </div>
+    </UMain>
+  </div>
 </template>

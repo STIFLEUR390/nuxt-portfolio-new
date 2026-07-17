@@ -12,9 +12,7 @@ defineProps<{
     :title="'Services'"
     :description="'Ce que je peux construire pour vous. Chaque service est pensé pour apporter une valeur concrète à votre projet ou votre entreprise.'"
     :ui="{
-      container: 'px-0 pt-0!',
-      title: 'text-left text-xl sm:text-xl lg:text-2xl font-medium',
-      description: 'text-left mt-2 text-sm sm:text-md lg:text-sm text-muted'
+      container: 'px-0 pt-0!'
     }"
   >
     <div

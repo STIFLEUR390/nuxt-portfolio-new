@@ -12,7 +12,7 @@ const toaster = { position: 'bottom-right', duration: 5000, expand: true } as co
 useHead(() => ({
   meta: [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
     { key: 'theme-color', name: 'theme-color', content: color.value },
     ...(head.value.meta || [])
   ],
