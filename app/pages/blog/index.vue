@@ -23,8 +23,8 @@ defineOgImage('Portfolio', { title, description })
       :title="page.title"
       :description="page.description"
       :ui="{
-        title: 'mx-0! text-left',
-        description: 'mx-0! text-left',
+        title: 'mx-0! text-left text-balance',
+        description: 'mx-0! text-left text-pretty',
         links: 'justify-start'
       }"
     />
@@ -36,7 +36,7 @@ defineOgImage('Portfolio', { title, description })
       <UBlogPosts orientation="vertical">
         <Motion
           v-for="(post, index) in posts"
-          :key="index"
+          :key="post.path"
           :initial="{ opacity: 0, transform: 'translateY(10px)' }"
           :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
           :transition="{ delay: 0.2 * index }"
@@ -56,7 +56,15 @@ defineOgImage('Portfolio', { title, description })
                   ? 'sm:-rotate-1 overflow-visible'
                   : 'sm:rotate-1 overflow-visible'
             }"
-          />
+          >
+            <template #footer>
+              <div class="flex items-center gap-2 text-xs text-muted">
+                <span>{{ new Date(post.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short' }) }}</span>
+                <span class="text-muted/50">·</span>
+                <span>{{ post.minRead }} min</span>
+              </div>
+            </template>
+          </UBlogPost>
         </Motion>
       </UBlogPosts>
     </UPageSection>

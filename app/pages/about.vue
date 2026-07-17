@@ -25,8 +25,8 @@ defineOgImage('Portfolio', { title, description })
       orientation="horizontal"
       :ui="{
         container: 'lg:flex sm:flex-row items-center',
-        title: 'mx-0! text-left',
-        description: 'mx-0! text-left',
+        title: 'mx-0! text-left text-balance',
+        description: 'mx-0! text-left text-pretty',
         links: 'justify-start'
       }"
     >
@@ -42,18 +42,30 @@ defineOgImage('Portfolio', { title, description })
         container: 'pt-0!'
       }"
     >
-      <MarkdownRenderer
-        :value="page.content"
-        unwrap="p"
-      />
-      <div class="flex flex-row justify-center items-center py-10 -space-x-8">
+      <Motion
+        :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+        :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+        :in-view-options="{ once: true }"
+      >
+        <MarkdownRenderer
+          :value="page.content"
+          unwrap="p"
+        />
+      </Motion>
+      <Motion
+        :initial="{ opacity: 0 }"
+        :while-in-view="{ opacity: 1 }"
+        :transition="{ delay: 0.3 }"
+        :in-view-options="{ once: true }"
+        class="flex flex-row justify-center items-center py-10 -space-x-8"
+      >
         <PolaroidItem
           v-for="(image, index) in page.images"
           :key="index"
           :image="image"
           :index
         />
-      </div>
+      </Motion>
     </UPageSection>
   </UPage>
 </template>

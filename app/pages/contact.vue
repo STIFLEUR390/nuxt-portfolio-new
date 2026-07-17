@@ -20,6 +20,7 @@ const state = reactive({
 type Schema = typeof state
 
 const submitted = ref(false)
+const submitting = ref(false)
 
 function validate(state: Partial<Schema>): FormError[] {
   const errors: FormError[] = []
@@ -34,6 +35,7 @@ function validate(state: Partial<Schema>): FormError[] {
 
 const toast = useAppToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  submitting.value = true
   try {
     await $fetch('/api/contact', {
       method: 'POST',
@@ -49,6 +51,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     toast.success('Message envoyé !', 'Merci, je vous répondrai rapidement.')
   } catch {
     toast.error('Erreur', 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.')
+  } finally {
+    submitting.value = false
   }
 }
 </script>
@@ -59,8 +63,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       :title="'Parlons de votre projet'"
       :description="'Disponible pour missions freelance, CDI ou CDD. Une idée, un besoin technique, une collaboration ? Écrivez-moi.'"
       :ui="{
-        title: 'mx-0! text-left',
-        description: 'mx-0! text-left',
+        title: 'mx-0! text-left text-balance',
+        description: 'mx-0! text-left text-pretty',
         links: 'justify-start'
       }"
     >
@@ -164,9 +168,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UButton
             type="submit"
             label="Envoyer le message"
-            color="neutral"
+            color="primary"
             block
             size="lg"
+            :loading="submitting"
           />
         </UForm>
 

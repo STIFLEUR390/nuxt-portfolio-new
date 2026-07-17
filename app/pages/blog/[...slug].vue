@@ -43,8 +43,10 @@ if (page.value.image) {
 
 const articleLink = computed(() => typeof window !== 'undefined' ? window.location.href : '')
 
+const { locale } = useI18n()
+
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
+  return new Date(dateString).toLocaleDateString(locale.value === 'fr' ? 'fr-FR' : 'en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
@@ -56,14 +58,27 @@ const formatDate = (dateString: string) => {
   <UMain class="mt-20 px-2">
     <UContainer class="relative min-h-screen">
       <UPage v-if="page">
-        <ULink
-          to="/blog"
-          class="text-sm flex items-center gap-1"
+        <Motion
+          :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+          :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+          :in-view-options="{ once: true }"
         >
-          <UIcon name="lucide:chevron-left" />
-          Blog
-        </ULink>
-        <div class="flex flex-col gap-3 mt-8">
+          <ULink
+            to="/blog"
+            class="text-sm flex items-center gap-1 text-muted hover:text-highlighted transition-colors"
+          >
+            <UIcon name="i-lucide-chevron-left" />
+            Blog
+          </ULink>
+        </Motion>
+
+        <Motion
+          :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+          :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+          :transition="{ delay: 0.1 }"
+          :in-view-options="{ once: true }"
+          class="flex flex-col gap-3 mt-8"
+        >
           <div class="flex text-xs text-muted items-center justify-center gap-2">
             <span v-if="page.date">
               {{ formatDate(page.date) }}
@@ -72,19 +87,20 @@ const formatDate = (dateString: string) => {
               -
             </span>
             <span v-if="page.minRead">
-              {{ page.minRead }} MIN READ
+              {{ page.minRead }} min de lecture
             </span>
           </div>
           <NuxtImg
             v-if="page.image"
             :src="page.image"
             :alt="page.title"
-            class="rounded-lg w-full h-[300px] object-cover object-center"
+            class="rounded-lg w-full aspect-video object-cover object-center"
+            loading="lazy"
           />
-          <h1 class="text-4xl text-center font-medium max-w-3xl mx-auto mt-4">
+          <h1 class="text-4xl text-center font-medium max-w-3xl mx-auto mt-4 text-balance">
             {{ page.title }}
           </h1>
-          <p class="text-muted text-center max-w-2xl mx-auto">
+          <p class="text-muted text-center max-w-2xl mx-auto text-pretty">
             {{ page.description }}
           </p>
           <div class="flex items-center justify-center gap-2 mt-2">
@@ -96,7 +112,8 @@ const formatDate = (dateString: string) => {
               v-bind="page.author"
             />
           </div>
-        </div>
+        </Motion>
+
         <UPageBody class="max-w-3xl mx-auto">
           <MarkdownRenderer
             v-if="page.body"
@@ -108,8 +125,8 @@ const formatDate = (dateString: string) => {
               size="sm"
               variant="link"
               color="neutral"
-              label="Copy link"
-              @click="copyToClipboard(articleLink, 'Article link copied to clipboard')"
+              label="Copier le lien"
+              @click="copyToClipboard(articleLink, 'Lien copié dans le presse-papier')"
             />
           </div>
           <UContentSurround :surround />

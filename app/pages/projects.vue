@@ -23,8 +23,8 @@ defineOgImage('Portfolio', { title, description })
       :title="page.title"
       :description="page.description"
       :ui="{
-        title: 'mx-0! text-left',
-        description: 'mx-0! text-left',
+        title: 'mx-0! text-left text-balance',
+        description: 'mx-0! text-left text-pretty',
         links: 'justify-start'
       }"
     >
@@ -41,6 +41,7 @@ defineOgImage('Portfolio', { title, description })
           <UButton
             :to="`mailto:${global.email}`"
             :label="page.links[1]?.label"
+            variant="outline"
           />
         </div>
       </template>
@@ -72,25 +73,39 @@ defineOgImage('Portfolio', { title, description })
         >
           <template #leading>
             <span class="text-sm text-muted">
-              {{ new Date(project.date).getFullYear() }}
+              {{ project.date }}
             </span>
+          </template>
+          <template #body>
+            <div class="flex flex-wrap gap-1.5 mt-2">
+              <UBadge
+                v-for="tag in project.tags"
+                :key="tag"
+                variant="subtle"
+                color="neutral"
+                class="gap-1 px-2 py-0.5 text-xs"
+              >
+                {{ tag }}
+              </UBadge>
+            </div>
           </template>
           <template #footer>
             <ULink
               :to="project.url"
-              class="text-sm text-primary flex items-center"
+              class="text-sm text-primary flex items-center gap-1 group-hover:gap-2 transition-all"
             >
               Voir le projet
               <UIcon
                 name="i-lucide-arrow-right"
-                class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100"
+                class="size-4 text-primary transition-all group-hover:translate-x-0.5"
               />
             </ULink>
           </template>
           <img
             :src="project.image"
             :alt="project.title"
-            class="object-cover w-full h-48 rounded-lg"
+            class="object-cover w-full aspect-video rounded-lg"
+            loading="lazy"
           >
         </UPageCard>
       </Motion>
