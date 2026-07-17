@@ -2,142 +2,189 @@ import type { PageData } from '~/data/types'
 
 export const indexPage: PageData = {
   seo: {
-    title: 'Emma Thompson - UX/UI Designer',
-    description: 'Welcome to my portfolio! I\'m Emma Thompson, a UX/UI designer and front-end developer based in Boston. I specialize in creating user-centered digital experiences that are both beautiful and functional.'
+    title: 'Hérold H. - Développeur Full-Stack Laravel / Vue.js / Nuxt',
+    description: 'Développeur Full-Stack basé à Douala. Je conçois des applications web modernes, SaaS, APIs et outils métiers avec Laravel, Vue.js, Nuxt et PostgreSQL.'
   },
-  title: 'Hey, I\'m Emma Thompson UX/UI Designer',
-  description: 'I craft intuitive digital experiences where design meets functionality. Based in Boston, bringing ideas to life through code and creativity.',
+  title: 'Développeur Full-Stack, applications web & SaaS',
+  description: 'Je conçois des applications web modernes, SaaS, APIs et outils métiers pour les entreprises qui veulent mieux vendre, automatiser ou scaler leurs services.',
   hero: {
     links: [
-      { label: 'Use this template', to: 'https://github.com/nuxt-ui-templates/portfolio', color: 'neutral' }
+      { label: 'Voir mes projets', to: '/projects', color: 'neutral' },
+      { label: 'Mission freelance', to: 'mailto:herold@example.com' },
+      { label: 'Télécharger mon CV', color: 'neutral' }
     ],
-    images: [
-      { src: '/hero/random-1.avif', alt: 'Random Image 1' },
-      { src: '/hero/random-2.avif', alt: 'Random Image 2' },
-      { src: '/hero/random-3.avif', alt: 'Random Image 3' },
-      { src: '/hero/random-4.avif', alt: 'Random Image 4' },
-      { src: '/hero/random-5.avif', alt: 'Random Image 5' },
-      { src: '/hero/random-6.avif', alt: 'Random Image 6' },
-      { src: '/hero/random-7.avif', alt: 'Random Image 7' },
-      { src: '/hero/random-8.avif', alt: 'Random Image 8' },
-      { src: '/hero/random-9.avif', alt: 'Random Image 9' }
-    ]
+    images: []
   },
-  about: {
-    title: 'About Me',
-    description: 'As a UX/UI designer and front-end developer with 6 years of experience, I leverage my Boston University Interactive Design degree to craft user-centered digital experiences. My approach blends creative strategy with technical expertise, transforming concepts into functional, purposeful digital products that seamlessly integrate design and technology.'
-  },
+  services: [
+    {
+      title: 'Développement web full-stack',
+      description: 'Applications métier, dashboards, plateformes SaaS, e-commerce. Laravel + Vue.js/Nuxt + PostgreSQL, de la conception au déploiement.',
+      icon: 'i-lucide-globe'
+    },
+    {
+      title: 'APIs & intégrations',
+      description: 'Laravel REST API, webhooks, paiements Stripe / Flutterwave / PayPal, intégrations tierces (MoySklad, Calendly, etc.).',
+      icon: 'i-lucide-link'
+    },
+    {
+      title: 'Modernisation frontend',
+      description: 'Vue 3, Nuxt 4, Inertia.js, Tailwind CSS, shadcn-vue. Migration progressive et interfaces modernes et performantes.',
+      icon: 'i-lucide-palette'
+    },
+    {
+      title: 'Automatisation & IA appliquée',
+      description: 'Assistants intelligents, workflows automatisés, traitement de contenu, chatbots, automatisations métier sur mesure.',
+      icon: 'i-lucide-bot'
+    },
+    {
+      title: 'Supports marketing digitaux',
+      description: 'Landing pages, tunnels de conversion, pages produit, visuels promotionnels. Création rapide de supports pour accompagner vos campagnes.',
+      icon: 'i-lucide-megaphone'
+    }
+  ],
+  stack: [
+    {
+      label: 'Stack principale',
+      description: 'Mon socle technique pour les projets full-stack',
+      items: [
+        { name: 'Laravel', icon: 'i-simple-icons-laravel' },
+        { name: 'Vue.js', icon: 'i-simple-icons-vuedotjs' },
+        { name: 'Nuxt', icon: 'i-simple-icons-nuxtdotjs' },
+        { name: 'PostgreSQL', icon: 'i-simple-icons-postgresql' },
+        { name: 'Tailwind CSS', icon: 'i-simple-icons-tailwindcss' }
+      ]
+    },
+    {
+      label: 'Stack secondaire',
+      description: 'Technologies complémentaires maîtrisées',
+      items: [
+        { name: 'Inertia.js', icon: 'i-simple-icons-inertia' },
+        { name: 'TypeScript' },
+        { name: 'GraphQL', icon: 'i-simple-icons-graphql' },
+        { name: 'Filament' },
+        { name: 'Livewire', icon: 'i-simple-icons-livewire' },
+        { name: 'Pinia' }
+      ]
+    },
+    {
+      label: 'Outils & expertise',
+      description: 'Infrastructure, CI/CD, paiements et environnements',
+      items: [
+        { name: 'Docker', icon: 'i-simple-icons-docker' },
+        { name: 'CI/CD' },
+        { name: 'Sentry' },
+        { name: 'Redis', icon: 'i-simple-icons-redis' },
+        { name: 'Tauri' },
+        { name: 'Rust / WASM' },
+        { name: 'Stripe', icon: 'i-simple-icons-stripe' },
+        { name: 'Flutterwave' },
+        { name: 'PayPal', icon: 'i-simple-icons-paypal' }
+      ]
+    }
+  ],
   experience: {
-    title: 'Work Experience',
+    title: 'Expérience',
     items: [
       {
-        position: 'Brand Designer at',
-        date: '2023 - Present',
-        company: { name: 'Nuxt', logo: 'i-simple-icons-nuxtdotjs', url: 'https://nuxt.com', color: '#00DC82' }
-      },
-      {
-        position: 'Assets Designer at',
-        date: '2022 - 2023',
-        company: { name: 'Raycast', logo: 'i-simple-icons-raycast', url: 'https://raycast.com', color: '#FF6363' }
-      },
-      {
-        position: 'Senior UX/UI Designer at',
-        date: '2020 - 2021',
-        company: { name: 'Linear', logo: 'i-simple-icons-linear', url: 'https://linear.app', color: '#5E6AD2' }
+        position: 'Développeur Full-Stack',
+        date: '2019 - Présent',
+        company: { name: 'ETECH KEYS', logo: 'i-simple-icons-codefactor', url: '#', color: '#2563EB' },
+        highlights: [
+          'Conception et maintenance d\'applications web métier',
+          'Développement de APIs RESTful et intégrations tierces',
+          'Modernisation de frontends legacy vers Vue.js / Nuxt',
+          'Mise en production et suivi continu (Docker, CI/CD)'
+        ]
       }
     ]
   },
   testimonials: [
     {
-      quote: 'Emma\'s approach to UX design completely transformed our product. She has a rare ability to balance beautiful aesthetics with functional simplicity. The redesign not only looked better, but it reduced our customer support tickets by 40% and increased conversion rates across all key metrics.',
+      quote: 'Hérold a réalisé notre plateforme SaaS de A à Z. Son expertise Laravel + Vue.js nous a permis d\'avoir un produit stable, rapide et évolutif. Professionnel, à l\'écoute et très réactif.',
       author: {
-        name: 'Sarah Chen',
-        description: 'Product Director at Bloom Finance',
+        name: 'Client KwikTalk',
+        description: 'Fondateur de KwikTalk',
         avatar: {
-          src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
+          src: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
+          srcset: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
         }
       }
     },
     {
-      quote: 'Working with Emma was the best decision we made for our startup. She didn\'t just deliver designs—she challenged our assumptions, conducted thorough user research, and created an experience that truly resonated with our audience. Her technical knowledge of front-end development meant the handoff to our engineering team was seamless.',
+      quote: 'Un développeur qui comprend à la fois le backend, le frontend et les enjeux métier. Rare et précieux. Notre marketplace lui doit beaucoup.',
       author: {
-        name: 'Michael Rodriguez',
-        description: 'Co-founder of Wavelength Music',
+        name: 'Client E-Key Market',
+        description: 'Responsable produit',
         avatar: {
-          src: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
+          src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
+          srcset: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
         }
       }
     },
     {
-      quote: 'Emma stands out in her ability to translate complex sustainability data into intuitive interfaces. Her work on EcoTrack wasn\'t just visually stunning—it fundamentally changed how our users interact with environmental information. She approaches each problem with both creativity and analytical rigor, which is exactly what we needed.',
+      quote: 'Hérold a su moderniser notre application legacy avec Nuxt et Tailwind. Résultat : une interface plus rapide, plus agréable et une équipe enfin sereine sur la maintenance.',
       author: {
-        name: 'Dr. Aisha Johnson',
-        description: 'Chief Innovation Officer at GreenTech Solutions',
+        name: 'Client TCF Canada Suite',
+        description: 'Chef de projet',
         avatar: {
-          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
-          srcset: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
+          src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=40&h=40&q=80',
+          srcset: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=80&h=80&q=80 2x'
         }
       }
     }
   ],
   blog: {
-    title: 'Latest Articles',
-    description: 'Some of my recent thoughts'
+    title: 'Articles récents',
+    description: 'Réflexions sur le développement web, Laravel, Vue.js et l\'écosystème Nuxt.'
   },
   faq: {
-    title: 'Frequently Asked Questions',
-    description: 'Answers to common questions about my process and services.',
+    title: 'Questions fréquentes',
+    description: 'Tout savoir sur ma façon de travailler et mes services.',
     categories: [
       {
         title: 'Services & Process',
         questions: [
           {
-            label: 'What services do you offer?',
-            content: 'I specialize in UX/UI design and front-end development. This includes user research, wireframing, interactive prototyping, creating intuitive user interfaces, building responsive websites and web applications (especially with Vue.js/Nuxt.js), and developing design systems. My goal is to create seamless digital experiences from concept to deployment.'
+            label: 'Quels types de projets acceptez-vous ?',
+            content: 'Je travaille principalement sur des applications web complètes : SaaS, plateformes métier, dashboards, APIs, marketplaces, sites à fort trafic. Si votre projet utilise Laravel, Vue.js, Nuxt ou nécessite une architecture full-stack moderne, c\'est idéal. Je peux aussi intervenir sur des missions plus courtes (audit, intégration, modernisation).'
           },
           {
-            label: 'What is your design process like?',
-            content: 'My process is collaborative and iterative, typically involving stages like Discovery & Research, Ideation & Prototyping, User Testing, Visual Design, and close collaboration with development teams during implementation. I tailor the process based on project needs, always focusing on user-centered solutions.'
+            label: 'Comment se déroule une mission ?',
+            content: 'On commence par un échange pour comprendre le besoin, le contexte et les contraintes. Je propose ensuite un cadre clair : périmètre, livrables, jalons et budget. Pendant la mission, je communique régulièrement (souvent via Discord ou Slack) et je livre en continu sur un repository privé. À la fin, vous avez le code, la doc et les accès.'
           },
           {
-            label: 'Do you work with startups?',
-            content: 'Absolutely! I enjoy working with startups to help shape their product vision and create user-friendly interfaces from the ground up. I can adapt my process to fit the fast-paced startup environment.'
+            label: 'Travaillez-vous en équipe ou en solo ?',
+            content: 'Je peux travailler seul sur l\'ensemble du projet, ou m\'intégrer dans une équipe existante (développeurs, designers, chefs de projet). Je suis habitué aux environnements collaboratifs et aux outils modernes (Git, CI/CD, ticketing).'
           }
         ]
       },
       {
-        title: 'Pricing & Timelines',
+        title: 'Prix & Disponibilité',
         questions: [
           {
-            label: 'How much does a project typically cost?',
-            content: 'Project costs vary based on scope, complexity, features, and timeline. For comprehensive UX/UI design and front-end development projects, my engagements typically start around $5,000, with average projects ranging between $8,000 and $25,000. For consulting or specific design tasks, my day rate is $700.'
+            label: 'Combien coûte un projet ?',
+            content: 'Chaque projet est différent, je fais un devis personnalisé après analyse du besoin. Pour une idée : un SaaS simple commence autour de 3000 €, un projet plus complet (dashboard + API + panel admin) peut aller de 8000 à 20 000 €. Je propose aussi des forfaits maintenance / évolutions.'
           },
           {
-            label: 'What are your payment terms?',
-            content: 'I generally require a 40% deposit to schedule the project and begin work, with the remaining 60% due upon successful project completion and delivery. I accept payments via bank transfer and Stripe.'
+            label: 'Quels sont vos modes de paiement ?',
+            content: 'J\'accepte les virements bancaires, Stripe et PayPal. Généralement je demande un acompte de 40% au lancement, le solde à la livraison. Pour les gros projets, un échelonnement sur plusieurs jalons est possible.'
           },
           {
-            label: 'How long does a typical project take?',
-            content: 'Timelines depend heavily on the project\'s scope and complexity. Smaller projects might take 3-4 weeks, while larger, more involved projects can range from 2 to 4 months. I always provide a detailed timeline estimate after the initial discovery phase.'
-          },
-          {
-            label: 'Do you offer retainers or ongoing support?',
-            content: 'Yes, for clients needing ongoing design support, feature development, or maintenance, I offer monthly retainer options tailored to specific needs. Let\'s discuss if this is something you\'re interested in.'
+            label: 'Quels sont vos délais ?',
+            content: 'Cela dépend de la charge. Un projet simple peut être livré en 2-3 semaines. Un projet complet avec plusieurs modules peut prendre 2 à 4 mois. Je donne toujours une estimation après la phase de cadrage.'
           }
         ]
       },
       {
-        title: 'About Me',
+        title: 'À propos',
         questions: [
           {
-            label: 'What do you enjoy most about your work?',
-            content: 'I love the challenge of solving complex problems through design and technology. It\'s incredibly rewarding to see people interact with something I\'ve created and find it genuinely useful and easy to navigate. Bridging the gap between user needs and technical possibilities is what truly excites me.'
+            label: 'Êtes-vous basé à Douala ? Travaillez-vous à distance ?',
+            content: 'Oui, je suis basé à Douala, Cameroun. Je travaille principalement à distance avec des clients partout dans le monde (France, Canada, Afrique). Les échanges se font par visio, messagerie et email. Je peux me déplacer ponctuellement si nécessaire.'
           },
           {
-            label: 'What are your hobbies outside of work?',
-            content: 'When I\'m not designing or coding, I enjoy exploring Boston\'s neighborhoods, trying out new coffee shops, and hiking in the nearby reservations. I\'m also passionate about photography and occasionally contribute to open-source projects.'
+            label: 'Qu\'est-ce qui vous passionne dans le développement ?',
+            content: 'Ce qui me motive, c\'est de construire des outils qui résolvent des vrais problèmes. J\'aime particulièrement la conception d\'architecture, l\'optimisation des performances, et le travail sur des produits complets (du backend jusqu\'à l\'interface utilisateur). Je suis aussi très intéressé par l\'IA appliquée et l\'automatisation business.'
           }
         ]
       }

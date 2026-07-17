@@ -13,7 +13,13 @@ const page = computed(() => {
   return post
 })
 
-const surround = computed(() => getSurroundingPosts(postPath.value, { fields: ['description'] }))
+const surround = computed(() => {
+  const data = getSurroundingPosts(postPath.value, { fields: ['description'] })
+  const result: { title?: string, _path?: string, description?: string }[] = []
+  if (data.prev) result.push({ title: data.prev.title, _path: data.prev.path, description: data.prev.description })
+  if (data.next) result.push({ title: data.next.title, _path: data.next.path, description: data.next.description })
+  return result
+})
 
 const title = computed(() => page.value.title)
 const description = computed(() => page.value.description)

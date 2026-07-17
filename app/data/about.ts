@@ -2,38 +2,40 @@ import type { PageData } from '~/data/types'
 
 export const aboutPage: PageData = {
   seo: {
-    title: 'About Me',
-    description: 'Learn more about my journey as a Boston-based UX/UI Designer & Front-End Developer, my design philosophy, and my passion for crafting intuitive digital experiences.'
+    title: 'À propos',
+    description: 'Développeur Full-Stack basé à Douala. Laravel, Vue.js, Nuxt, PostgreSQL. 4+ ans d\'expérience chez ETECH KEYS.'
   },
-  title: 'About Me',
-  description: 'Learn more about my journey as a Boston-based UX/UI Designer & Front-End Developer, my design philosophy, and my passion for crafting intuitive digital experiences.',
-  content: `Hi, I'm **Emma Thompson**, a UX/UI Designer and Front-End Developer based right here in Boston. For the past six years, I've been immersed in the world of digital product creation, focusing on building experiences that are not just functional, but genuinely intuitive and engaging for users.
+  title: 'À propos de moi',
+  description: 'Développeur Full-Stack basé à Douala, passionné par la conception d\'applications web modernes et d\'outils qui résolvent des problèmes concrets.',
+  content: `Je suis **Hérold**, développeur Full-Stack basé à Douala, Cameroun. Depuis plus de 4 ans, j'accompagne la conception, l'évolution et le déploiement d'applications web pour des clients variés — de l'analyse jusqu'à la mise en production.
 
-My path started at **Boston University**, where I earned a degree in Interactive Design. It was there I discovered my dual passion for the visual language of design and the logical puzzle of code. Since then, I've honed my skills in both areas, believing that the best digital products are born from a deep understanding of both aesthetics and implementation.
+Je suis spécialisé dans l'écosystème **Laravel / Vue.js / Nuxt / PostgreSQL**, avec une solide expérience en conception d'APIs RESTful, intégration de paiements en ligne, déploiement Docker et automatisation de processus métier.
 
-### My Design Philosophy
+### Ma philosophie
 
-My design philosophy is rooted in **empathy** and **problem-solving**. I believe great design starts with understanding the 'why' – the user's needs, motivations, and pain points. I use research, iterative prototyping (often with tools like Figma), and user testing to ensure the solutions I build are truly effective.
+Je crois qu'une bonne application ne se limite pas à un code qui marche. Elle doit être :
+- **Maintenable** : architecture propre, code commenté, tests
+- **Performante** : optimisée pour la vitesse et l'expérience utilisateur
+- **Évolutive** : pensée pour grandir avec le besoin
+- **Utile** : centrée sur le problème réel du client
 
-I strive to create interfaces that feel effortless, where functionality and beauty work hand-in-hand. Whether I'm crafting pixel-perfect UIs or writing clean Vue.js/Nuxt.js code, my focus is always on creating value for the end-user.
+### Ce qui me motive
 
-### What Drives Me
+Ce qui me passionne, c'est de voir un projet passer du concept à la réalité — une idée discutée autour d'un café qui devient un outil utilisé au quotidien par des vrais utilisateurs. L'IA appliquée et l'automatisation m'intéressent particulièrement comme leviers pour créer encore plus de valeur.
 
-What keeps me excited about this work is the constant learning and the challenge of translating complex ideas into simple, elegant solutions. There's nothing more rewarding than seeing a design come to life and knowing it's making someone's digital interaction easier or more enjoyable.
+### En dehors du code
 
-### Beyond the Screen
+Quand je ne développe pas, j'aime explorer les nouvelles technologies, contribuer à des projets open source, et réfléchir à des solutions innovantes pour les défis techniques du quotidien.
 
-When I'm not designing or coding, you might find me exploring Boston's latest coffee shops, hiking nearby trails, or occasionally contributing to open-source projects.
-
-Thanks for stopping by. Feel free to browse my [projects](/projects) or [get in touch](/#contact) if you'd like to collaborate!`,
+Vous avez un projet en tête ? [Parlons-en](/speaking) ou [jetez un œil à mes réalisations](/projects).`,
   images: [
     {
-      src: 'https://images.unsplash.com/photo-1744877478622-a78c7a3336f6?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'My coffee workspace'
+      src: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1470&auto=format&fit=crop',
+      alt: 'Espace de travail développement'
     },
     {
-      src: 'https://images.unsplash.com/photo-1744429523595-2c06b8611242?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      alt: 'My trip to Tokyo'
+      src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop',
+      alt: 'Code et développement'
     }
   ]
 }

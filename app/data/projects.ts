@@ -2,48 +2,48 @@ import type { PageData, ProjectItem } from '~/data/types'
 
 export const projectsPage: PageData = {
   seo: {
-    title: 'Projects',
-    description: 'I\'ve worked on a variety of projects, focusing on creating intuitive digital experiences where thoughtful design meets clean code.'
+    title: 'Projets',
+    description: 'Découvrez mes projets phares : applications SaaS, marketplaces, plateformes métier et outils modernes.'
   },
-  title: 'Designing Interfaces, Building Experiences.',
-  description: 'I\'ve worked on a variety of projects, focusing on creating intuitive digital experiences where thoughtful design meets clean code. Here are some highlights I\'m proud of, showcasing my process from concept to execution.',
+  title: 'Des projets concrets, orientés résultats.',
+  description: 'Chaque projet raconte une histoire : un besoin, une solution technique, un livrable. Voici une sélection de mes réalisations les plus significatives.',
   links: [
-    { label: 'Let\'s talk', color: 'neutral' },
-    { label: 'Email me' }
+    { label: 'Discutons de votre projet', color: 'neutral' },
+    { label: 'M\'écrire' }
   ]
 }
 
 export const projects: ProjectItem[] = [
   {
-    title: 'Bloom Finance App Redesign',
-    description: 'Led the complete UX/UI overhaul and front-end implementation for a personal finance platform, focusing on data visualization clarity and improving user onboarding flow. Resulted in a 32% increase in user retention.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    title: 'KwikTalk — WhatsApp Marketing SaaS',
+    description: 'Plateforme SaaS de marketing WhatsApp : envoi automatisé de campagnes, gestion de contacts, modèles de messages, statistiques en temps réel. Architecture Laravel + Vue.js avec file d\'attente Redis, webhooks et API REST.',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     url: '#',
-    tags: ['UX Design', 'UI Design'],
+    tags: ['Laravel', 'Vue.js', 'SaaS', 'Redis', 'WhatsApp API', 'Stripe'],
     date: '2024'
   },
   {
-    title: 'EcoTrack Sustainability App',
-    description: 'Created a mobile-first application to help users track and reduce their environmental impact. Translated complex sustainability metrics into an accessible and motivating user interface.',
-    image: 'https://images.unsplash.com/photo-1613858749733-3a3e456e3d9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'TCF Canada Suite',
+    description: 'Plateforme complète de préparation au TCF Canada : exercices interactifs, tests blancs, suivi de progression, dashboard candidat et panneau admin. Projet longue durée (2023-2026) avec évolutions continues et déploiement Docker.',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     url: '#',
-    tags: ['UX Research', 'UI Design', 'Mobile App'],
+    tags: ['Laravel', 'Nuxt', 'PostgreSQL', 'Docker', 'CI/CD', 'Filament'],
     date: '2023'
   },
   {
-    title: 'Internal Developer Hub (Nuxt Team)',
-    description: 'Designed and built key components for an internal documentation and tooling hub for Nuxt developers, focusing on improving developer experience and streamlining access to resources.',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    title: 'E-Key Market',
+    description: 'Marketplace digitale pour l\'achat et la vente de clés de jeux et logiciels. Paiements multiples (Stripe, Flutterwave, PayPal), gestion de stock automatisée, interface utilisateur réactive, dashboard vendeur complet.',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     url: '#',
-    tags: ['Developer Tools', 'UX Design', 'Nuxt', 'Design System', 'Internal Tools'],
-    date: '2024'
+    tags: ['Laravel', 'Vue.js', 'E-commerce', 'Stripe', 'Flutterwave', 'PayPal'],
+    date: '2023'
   },
   {
-    title: 'Wavelength Music Streaming Service',
-    description: 'Designed and developed the user interface for an indie music streaming service, focusing on discovery features and creating a unique, engaging listening experience using custom audio visualizations.',
-    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    title: 'Nuxt Modern Starter',
+    description: 'Kit de démarrage moderne pour projets Nuxt 4 : configuration Tailwind, modules essentiels, structure clean, composants prêts à l\'emploi. Pensé pour accélérer le lancement de nouveaux projets frontend.',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
     url: '#',
-    tags: ['UI Design', 'Front-End Dev', 'Animation'],
-    date: '2023'
+    tags: ['Nuxt', 'Tailwind CSS', 'TypeScript', 'Starter Kit', 'Open Source'],
+    date: '2025'
   }
 ]

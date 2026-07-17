@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'motion-v/nuxt'
   ],
+
   devtools: {
     enabled: true
   },
@@ -18,12 +19,6 @@ export default defineNuxtConfig({
   ui: {
     content: true
   },
-
-  vite: {
-    optimizeDeps: {
-      include: ['motion-v', 'framer-motion', 'framer-motion/dom']
-    }
-  },
   compatibilityDate: '2025-07-15',
   nitro: {
     prerender: {
@@ -31,6 +26,12 @@ export default defineNuxtConfig({
         '/'
       ],
       crawlLinks: true
+    }
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: ['motion-v', 'framer-motion', 'framer-motion/dom']
     }
   },
 
@@ -45,10 +46,16 @@ export default defineNuxtConfig({
 
   i18n: {
     locales: [
-      { code: 'fr', name: 'Français' },
-      { code: 'en', name: 'English' }
+      { code: 'fr', name: 'Français', file: 'fr.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
     ],
-    defaultLocale: 'fr'
+    langDir: 'locales',
+    defaultLocale: 'fr',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root'
+    }
   },
 
   ogImage: {

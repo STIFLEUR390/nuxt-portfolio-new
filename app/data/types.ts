@@ -31,6 +31,19 @@ export interface ExperienceItem {
     url: string
     color: string
   }
+  highlights?: string[]
+}
+
+export interface ServiceItem {
+  title: string
+  description: string
+  icon: string
+}
+
+export interface StackCategory {
+  label: string
+  items: { name: string, icon?: string }[]
+  description?: string
 }
 
 export interface Testimonial {
@@ -64,6 +77,8 @@ export interface PageData {
     title: string
     description: string
   }
+  services?: ServiceItem[]
+  stack?: StackCategory[]
   experience?: {
     title: string
     items: ExperienceItem[]

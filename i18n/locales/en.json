@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "services": "Services"
+  },
+  "hero": {
+    "available": "Available for freelance missions",
+    "experience": "4+ years experience",
+    "stack": "Laravel / Vue / Nuxt",
+    "cta_projects": "View my projects",
+    "cta_mission": "Freelance mission",
+    "cta_cv": "Download my CV"
+  },
+  "projects": {
+    "title": "Projects",
+    "view": "View Project",
+    "talk": "Let's talk about your project",
+    "email": "Email me"
+  },
+  "blog": {
+    "title": "Latest Articles",
+    "read": "Read Article"
+  },
+  "about": {
+    "title": "About"
+  },
+  "services": {
+    "title": "Services"
+  },
+  "stack": {
+    "title": "Stack & Expertise"
+  },
+  "contact": {
+    "title": "Contact",
+    "email_me": "Email me"
+  },
+  "footer": {
+    "credits": "© {year} Hérold H. · Full-Stack Developer"
+  },
+  "error": {
+    "title": "Page not found",
+    "description": "Sorry, this page could not be found."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  },
+  "testimonials": {
+    "title": "Testimonials"
+  },
+  "trust": {
+    "exp": "4+ years experience",
+    "location": "Douala",
+    "role": "Full-Stack",
+    "tech": "Laravel / Vue / Nuxt"
+  }
+}

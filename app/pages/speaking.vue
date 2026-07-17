@@ -1,45 +1,19 @@
 <script setup lang="ts">
-import type { SpeakingEvent } from '~/data/types'
-import { speakingPage } from '~/data/speaking'
-
-const page = speakingPage
-
-const title = page.seo?.title || page.title
-const description = page.seo?.description || page.description
-
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description
-})
-
-defineOgImage('Portfolio', { title, description })
-
 const { global } = useAppConfig()
 
-const groupedEvents = computed(() => {
-  const grouped: Record<SpeakingEvent['category'], SpeakingEvent[]> = {
-    'Conference': [],
-    'Live talk': [],
-    'Podcast': []
-  }
-  for (const event of page.events) {
-    if (grouped[event.category]) grouped[event.category].push(event)
-  }
-  return grouped
+useSeoMeta({
+  title: 'Contact - Hérold H.',
+  description: 'Contactez-moi pour discuter de votre projet web, SaaS ou application métier.'
 })
 
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
-}
+defineOgImage('Portfolio', { title: 'Contact', description: 'Contactez-moi' })
 </script>
 
 <template>
-  <UPage v-if="page">
+  <UPage>
     <UPageHero
-      :title="page.title"
-      :description="page.description"
+      :title="'Parlons de votre projet'"
+      :description="'Disponible pour missions freelance, CDI ou CDD. Une idée, un besoin technique, une collaboration ? Écrivez-moi.'"
       :ui="{
         title: 'mx-0! text-left',
         description: 'mx-0! text-left',
@@ -47,72 +21,26 @@ function formatDate(dateString: string): string {
       }"
     >
       <template #links>
-        <UButton
-          v-if="page.links"
-          :to="`mailto:${global.email}`"
-          :label="page.links[0]?.label"
-        />
+        <div class="flex flex-wrap gap-3">
+          <UButton
+            :to="`mailto:${global.email}`"
+            label="M'écrire par email"
+            color="neutral"
+          />
+          <UButton
+            to="https://linkedin.com/in/heroldev"
+            label="LinkedIn"
+            variant="ghost"
+            color="neutral"
+          />
+          <UButton
+            to="https://github.com/heroldev"
+            label="GitHub"
+            variant="ghost"
+            color="neutral"
+          />
+        </div>
       </template>
     </UPageHero>
-    <UPageSection
-      :ui="{
-        container: 'pt-0!'
-      }"
-    >
-      <div
-        v-for="(eventsInCategory, category) in groupedEvents"
-        :key="category"
-        class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8 mb-16 last:mb-0"
-      >
-        <div class="lg:col-span-1 mb-4 lg:mb-0">
-          <h2
-            class="lg:sticky lg:top-16 text-xl font-semibold tracking-tight text-highlighted"
-          >
-            {{ category.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase()) }}s
-          </h2>
-        </div>
-
-        <div class="lg:col-span-2 space-y-8">
-          <div
-            v-for="(event, index) in eventsInCategory"
-            :key="`${category}-${index}`"
-            class="group relative pl-6 border-l border-default"
-          >
-            <NuxtLink
-              v-if="event.url"
-              :to="event.url"
-              class="absolute inset-0"
-            />
-            <div class="mb-1 text-sm font-medium text-muted">
-              <span>{{ event.location }}</span>
-              <span
-                v-if="event.location && event.date"
-                class="mx-1"
-              >·</span>
-              <span v-if="event.date">{{ formatDate(event.date) }}</span>
-            </div>
-
-            <h3 class="text-lg font-semibold text-highlighted">
-              {{ event.title }}
-            </h3>
-
-            <UButton
-              v-if="event.url"
-              target="_blank"
-              :label="event.category === 'Podcast' ? 'Listen' : 'Watch'"
-              variant="link"
-              class="p-0 pt-2 gap-0"
-            >
-              <template #trailing>
-                <UIcon
-                  name="i-lucide-arrow-right"
-                  class="size-4 transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100"
-                />
-              </template>
-            </UButton>
-          </div>
-        </div>
-      </div>
-    </UPageSection>
   </UPage>
 </template>
