@@ -126,6 +126,8 @@ Comme un plan d'architecte, ce portfolio construit la confiance par la clarté, 
 
 L'esthétique est techniquement précise sans être froide. Le bleu primaire apporte une signature professionnelle reconnaissable ; les zinc neutres offrent un socle stable et lisible. La profondeur est créée par les changements de tonalité ; les ombres sont utilisées avec parcimonie, réservées à la navigation flottante et à certains états interactifs.
 
+Le système repose sur `@nuxt/ui` v4 comme fondation de composants, avec des surcharges de classes Tailwind ciblées pour les patterns propres au portfolio. Les animations orchestrent les entrées via la librairie `motion-v` en mode reveal (opacity + translateY), jamais en gate (le contenu reste visible sans JS).
+
 Ce système rejette explicitement : les templates génériques, les dégradés décoratifs, les cartes fantômes (1px border + grosse ombre), les coins excessivement arrondis (>16px), les eyebrow labels en uppercase au-dessus de chaque section, et la glassmorphose décorative.
 
 ### Key Characteristics
@@ -176,7 +178,7 @@ Deux mondes distincts — light et dark — qui partagent la même ossature bleu
 
 ### Semantic
 
-- **Success Green** (`#22c55e`) : Indicateur de disponibilité, succès d'envoi formulaire.
+- **Success Green** (`#22c55e`) : Indicateur de disponibilité, succès d'envoi formulaire. Utilisé dans le Hero (indicateur "Disponible" avec animation ping) et les notifications toast.
 
 ### Named Rules
 
@@ -232,87 +234,103 @@ Principe : un élément a soit un fond différencié (`surface-subtle`), soit un
 
 ## 5. Components
 
+Tous les composants UI sont issus de `@nuxt/ui` v4. Les descriptions ci-dessous documentent les surcharges propres au portfolio — les valeurs non mentionnées suivent les defaults du module.
+
+### Page Wrappers
+
+Trois niveaux de mise en page fournis par `@nuxt/ui` :
+
+- **UPage** : Conteneur racine de chaque page. Gère le padding et la largeur max du contenu.
+- **UPageHero** : Section héro — portrait, titre, description, CTA. Slot `headline`, `title`, `description`, `links`. Container : `py-18 sm:py-24 lg:py-32`. Titre : `mx-auto max-w-xl text-pretty text-3xl sm:text-4xl lg:text-5xl`.
+- **UPageSection** : Section standard. Container `px-0 pt-0!` surchargé pour contrôler le padding finement. Titre aligné à gauche, `text-xl sm:text-xl lg:text-2xl font-medium`, description `text-muted` en `text-sm`.
+
 ### Buttons
 
-Précis et confiants. L'intention est immédiatement lisible.
+Implémentés via `UButton` de `@nuxt/ui`. Le système utilise trois variantes :
 
-- **Shape :** Coins 0.5rem (8px). Padding vertical : 0.75rem. Padding horizontal : 1.5rem.
-- **Primary :** Fond Blueprint Blue, texte blanc. Hover : Blueprint Deep. Transition 0.2s ease-out.
-- **Outline :** Bordure Border, texte Ink, fond transparent. Hover : fond Elevated.
-- **Ghost :** Texte Muted, pas de bordure ni fond. Hover : fond Elevated.
-- **Hover :** Changement tonal subtil (pas de scale, pas de lift).
-- **Active :** Légère impression d'enfoncement (darken 5%), pas de scale dramatique.
-- **Focus :** Ring bleu 2px avec offset 2px. Ne jamais supprimer le focus visible.
-- **Disabled :** Opacité réduite (50%), pas d'ombre, pas de réaction hover. Pas de focus ring.
+- **Primary (solid)** : Fond `primary` (Blueprint Blue `#3b82f6`), texte blanc. Hover : `bg-primary/75`. Taille `lg` dans le hero, `md` ailleurs.
+- **Outline** : Bordure `primary/50` (ou zinc), fond transparent. Hover : `bg-primary/10`. Utilisé pour les CTA secondaires.
+- **Ghost** : Texte `muted`, pas de fond ni bordure. Hover : `bg-elevated`. Utilisé pour le lien CV dans le hero.
 
-### Cards
-
-Deux variantes, une philosophie : contenir sans enfermer.
-
-- **UCard (variant="subtle") :** Fond `surface-subtle`, pas de bordure, coins 0.75rem (12px), padding 1.25rem.
-  - Pas d'ombre au repos.
-- **UPageCard (variant="naked") :** Pas de fond ni bordure. Image en pleine largeur (rounded-lg).
-  - Hover : icône flèche qui slide (translateX).
-- **Blog Post :** Image arrondie-lg avec `border-4` et `ring-2`. Rotation alternée (rotate-1/-1).
-- **Hover (cards cliquables) :** Changement tonal subtil ou icône qui se déplace. Pas d'ombre au survol.
-- **Focus :** Ring bleu 2px.
-- **Disabled (si pertinent) :** Opacité réduite, pas d'interaction.
+States : hover change tonalité (pas de scale, pas de lift). Active : `bg-primary/75`. Focus : ring bleu 2px (`outline-primary/25 focus-visible:outline-3`). Disabled : `opacity-75`, pas de réaction hover.
 
 ### Navigation
 
-La barre de navigation est le seul élément qui flotte au-dessus du contenu.
+Implémentée via `UNavigationMenu` avec surcharges.
 
-- **Style :** Pilule arrondie (rounded-full), fond `bg-muted/80` + `backdrop-blur-sm`, bordure légère, `shadow-lg` minimal.
-- **États :** Actif = texte primary. Inactif = muted. Survol = fond `muted/50`.
-- **Mobile :** Même pilule, adaptée à la largeur.
+- **Style** : Pilule arrondie (`rounded-full`), fond `bg-muted/80` + `backdrop-blur-sm`, bordure `border border-muted/50`, ombre `shadow-lg shadow-neutral-950/5`. Fixe en haut de page (`fixed top-2 sm:top-4`), centrée via transform.
+- **Variante** : `variant="link"` `color="neutral"`.
+- **Liens** : `px-2 py-1`, `linkLeadingIcon: hidden`.
+- **États** : Actif = texte `highlighted`. Inactif = `muted`. Survol = fond `muted/50`.
+- **Trailing** : Boutons de langue (FR/EN) en ghost size xs + ColorModeButton.
 
-### Inputs / Fields
+### Cards
 
-Fonctionnels, propres, sans fioriture.
+Implémentées via `UCard variant="subtle"` pour les services.
 
-- **Style :** Fond `surface-default`, bordure `border-default`, coins 0.5rem (8px). Icône intérieure optionnelle.
-- **Focus :** Bordure primaire + ring bleu 2px. Transition douce.
-- **Hover :** Bordure légèrement plus foncée (darken 10%).
-- **Error :** Texte d'erreur rouge, bordure rouge, icône d'erreur.
-- **Disabled :** Opacité réduite, pas de focus ring, pas de réaction hover.
-- **Placeholder :** `text-secondary` (contrôle volontaire, pas un gré clair par défaut).
-- **Autocomplete :** Attributs `autocomplete` présents.
+- **Style** : Fond `bg-elevated/50`, pas de bordure ni ombre, coins 0.75rem (rounded-lg via Nuxt UI radius scale).
+- **Contenu** : `p-5`, flex column gap-3. Icône `text-primary` size-6. Titre `text-base font-semibold text-highlighted`. Description `text-sm text-muted leading-relaxed`.
+- **Grille** : `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`.
 
-### Chips / Badges
+### Badges / Chips
 
-Pour la stack technique, tags, métadonnées.
+Implémentés via `UBadge variant="subtle" color="neutral"`.
 
-- **Style :** Fond `surface-subtle`, texte `text-secondary`, rounded-full, gap 1.5, px-3 py-1.5.
-- **Icône :** 16px, incluse avant le texte.
+- **Style** : Ring subtil, texte `text-default`, fond `bg-elevated`. Coins `rounded-md` (par défaut). Surcharges Tailwind : `gap-1.5 px-3 py-1.5 text-sm`.
+- **Icône** : 16px (`size-4`), placée avant le texte via `UIcon`.
+- **Usage** : Stack technique, tags de catégorie. Regroupés par catégorie avec titre `text-base font-semibold text-highlighted`.
 
 ### Accordion (FAQ)
 
-- **Style :** Fond `surface-subtle` à 60%, coins 0.5rem, pas de bordure, padding 1rem.
-- **Trigger hover :** Fond `muted/50`.
-- **Trailing icon :** Lucide plus (+) → rotation 135° à l'ouverture. Transition fluide.
-- **Espacement :** `mb-2` entre les items.
+Implémenté via `UAccordion` avec surcharges, combiné avec `UTabs` pour les catégories.
 
-## 6. Layout & Spacing
+- **Tabs** : `UTabs` horizontal avec indicateur `bg-elevated/60`. Triggers : `px-3 py-2 rounded-lg hover:bg-muted/50`. Actif = `text-highlighted`, inactif = `text-muted`.
+- **Accordion items** : `border-none`, `mb-2`.
+- **Trigger** : `mb-2 border-0 group px-4 transform-gpu rounded-lg bg-elevated/60 will-change-transform hover:bg-muted/50 text-base`.
+- **Trailing icon** : `lucide:plus`. Rotation 135° à l'ouverture (`group-data-[state=open]:rotate-135`). Transition fluide via Nuxt UI.
+- **Body** : Contenu markdown rendu par `MarkdownRenderer` (unwrap p, px-4).
 
-### Spacing Rules
+### Stats Bar
 
-- **xs** (0.5rem) : Espacement inline, gaps d'icônes, padding de chip.
-- **sm** (1rem) : Intérieurs de composants tassés, gaps de formulaires.
-- **md** (1.5rem) : Intérieurs de composants standards, gaps de grille.
-- **lg** (2rem) : Espacement entre cartes et blocs.
-- **xl** (3rem) : Rythme entre sections sur mobile.
-- **section** (4rem minimum) : Espacement vertical entre sections majeures. Ne jamais descendre sous 4rem sur desktop.
+Barre horizontale d'indicateurs clés sous le hero.
 
-### Grid Rules
+- **Style** : `flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted py-6 sm:py-8 border-y border-default my-8`.
+- **Items** : Icône Lucide 16px + texte. Séparateurs `text-muted/30`.
+- **Contenu** : Années d'expérience, localisation, stack, rôle.
 
-- **Prose width :** 65-75ch max. Les paragraphes ne s'étendent jamais sur toute la largeur du conteneur.
-- **Content container :** `--container-4xl` (56rem / 896px), centré. Bordures latérales sur desktop (`border-x`).
-- **Hero :** Peut dépasser du conteneur standard, mais le texte body reste contraint.
-- **Services grid :** 1 colonne mobile, 2 colonnes tablette, 3 colonnes desktop.
-- **Projets :** Liste verticale avec cartes horizontales alternées (reverse sur un élément sur deux).
-- **Blog :** Grille verticale, cartes horizontales avec rotation alternée.
+### Hero Availability Indicator
 
-## 7. Do's and Don'ts
+Indicateur de disponibilité freelance dans le hero.
+
+- **Style** : `flex items-center gap-1.5 text-sm text-muted`. Point vert avec animation ping (`animate-ping` + `bg-success`). Séparateurs `text-muted/50 · text-muted/50`.
+
+### Motion (Animations d'entrée)
+
+Tous les reveals utilisent `motion-v` (wrapper Vue du framer-motion). Pattern uniforme :
+
+- **Hero** : `Motion` avec initial `{ opacity: 0, filter: 'blur(20px)', scale: 1.1 }`, animate `{ opacity: 1, filter: 'blur(0px)', scale: 1 }`, duration 0.6s, delays staggerés (0.1s / 0.3s / 0.5s).
+- **Sections** : `Motion` avec `initial="{ opacity: 0, transform: 'translateY(10px)' }"`, `while-in-view="{ opacity: 1, transform: 'translateY(0)' }"`, `in-view-options="{ once: true }"`, delay calculé par index (`0.1 * index`).
+- **Work Experience** : translateY(20px), delay base 0.4s + 0.2s par item.
+- **Stack** : fade-in simple (`opacity`), delay 0.1s par catégorie.
+
+Contenu jamais caché par défaut : les `initial` sont des états améliorables, pas des gates. Si le JS ne charge pas, le contenu reste pleinement visible.
+
+### Form Inputs
+
+Implémentés via `UInput` et `UTextarea` de `@nuxt/ui`. Variante `outline` par défaut, `size="md"`, `color="primary"`.
+
+### Changelog (Work Experience)
+
+- **Date** : `text-sm`, texte `text-muted`.
+- **Séparateur** : `USeparator`.
+- **Lien entreprise** : `ULink` avec icône. Couleur de l'entreprise via style inline `{ color: experience.company.color }`. Nom en `font-medium`.
+- **Highlights** : `ul list-disc list-inside space-y-1 text-sm text-muted`.
+
+### Toast Notifications
+
+Configuration : `color: 'neutral'` par défaut. Utilisé pour les retours de soumission de formulaire.
+
+## 6. Do's and Don'ts
 
 ### Do:
 
@@ -321,7 +339,9 @@ Pour la stack technique, tags, métadonnées.
 - **Do** utiliser Instrument Serif uniquement pour les moments à fort impact (hero, citation).
 - **Do** garder le body à 1rem minimum. Jamais en dessous de 16px.
 - **Do** respecter un rythme vertical de 4rem minimum entre les sections majeures.
-- **Do** animer avec des ease-out doux (duration 0.4-0.6s, cubic-bezier(0.16, 1, 0.3, 1)).
+- **Do** animer avec des ease-out doux (duration 0.4-0.6s). Utiliser `motion-v` pour les reveals en scroll.
+- **Do** utiliser les composants `@nuxt/ui` (`UButton`, `UCard`, `UBadge`, `UAccordion`, `UNavigationMenu`) et surcharger via `:ui` prop ou classes Tailwind.
+- **Do** garder le contenu visible sans JS — les animations motion-v sont des enhancements, pas des gates.
 - **Do** documenter tous les états interactifs : hover, active, focus, disabled.
 - **Do** respecter WCAG AA : contraste ≥ 4.5:1, focus visible, prefers-reduced-motion supporté.
 - **Do** limiter le texte body à 75 caractères par ligne max.
@@ -338,3 +358,4 @@ Pour la stack technique, tags, métadonnées.
 - **Don't** utiliser d'ombres sur les cartes au repos. Les ombres sont réservées à la navigation et aux états interactifs.
 - **Don't** aligner trois cartes identiques dans chaque section — varier les grilles pour éviter l'effet template.
 - **Don't** supprimer le focus visible. Le focus ring bleu fait partie du système.
+- **Don't** ajouter de composants UI customs quand `@nuxt/ui` fournit déjà le pattern.

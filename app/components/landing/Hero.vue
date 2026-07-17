@@ -7,21 +7,20 @@ defineProps<{
   page: PageData
 }>()
 
-function animate() {
-  return {
-    initial: {
-      scale: 1.1,
-      opacity: 0,
-      filter: 'blur(20px)'
-    },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      filter: 'blur(0px)'
-    },
-    transition: {
-      duration: 0.6
-    }
+const animate = {
+  initial: {
+    scale: 1.05,
+    opacity: 0,
+    filter: 'blur(8px)'
+  },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    filter: 'blur(0px)'
+  },
+  transition: {
+    duration: 0.5,
+    ease: 'easeOut'
   }
 }
 </script>
@@ -30,14 +29,14 @@ function animate() {
   <UPageHero
     :ui="{
       headline: 'flex items-center justify-center',
-      title: 'text-shadow-md max-w-lg mx-auto',
+      title: 'text-shadow-md max-w-lg mx-auto text-balance',
       links: 'mt-4 flex-col justify-center items-center'
     }"
   >
     <template #headline>
       <Motion
-        v-bind="animate()"
-        :transition="{ duration: 0.6, delay: 0.1 }"
+        v-bind="animate"
+        :transition="{ duration: 0.5, delay: 0.1, ease: 'easeOut' }"
       >
         <UColorModeAvatar
           class="size-18 ring ring-default ring-offset-3 ring-offset-bg"
@@ -50,8 +49,8 @@ function animate() {
 
     <template #title>
       <Motion
-        v-bind="animate()"
-        :transition="{ duration: 0.6, delay: 0.1 }"
+        v-bind="animate"
+        :transition="{ duration: 0.5, delay: 0.15, ease: 'easeOut' }"
       >
         {{ page.title }}
       </Motion>
@@ -59,8 +58,8 @@ function animate() {
 
     <template #description>
       <Motion
-        v-bind="animate()"
-        :transition="{ duration: 0.6, delay: 0.3 }"
+        v-bind="animate"
+        :transition="{ duration: 0.5, delay: 0.3, ease: 'easeOut' }"
       >
         {{ page.description }}
       </Motion>
@@ -68,8 +67,8 @@ function animate() {
 
     <template #links>
       <Motion
-        v-bind="animate()"
-        :transition="{ duration: 0.6, delay: 0.5 }"
+        v-bind="animate"
+        :transition="{ duration: 0.5, delay: 0.45, ease: 'easeOut' }"
       >
         <div
           v-if="page.hero?.links"
@@ -97,18 +96,18 @@ function animate() {
         </div>
       </Motion>
 
-      <div class="flex items-center gap-2 mt-4 text-sm text-muted">
+      <div class="flex items-center justify-center gap-2 mt-4 text-sm text-muted">
         <span class="flex items-center gap-1.5">
           <span class="relative flex size-2">
             <span class="absolute inline-flex size-full rounded-full bg-success animate-ping" />
             <span class="relative inline-flex size-2 rounded-full bg-success" />
           </span>
-          Disponible pour missions freelance
+          Disponible
         </span>
         <span class="text-muted/50">·</span>
         <span>4+ ans d'expérience</span>
         <span class="text-muted/50">·</span>
-        <span>Laravel / Vue / Nuxt</span>
+        <span>Freelance</span>
       </div>
     </template>
   </UPageHero>

@@ -76,6 +76,7 @@ export interface PageData {
   about?: {
     title: string
     description: string
+    content?: string
   }
   services?: ServiceItem[]
   stack?: StackCategory[]

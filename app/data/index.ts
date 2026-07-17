@@ -15,6 +15,11 @@ export const indexPage: PageData = {
     ],
     images: []
   },
+  about: {
+    title: 'À propos',
+    description: 'Développeur full-stack basé à Douala, spécialisé Laravel, Vue.js et Nuxt.',
+    content: 'Depuis 2019, j\'accompagne des entreprises — startups, PME, scale-ups — dans la conception et le développement de leurs produits web. Je construis des applications métier, des SaaS, des APIs et des dashboards avec une obsession pour la qualité du code, les performances et l\'expérience utilisateur.\n\nCe qui me distingue : je comprends à la fois le backend et le frontend, ce qui me permet de livrer des produits cohérents de bout en bout, sans friction entre les couches.'
+  },
   services: [
     {
       title: 'Développement web full-stack',

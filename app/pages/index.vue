@@ -7,8 +7,13 @@ useSeoMeta({
   title: page.seo?.title || page.title,
   ogTitle: page.seo?.title || page.title,
   description: page.seo?.description || page.description,
-  ogDescription: page.seo?.description || page.description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/portfolio-light.png'
+  ogDescription: page.seo?.description || page.description
+})
+
+defineOgImage('Portfolio', {
+  title: page.title,
+  description: page.description,
+  headline: 'Portfolio'
 })
 </script>
 
@@ -17,22 +22,14 @@ useSeoMeta({
     <LandingHero :page />
 
     <div
-      class="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted py-6 sm:py-8 border-y border-default my-8"
+      class="flex items-center justify-center gap-4 sm:gap-6 text-sm text-muted py-6 sm:py-8 border-y border-default my-8 sm:my-12"
     >
-      <span class="flex items-center gap-1.5">
-        <UIcon
-          name="i-lucide-calendar"
-          class="size-4"
-        />
-        4+ ans d'expérience
-      </span>
-      <span class="text-muted/30">|</span>
       <span class="flex items-center gap-1.5">
         <UIcon
           name="i-lucide-map-pin"
           class="size-4"
         />
-        Douala
+        Douala, Cameroun
       </span>
       <span class="text-muted/30">|</span>
       <span class="flex items-center gap-1.5">
@@ -45,10 +42,10 @@ useSeoMeta({
       <span class="text-muted/30">|</span>
       <span class="flex items-center gap-1.5">
         <UIcon
-          name="i-lucide-code"
+          name="i-lucide-clock"
           class="size-4"
         />
-        Laravel / Vue / Nuxt
+        Disponible
       </span>
     </div>
 

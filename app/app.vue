@@ -37,7 +37,11 @@ useSeoMeta({
     :toaster="toaster"
   >
     <NuxtLayout>
-      <NuxtPage />
+      <MotionConfig
+        :reduced-motion="'user'"
+      >
+        <NuxtPage />
+      </MotionConfig>
     </NuxtLayout>
 
     <ClientOnly />

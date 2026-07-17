@@ -23,35 +23,42 @@ const posts = computed(() => getSortedPosts().slice(0, 3))
       orientation="vertical"
       class="gap-4 lg:gap-y-4"
     >
-      <UBlogPost
+      <Motion
         v-for="(post, index) in posts"
         :key="index"
-        orientation="horizontal"
-        variant="naked"
-        v-bind="post"
-        :to="post.path"
-        :ui="{
-          root: 'group relative lg:items-start lg:flex ring-0 hover:ring-0',
-          body: 'px-0!',
-          header: 'hidden'
-        }"
+        :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+        :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+        :transition="{ delay: 0.1 * index }"
+        :in-view-options="{ once: true }"
       >
-        <template #footer>
-          <UButton
-            size="xs"
-            variant="link"
-            class="px-0 gap-0"
-            label="Read Article"
-          >
-            <template #trailing>
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100"
-              />
-            </template>
-          </UButton>
-        </template>
-      </UBlogPost>
+        <UBlogPost
+          orientation="horizontal"
+          variant="naked"
+          v-bind="post"
+          :to="post.path"
+          :ui="{
+            root: 'group relative lg:items-start lg:flex ring-0 hover:ring-0',
+            body: 'px-0!',
+            header: 'hidden'
+          }"
+        >
+          <template #footer>
+            <UButton
+              size="xs"
+              variant="link"
+              class="px-0 gap-0"
+              label="Lire l'article"
+            >
+              <template #trailing>
+                <UIcon
+                  name="i-lucide-arrow-right"
+                  class="size-4 text-primary transition-all opacity-0 group-hover:translate-x-1 group-hover:opacity-100"
+                />
+              </template>
+            </UButton>
+          </template>
+        </UBlogPost>
+      </Motion>
     </UBlogPosts>
   </UPageSection>
 </template>
