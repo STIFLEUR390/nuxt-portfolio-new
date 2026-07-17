@@ -69,7 +69,7 @@ export default defineNuxtConfig({
     langDir: 'locales',
     defaultLocale: 'fr',
     strategy: 'prefix_except_default',
-    baseUrl: 'https://heroldev.com',
+    baseUrl: 'https://heroldtamko.dev',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',

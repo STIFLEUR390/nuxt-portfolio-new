@@ -8,8 +8,8 @@
     "services": "Services"
   },
   "seo": {
-    "title": "Hérold H. · Full-Stack Developer",
-    "description": "Développeur Full-Stack basé à Douala. Laravel, Vue.js, Nuxt, PostgreSQL."
+    "title": "Franck Hérold T. · Full-Stack Developer",
+    "description": "Développeur Full-Stack basé à Douala. Laravel, Vue.js, Nuxt, Inertia.js, PostgreSQL."
   },
   "hero": {
     "available": "Disponible pour missions freelance",
@@ -69,7 +69,7 @@
     "description": "Désolé, cette page n'existe pas."
   },
   "footer": {
-    "credits": "© {year} Hérold H. · Full-Stack Developer"
+    "credits": "© {year} Franck Hérold T. · Full-Stack Developer"
   },
   "language_switch": {
     "to": "EN"

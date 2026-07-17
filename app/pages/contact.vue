@@ -2,7 +2,7 @@
 const { global } = useAppConfig()
 
 useSeoMeta({
-  title: 'Contact - Hérold H.',
+  title: 'Contact - Franck Hérold TAMTO TAMKO',
   description: 'Contactez-moi pour discuter de votre projet web, SaaS ou application métier.'
 })
 
@@ -64,13 +64,13 @@ async function onSubmit() {
             color="neutral"
           />
           <UButton
-            to="https://linkedin.com/in/heroldev"
+            to="https://linkedin.com/in/heroldtamko"
             label="LinkedIn"
             variant="ghost"
             color="neutral"
           />
           <UButton
-            to="https://github.com/heroldev"
+            to="https://github.com/STIFLEUR390"
             label="GitHub"
             variant="ghost"
             color="neutral"

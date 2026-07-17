@@ -2,15 +2,15 @@ import type { PageData } from '~/data/types'
 
 export const indexPage: PageData = {
   seo: {
-    title: 'Hérold H. - Développeur Full-Stack Laravel / Vue.js / Nuxt',
-    description: 'Développeur Full-Stack basé à Douala. Je conçois des applications web modernes, SaaS, APIs et outils métiers avec Laravel, Vue.js, Nuxt et PostgreSQL.'
+    title: 'Franck Hérold TAMTO TAMKO - Développeur Full-Stack Laravel / Vue.js / Nuxt',
+    description: 'Développeur Full-Stack basé à Douala. Je conçois des applications web modernes, SaaS, APIs et outils métiers avec Laravel, Vue.js, Nuxt, Inertia.js et PostgreSQL.'
   },
   title: 'Développeur Full-Stack, applications web & SaaS',
   description: 'Je conçois des applications web modernes, SaaS, APIs et outils métiers pour les entreprises qui veulent mieux vendre, automatiser ou scaler leurs services.',
   hero: {
     links: [
       { label: 'Voir mes projets', to: '/projects', color: 'neutral' },
-      { label: 'Mission freelance', to: 'mailto:herold@example.com' },
+      { label: 'Mission freelance', to: 'mailto:heroldtamko39@gmail.com' },
       { label: 'Télécharger mon CV', color: 'neutral' }
     ],
     images: []
@@ -33,8 +33,13 @@ export const indexPage: PageData = {
     },
     {
       title: 'Automatisation & IA appliquée',
-      description: 'Assistants intelligents, workflows automatisés, traitement de contenu, chatbots, automatisations métier sur mesure.',
+      description: 'Assistants intelligents, workflows automatisés, scraping web, chatbots, automatisations métier sur mesure avec Laravel AI et Claude Code.',
       icon: 'i-lucide-bot'
+    },
+    {
+      title: 'Intégrations WhatsApp & APIs tierces',
+      description: 'Solutions SaaS connectées à WhatsApp (Evolution Go API), webhooks, APIs REST, paiements Stripe/Flutterwave/PayPal.',
+      icon: 'i-lucide-message-square'
     },
     {
       title: 'Supports marketing digitaux',
@@ -50,6 +55,7 @@ export const indexPage: PageData = {
         { name: 'Laravel', icon: 'i-simple-icons-laravel' },
         { name: 'Vue.js', icon: 'i-simple-icons-vuedotjs' },
         { name: 'Nuxt', icon: 'i-simple-icons-nuxtdotjs' },
+        { name: 'Inertia.js', icon: 'i-simple-icons-inertia' },
         { name: 'PostgreSQL', icon: 'i-simple-icons-postgresql' },
         { name: 'Tailwind CSS', icon: 'i-simple-icons-tailwindcss' }
       ]
@@ -58,11 +64,12 @@ export const indexPage: PageData = {
       label: 'Stack secondaire',
       description: 'Technologies complémentaires maîtrisées',
       items: [
-        { name: 'Inertia.js', icon: 'i-simple-icons-inertia' },
         { name: 'TypeScript' },
-        { name: 'GraphQL', icon: 'i-simple-icons-graphql' },
-        { name: 'Filament' },
+        { name: 'shadcn-vue' },
+        { name: 'AdonisJS', icon: 'i-simple-icons-adonisjs' },
         { name: 'Livewire', icon: 'i-simple-icons-livewire' },
+        { name: 'Filament' },
+        { name: 'GraphQL', icon: 'i-simple-icons-graphql' },
         { name: 'Pinia' }
       ]
     },
@@ -86,14 +93,16 @@ export const indexPage: PageData = {
     title: 'Expérience',
     items: [
       {
-        position: 'Développeur Full-Stack',
+        position: 'Développeur Web Full-Stack',
         date: '2019 - Présent',
         company: { name: 'ETECH KEYS', logo: 'i-simple-icons-codefactor', url: '#', color: '#2563EB' },
         highlights: [
-          'Conception et maintenance d\'applications web métier',
-          'Développement de APIs RESTful et intégrations tierces',
-          'Modernisation de frontends legacy vers Vue.js / Nuxt',
-          'Mise en production et suivi continu (Docker, CI/CD)'
+          'Conception et développement de solutions web innovantes pour une clientèle variée',
+          'Maintenance et optimisation d\'applications existantes : performances, bugs, refactoring',
+          'Architecture d\'APIs REST robustes avec Laravel et intégration frontend Vue.js',
+          'Gestion de bases de données : modélisation, migrations, optimisation (MySQL, SQLite, PostgreSQL)',
+          'Documentation technique complète : spécifications, guides, procédures de déploiement',
+          'Veille technologique active et proposition d\'améliorations pour la pérennité des solutions'
         ]
       }
     ]
@@ -135,7 +144,7 @@ export const indexPage: PageData = {
   ],
   blog: {
     title: 'Articles récents',
-    description: 'Réflexions sur le développement web, Laravel, Vue.js et l\'écosystème Nuxt.'
+    description: 'Réflexions sur le développement web, Laravel, Vue.js, Nuxt et l\'écosystème AI.'
   },
   faq: {
     title: 'Questions fréquentes',

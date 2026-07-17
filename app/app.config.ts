@@ -3,11 +3,11 @@ export default defineAppConfig({
     picture: {
       dark: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1480&auto=format&fit=crop',
       light: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1480&auto=format&fit=crop',
-      alt: 'Hérold H. - Full-Stack Developer'
+      alt: 'Franck Hérold TAMTO TAMKO - Full-Stack Developer'
     },
-    meetingLink: 'https://cal.com/herold',
-    email: 'herold@example.com',
-    cvUrl: '/cv-herold-dev.pdf',
+    meetingLink: 'https://cal.com/heroldtamko',
+    email: 'heroldtamko39@gmail.com',
+    cvUrl: '#',
     available: true
   },
   ui: {
@@ -24,21 +24,21 @@ export default defineAppConfig({
     }
   },
   footer: {
-    credits: `© ${new Date().getFullYear()} Hérold H. · Full-Stack Developer`,
+    credits: `© ${new Date().getFullYear()} Franck Hérold TAMTO TAMKO · Full-Stack Developer`,
     colorMode: false,
     links: [{
       'icon': 'i-simple-icons-github',
-      'to': 'https://github.com/heroldev',
+      'to': 'https://github.com/STIFLEUR390',
       'target': '_blank',
       'aria-label': 'GitHub'
     }, {
       'icon': 'i-simple-icons-linkedin',
-      'to': 'https://linkedin.com/in/heroldev',
+      'to': 'https://linkedin.com/in/heroldtamko',
       'target': '_blank',
       'aria-label': 'LinkedIn'
     }, {
       'icon': 'i-simple-icons-x',
-      'to': 'https://x.com/heroldev',
+      'to': 'https://x.com/STIFLEUR390',
       'target': '_blank',
       'aria-label': 'X (Twitter)'
     }]
