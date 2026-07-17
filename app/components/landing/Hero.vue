@@ -10,13 +10,11 @@ defineProps<{
 const animate = {
   initial: {
     scale: 1.05,
-    opacity: 0,
-    filter: 'blur(8px)'
+    opacity: 0
   },
   animate: {
     scale: 1,
-    opacity: 1,
-    filter: 'blur(0px)'
+    opacity: 1
   },
   transition: {
     duration: 0.5,

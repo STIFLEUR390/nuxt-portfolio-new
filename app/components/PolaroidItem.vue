@@ -19,6 +19,8 @@ defineProps<{
     <img
       :src="image.src"
       :alt="image.alt"
+      width="128"
+      height="128"
       loading="lazy"
       class="size-32 object-cover"
     >
