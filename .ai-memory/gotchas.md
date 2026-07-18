@@ -44,3 +44,12 @@
 
 - `.codegraph/` présent et actif — daemon tourne
 - Utiliser codegraph pour explorer le code (plus rapide que grep/read manuel)
+
+## Umami Analytics
+
+- `nuxt-umami` v3 — module `nuxt-umami` dans `nuxt.config.ts` + bloc `umami`
+- `proxy: 'cloak'` — le host et id restent côté serveur ; nécessite un build pour les tests
+- `ignoreLocalhost: true` — pas de tracking en dev, penser à désactiver pour tester ses propres visites
+- `autoTrack: true` — tracking automatique via `<NuxtPage>` ; si une page n'a pas `<NuxtPage>`, tracker manuellement avec `umTrackView()` dans `onMounted`
+- Pour exclure son propre navigateur : `localStorage.setItem('umami.disabled', '1')`
+- Les composables sont auto-importés : `umTrackView()`, `umTrackEvent()`, `umIdentify()`, `umTrackRevenue()`

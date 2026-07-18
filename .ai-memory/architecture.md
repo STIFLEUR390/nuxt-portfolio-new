@@ -58,3 +58,12 @@ Les pages hybrides : `const { data } = useXxx()` avec `const page = computed(() 
 2. Pages → composables → `useAsyncData` → `directus.request(readItems(...))`
 3. Si Directus répond → utiliser les données CMS
 4. Si Directus échoue → fallback statique
+
+## Analytics
+
+Umami Analytics via `nuxt-umami` v3 :
+- Module configuré dans `nuxt.config.ts` avec `proxy: 'cloak'`
+- Le `host` et le `id` restent côté serveur (pas exposés dans le bundle client)
+- Tracking automatique des pages via `<NuxtPage>` (`autoTrack: true`)
+- Composables auto-importés : `umTrackView()`, `umTrackEvent()`, `umIdentify()`, `umTrackRevenue()`
+- Variables d'env : `NUXT_UMAMI_HOST`, `NUXT_UMAMI_ID`

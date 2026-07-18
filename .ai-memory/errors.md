@@ -45,3 +45,14 @@ Les clés `runtimeConfig` : `usesendApiKey`, `fromEmail`, `contactEmail`, `usese
 **Cause**: `@source "../../../content/**/*"` dans `main.css` et `ui.content: true` dans config sont des artefacts du template Nuxt UI Portfolio
 
 **Solution**: Ignorer — il n'y a pas de dossier `content/` dans ce projet. Ne pas le créer.
+
+## Umami — pas de tracking
+
+**Symptôme**: Aucun événement dans le dashboard Umami
+
+**Cause**: Variables d'environnement manquantes ou mode proxy mal configuré
+
+**Solution**:
+- Vérifier `.env` contient `NUXT_UMAMI_HOST` et `NUXT_UMAMI_ID`
+- Le mode `proxy: 'cloak'` nécessite un build (`pnpm dev` derrière un proxy fonctionne normalement)
+- Les adblockers peuvent bloquer même en mode `cloak` ; dans ce cas essayer sans proxy ou avec `proxy: 'direct'`
