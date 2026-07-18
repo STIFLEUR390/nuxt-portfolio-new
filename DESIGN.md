@@ -30,6 +30,10 @@ colors:
   dark-surface-subtle: "#27272a"
   dark-link-default: "#3b82f6"
   dark-link-hover: "#60a5fa"
+  selection-light: "#c8c8c8"
+  selection-dark: "#3f3f46"
+  selection-ink-light: "#282a30"
+  selection-ink-dark: "#ffffff"
 typography:
   display:
     fontFamily: "'Instrument Serif', serif"
@@ -178,6 +182,10 @@ Deux mondes distincts — light et dark — qui partagent la même ossature bleu
 
 ### Semantic
 
+- **Selection Light** (`#c8c8c8`) : Fond de sélection de texte en mode light. Gris neutre.
+- **Selection Dark** (`#3f3f46` / zinc-700) : Fond de sélection de texte en mode dark. Ton sur ton avec le fond `#020618`.
+- **Selection Ink Light** (`#282a30`) : Couleur du texte sélectionné en mode light.
+- **Selection Ink Dark** (`#ffffff`) : Couleur du texte sélectionné en mode dark.
 - **Success Green** (`#22c55e`) : Indicateur de disponibilité, succès d'envoi formulaire. Utilisé dans le Hero (indicateur "Disponible" avec animation ping) et les notifications toast.
 
 ### Named Rules
