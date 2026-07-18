@@ -88,7 +88,7 @@ export default defineNuxtConfig({
     langDir: 'locales',
     defaultLocale: 'fr',
     strategy: 'prefix_except_default',
-    baseUrl: 'https://portfolio.applix.fr',
+    baseUrl: 'https://portfolio.aplix.nl',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
