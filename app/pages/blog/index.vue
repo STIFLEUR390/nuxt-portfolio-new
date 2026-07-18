@@ -12,7 +12,7 @@ const currentPage = computed(() => {
 
 const perPage = 6
 
-const { data: blogData, status, error } = useBlog(currentPage.value)
+const { data: blogData, status } = useBlog(currentPage.value)
 
 const page = computed(() => blogData.value?.page || staticBlogMeta)
 const paginated = computed(() => {
@@ -49,6 +49,8 @@ useSeoMeta({
 
 defineOgImage('Portfolio', { title, description })
 
+const isPending = computed(() => status.value === 'pending')
+
 function goToPage(p: number) {
   router.push({ query: { page: p > 1 ? p : undefined } })
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -57,9 +59,34 @@ function goToPage(p: number) {
 
 <template>
   <UPage v-if="page">
-    <UPageHero
-      :title="(page.title as string) || ''"
-      :description="(page.description as string) || ''"
+    <!-- Skeleton loader -->
+    <template v-if="isPending">
+      <div class="flex flex-col gap-4 py-18 sm:py-24">
+        <USkeleton class="h-8 w-[250px]" />
+        <USkeleton class="h-5 w-[450px] max-w-full" />
+      </div>
+
+      <UPageSection :ui="{ container: 'pt-0!' }">
+        <div class="space-y-6">
+          <div v-for="i in 6" :key="i" class="flex flex-col md:flex-row gap-4 md:gap-6">
+            <USkeleton class="h-44 w-full md:w-72 rounded-lg" />
+            <div class="flex-1 space-y-3">
+              <USkeleton class="h-5 w-[150px]" />
+              <USkeleton class="h-6 w-[90%]" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-[70%]" />
+              <USkeleton class="h-4 w-[100px]" />
+            </div>
+          </div>
+        </div>
+      </UPageSection>
+    </template>
+
+    <!-- Actual content -->
+    <template v-else>
+      <UPageHero
+        :title="(page.title as string) || ''"
+        :description="(page.description as string) || ''"
       :ui="{
         title: 'mx-0! text-left text-balance',
         description: 'mx-0! text-left text-pretty',
@@ -126,5 +153,6 @@ function goToPage(p: number) {
         />
       </div>
     </UPageSection>
+      </template>
   </UPage>
 </template>

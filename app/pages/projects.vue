@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { projectsPage as staticProjectsPage, projects as staticProjects } from '~/data/projects'
 
-const { data: projectsData, status, error } = useProjects()
+const { data: projectsData, status } = useProjects()
 
 const page = computed(() => projectsData.value?.page || staticProjectsPage)
 const projects = computed(() => projectsData.value?.projects || staticProjects)
 const { global } = useAppConfig()
+
+const isPending = computed(() => status.value === 'pending')
 
 const title = page.value?.seo?.title || page.value?.title || ''
 const description = page.value?.seo?.description || page.value?.description || ''
@@ -22,14 +24,46 @@ defineOgImage('Portfolio', { title, description })
 
 <template>
   <UPage v-if="page">
-    <UPageHero
-      :title="page.title"
-      :description="page.description"
-      :ui="{
-        title: 'mx-0! text-left text-balance',
-        description: 'mx-0! text-left text-pretty',
-        links: 'justify-start'
-      }"
+    <!-- Skeleton loader -->
+    <template v-if="isPending">
+      <div class="flex flex-col gap-4 py-18 sm:py-24">
+        <USkeleton class="h-8 w-[350px]" />
+        <USkeleton class="h-5 w-[500px] max-w-full" />
+        <div class="flex gap-2 mt-2">
+          <USkeleton class="h-10 w-[180px] rounded-lg" />
+          <USkeleton class="h-10 w-[100px] rounded-lg" />
+        </div>
+      </div>
+
+      <UPageSection :ui="{ container: 'pt-0!' }">
+        <div class="space-y-10">
+          <div v-for="i in 4" :key="i" class="flex flex-col md:flex-row gap-6">
+            <USkeleton class="h-48 w-full md:w-72 rounded-lg" />
+            <div class="flex-1 space-y-3">
+              <USkeleton class="h-6 w-[250px]" />
+              <USkeleton class="h-4 w-full" />
+              <USkeleton class="h-4 w-[80%]" />
+              <USkeleton class="h-4 w-[60%]" />
+              <div class="flex gap-1.5 mt-2">
+                <USkeleton v-for="j in 4" :key="j" class="h-6 w-[80px] rounded-full" />
+              </div>
+              <USkeleton class="h-4 w-[120px] mt-2" />
+            </div>
+          </div>
+        </div>
+      </UPageSection>
+    </template>
+
+    <!-- Actual content -->
+    <template v-else>
+      <UPageHero
+        :title="page.title"
+        :description="page.description"
+        :ui="{
+          title: 'mx-0! text-left text-balance',
+          description: 'mx-0! text-left text-pretty',
+          links: 'justify-start'
+        }"
     >
       <template #links>
         <div
@@ -128,5 +162,6 @@ defineOgImage('Portfolio', { title, description })
         </UPageCard>
       </Motion>
     </UPageSection>
+      </template>
   </UPage>
 </template>

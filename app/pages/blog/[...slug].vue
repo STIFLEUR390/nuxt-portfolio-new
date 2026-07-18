@@ -11,7 +11,7 @@ const slug = computed(() => {
   return postPath.value.replace(/^\/blog\//, '')
 })
 
-const { data: postData, status, error } = useBlogPost(slug.value)
+const { data: postData, status } = useBlogPost(slug.value)
 
 const page = computed(() => {
   if (postData.value?.post) {
@@ -69,6 +69,8 @@ if (p.image) {
 
 const articleLink = computed(() => typeof window !== 'undefined' ? window.location.href : '')
 
+const isPending = computed(() => status.value === 'pending')
+
 const { locale } = useI18n()
 
 const formatDate = (dateString: string) => {
@@ -83,15 +85,35 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="mt-20">
     <UPage v-if="page">
-      <Motion
-        :initial="{ opacity: 0, transform: 'translateY(10px)' }"
-        :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
-        :in-view-options="{ once: true }"
-      >
-        <div class="flex flex-col gap-3">
-          <ULink
-            to="/blog"
-            class="text-sm flex items-center gap-1 text-muted hover:text-highlighted transition-colors"
+      <!-- Skeleton loader -->
+      <template v-if="isPending">
+        <div class="flex flex-col gap-6">
+          <USkeleton class="h-4 w-[60px]" />
+          <div class="flex flex-col gap-3 items-center text-center">
+            <USkeleton class="h-4 w-[200px]" />
+            <USkeleton class="h-[300px] w-full max-w-3xl rounded-lg" />
+            <USkeleton class="h-8 w-[500px] max-w-full" />
+            <USkeleton class="h-5 w-[400px] max-w-full" />
+            <USkeleton class="size-16 rounded-full" />
+          </div>
+          <div class="space-y-3 max-w-3xl mx-auto mt-8">
+            <USkeleton v-for="i in 8" :key="i" class="h-4 w-full" />
+            <USkeleton class="h-4 w-[80%]" />
+          </div>
+        </div>
+      </template>
+
+      <!-- Actual content -->
+      <template v-else>
+        <Motion
+          :initial="{ opacity: 0, transform: 'translateY(10px)' }"
+          :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
+          :in-view-options="{ once: true }"
+        >
+          <div class="flex flex-col gap-3">
+            <ULink
+              to="/blog"
+              class="text-sm flex items-center gap-1 text-muted hover:text-highlighted transition-colors"
           >
             <UIcon name="i-lucide-chevron-left" />
             Blog
@@ -181,6 +203,7 @@ const formatDate = (dateString: string) => {
         </ClientOnly>
         <UContentSurround :surround />
       </UPageBody>
+      </template>
     </UPage>
   </div>
 </template>

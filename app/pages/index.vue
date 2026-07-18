@@ -7,7 +7,7 @@ const { data: landing, status } = useLandingData()
 const page = computed(() => landing.value?.page || indexPage)
 const latestPosts = computed(() => landing.value?.latestPosts || [])
 
-const isPending = computed(() => status === 'pending')
+const isPending = computed(() => status.value === 'pending')
 
 useSeoMeta({
   title: page.value.seo?.title || page.value.title || '',
@@ -198,5 +198,6 @@ defineOgImage('Portfolio', {
         </div>
       </Motion>
     </UPageSection>
+      </template>
   </UPage>
 </template>
