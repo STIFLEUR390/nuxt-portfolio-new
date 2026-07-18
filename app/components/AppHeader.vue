@@ -4,12 +4,6 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 defineProps<{
   links: NavigationMenuItem[]
 }>()
-
-const { locale, locales, setLocale } = useI18n()
-
-const availableLocales = computed(() => {
-  return locales.value.filter(l => l.code !== locale.value)
-})
 </script>
 
 <template>
@@ -25,19 +19,7 @@ const availableLocales = computed(() => {
       }"
     >
       <template #list-trailing>
-        <div class="flex items-center gap-0.5">
-          <UButton
-            v-for="loc in availableLocales"
-            :key="loc.code"
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            @click="setLocale(loc.code)"
-          >
-            {{ loc.code === 'fr' ? 'FR' : 'EN' }}
-          </UButton>
-          <ColorModeButton />
-        </div>
+        <ColorModeButton />
       </template>
     </UNavigationMenu>
   </div>

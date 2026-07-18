@@ -5,11 +5,10 @@ const RATE_MAX = 3
 const RATE_WINDOW = 60_000
 
 function getClientIp(event: any): string {
-  const forwarded = event.node.req.headers['x-forwarded-for']
-  if (forwarded) {
-    if (typeof forwarded === 'string') return forwarded.split(',')[0].trim()
-    if (Array.isArray(forwarded) && forwarded.length > 0) return forwarded[0].trim()
-  }
+  const headers = event.node.req.headers
+  const forwarded = headers?.['x-forwarded-for']
+  if (typeof forwarded === 'string') return forwarded.split(',')[0]?.trim() || 'unknown'
+  if (Array.isArray(forwarded) && forwarded[0]) return forwarded[0].trim()
   const remote = event.node.req.socket?.remoteAddress
   return remote || 'unknown'
 }
