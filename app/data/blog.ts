@@ -5,7 +5,7 @@ const _posts: BlogPost[] = [
     title: 'Web Scraping avec AdonisJS : archiver les sujets du TCF Canada',
     description: 'Le TCF Canada publie régulièrement des sujets d\'expression écrite et orale sur divers sites. J\'ai créé un outil qui automatise la collecte et l\'archivage de ces sujets avec AdonisJS 7.',
     date: '2026-03-15',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/scraping-adonisjs.jpg',
     minRead: 5,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -69,7 +69,7 @@ Ce projet montre ma capacité à :
     title: 'Architecture Laravel : Repository, Service, Policy — Ce que j\'ai appris sur HookBridge',
     description: 'Quand j\'ai commencé avec Laravel, tout tenait dans les contrôleurs. HookBridge API a été l\'occasion de structurer proprement avec Repository, Service et Policy patterns.',
     date: '2026-02-28',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/architecture-laravel.jpg',
     minRead: 6,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -158,7 +158,7 @@ Si vous démarrez un projet Laravel qui va durer, prenez le temps de poser cette
     title: 'Keycloak : créer un thème WhatsApp personnalisé de A à Z',
     description: 'Keycloak est un des meilleurs SSO open-source, mais ses pages d\'authentification par défaut sont spartiates. J\'ai créé un thème WhatsApp personnalisé, dockerisé et documenté.',
     date: '2026-02-10',
-    image: 'https://images.unsplash.com/photo-1622043171820-77b7d8d58f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/keycloak-themes.jpg',
     minRead: 6,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -234,7 +234,7 @@ Un thème Keycloak professionnel, dockerisé, documenté, avec 5+ templates pers
     title: 'Construire 7 plugins Claude Code pour le développement fullstack',
     description: 'Après des mois à utiliser Claude Code au quotidien, j\'ai transformé mes configurations récurrentes en 7 plugins réutilisables pour accélérer le développement fullstack.',
     date: '2026-01-20',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/plugins-claude.jpg',
     minRead: 5,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -303,7 +303,7 @@ Si vous utilisez Claude Code, créez ne serait-ce qu'un plugin pour votre stack 
     title: 'GraphQL vs REST avec Laravel : mon retour d\'expérience',
     description: 'J\'ai construit la même todolist avec REST et GraphQL (Lighthouse) pour comparer les deux approches. Voici mon verdict et quand choisir l\'une ou l\'autre.',
     date: '2026-01-05',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/graphql-vs-rest.jpg',
     minRead: 7,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -395,7 +395,7 @@ GraphQL brille vraiment quand le client a des besoins de données complexes et v
     title: 'Ajouter MeiliSearch à un portfolio Nuxt pour une recherche full-text instantanée',
     description: 'J\'ai intégré MeiliSearch dans mon site Nuxt pour offrir une recherche full-text ultra-rapide, typo-tolérante, le tout dockerisé et open source.',
     date: '2025-12-10',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/meilisearch.jpg',
     minRead: 5,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -475,7 +475,7 @@ Si vous avez un site avec du contenu textuel, ajoutez MeiliSearch. C'est le meil
     title: 'Créer une marketplace Vue 3 de A à Z : architecture, état, routing',
     description: 'Une marketplace e-commerce complète avec Vue 3, Pinia, Vue Router et Tailwind CSS. Panier, checkout, authentification, wishlist, programme de fidélité — tout est là.',
     date: '2025-11-18',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/vue3-marketplace.jpg',
     minRead: 6,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -564,7 +564,7 @@ Un frontend e-commerce complet, modulaire, responsive, avec une architecture d'�
     title: 'Explorer l\'API OpenLibrary avec JavaScript et Vue.js',
     description: 'J\'ai construit BookShelf, une application zéro build qui interroge l\'API OpenLibrary pour rechercher des livres — en deux versions : Vanilla JS et Vue 3 CDN.',
     date: '2025-10-25',
-    image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/openlibrary-api.jpg',
     minRead: 5,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -649,7 +649,7 @@ Ce projet montre :
     title: 'Livewire vs Sanctum : deux philosophies d\'authentification Laravel',
     description: 'J\'ai exploré l\'authentification Laravel avec Livewire (server-side) et Sanctum (SPA token-based). Voici mon comparatif et quand choisir chaque approche.',
     date: '2025-09-12',
-    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/livewire-vs-sanctum.jpg',
     minRead: 8,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -764,7 +764,7 @@ Les deux sont excellents. Le choix dépend du contexte, pas du dogme.`,
     title: 'Du premier commit au déploiement : itérations sur mon portfolio Nuxt',
     description: 'Mon portfolio a connu trois versions majeures, chacune apportant son lot d\'apprentissages. De Nuxt 3 minimal à l\'architecture modulaire actuelle avec MeiliSearch.',
     date: '2025-08-30',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/iterations-portfolio.jpg',
     minRead: 5,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -839,7 +839,7 @@ Mon conseil : publiez votre V1 rapidement, même imparfaite. Les retours (les v�
     title: 'Laravel 13 + Inertia.js v3 : pourquoi j\'ai choisi cette stack pour KwikTalk',
     description: 'KwikTalk est un SaaS WhatsApp construit avec Laravel 13 et Inertia.js v3. Voici pourquoi cette stack est le sweet spot entre Livewire et une SPA complète.',
     date: '2025-07-15',
-    image: 'https://images.unsplash.com/photo-1611606063065-ee7946f0787a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/inertiajs-kwiktalk.jpg',
     minRead: 7,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
@@ -933,7 +933,7 @@ Si vous hésitez entre Livewire et une SPA complète pour votre prochain projet 
     title: 'Opinionated API Starter : ce que j\'ai mis dans Kit et pourquoi',
     description: 'Kit est mon starter API Laravel opinionated. Contrôleurs invokables, OpenAPI contract tests, SQLite-first, routes versionnées — toutes les décisions architecturales que j\'ai standardisées.',
     date: '2025-06-20',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+    image: '/img/blog/kit-api-starter.jpg',
     minRead: 8,
     author: {
       name: 'Franck Hérold TAMTO TAMKO'
