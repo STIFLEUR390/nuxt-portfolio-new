@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-og-image',
     'motion-v/nuxt',
-    'nuxt-directus-sdk'
+    'nuxt-directus-sdk',
+    'nuxt-umami'
   ],
 
   directus: {
@@ -60,6 +61,19 @@ export default defineNuxtConfig({
     fromEmail: '',
     contactEmail: ''
   },
+
+  umami: {
+    host: process.env.NUXT_UMAMI_HOST,
+    id: process.env.NUXT_UMAMI_ID,
+    autoTrack: true,
+    ignoreLocalhost: true,
+    proxy: 'cloak',
+    logErrors: true,
+    urlOptions: {
+      trailingSlash: 'never'
+    }
+  },
+
   compatibilityDate: '2025-07-15',
   nitro: {
     prerender: {
