@@ -1,0 +1,5 @@
+# Nixpacks build configuration
+# https://nixpacks.com/docs/configuration/file
+
+[start]
+cmd = "node .output/server/index.mjs"

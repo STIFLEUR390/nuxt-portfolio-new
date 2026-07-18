@@ -4,6 +4,8 @@
 
 Portfolio personnel de développeur full-stack. Construit avec **Nuxt 4**, **Nuxt UI v4**, **Tailwind CSS v4**.
 
+Production : [https://portfolio.aplix.nl](https://portfolio.aplix.nl)
+
 ## Stack
 
 | Couche | Technologie |
@@ -56,20 +58,26 @@ Tout le contenu est **data-driven** depuis `app/data/*.ts` :
 
 Éditez ces fichiers pour changer le contenu — pas de CMS, pas de `nuxt/content`.
 
-## Déploiement
+## Déploiement (Nixpacks)
 
-Déployé sur [Vercel](https://vercel.com) (ou tout host Node supportant Nitro).
+Build avec [Nixpacks](https://nixpacks.com) (Docker image OCI-compliant).
 
 ```bash
-pnpm build
+nixpacks build . --name nuxt-portfolio --tag portfolio.aplix.nl:latest
+docker run -it -p 3000:3000 nuxt-portfolio
 ```
 
-Variables d'environnement requises pour le formulaire de contact :
+### Configuration
 
-```
-NUXT_USESEND_API_KEY=us_...
-NUXT_FROM_EMAIL=...
-NUXT_CONTACT_EMAIL=...
+Le fichier [`nixpacks.toml`](./nixpacks.toml) définit la commande de démarrage. Nixpacks auto-détecte **pnpm** via `package.json` et exécute `pnpm build` (Nuxt SSR → `.output/server/index.mjs`).
+
+### Variables d'environnement
+
+```bash
+NUXT_USESEND_API_KEY=us_...   # requise pour le formulaire
+NUXT_FROM_EMAIL=...           # expéditeur vérifié useSend
+NUXT_CONTACT_EMAIL=...        # destinataire du formulaire
+NODE_ENV=production
 ```
 
 ## Licence
