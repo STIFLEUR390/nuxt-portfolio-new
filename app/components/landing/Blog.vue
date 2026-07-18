@@ -35,7 +35,7 @@ const posts = computed(() => getSortedPosts().slice(0, 3))
           v-bind="post"
           :to="post.path"
           :ui="{
-            root: 'group relative lg:items-start lg:flex ring-0 hover:ring-0',
+            root: 'group relative lg:items-start lg:flex ring-0 hover:ring-0 transition-transform duration-300 ease-out hover:-translate-y-0.5',
             body: 'px-0!',
             header: 'hidden'
           }"

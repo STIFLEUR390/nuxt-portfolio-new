@@ -41,7 +41,7 @@ defineProps<{
             :key="item.name"
             variant="subtle"
             color="neutral"
-            class="gap-1.5 px-3 py-1.5 text-sm"
+            class="gap-1.5 px-3 py-1.5 text-sm transition-colors hover:bg-primary/10 hover:text-primary"
           >
             <UIcon
               v-if="item.icon"

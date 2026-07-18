@@ -26,7 +26,7 @@ defineProps<{
         :in-view-options="{ once: true }"
         class="lg:col-span-2"
       >
-        <div class="h-full rounded-xl bg-primary/5 border border-primary/10 p-6 flex flex-col gap-2 justify-center">
+        <div class="h-full rounded-xl bg-primary/5 border border-primary/10 p-6 flex flex-col gap-2 justify-center transition-transform duration-300 ease-out hover:-translate-y-0.5">
           <h3 class="font-semibold text-lg text-highlighted">
             {{ page.services[0]?.title }}
           </h3>
@@ -47,7 +47,7 @@ defineProps<{
       >
         <UCard
           variant="subtle"
-          class="h-full"
+          class="h-full transition-transform duration-300 ease-out hover:-translate-y-0.5"
           :ui="{
             body: 'flex flex-col gap-3 p-5'
           }"
@@ -76,7 +76,7 @@ defineProps<{
       >
         <UCard
           variant="subtle"
-          class="h-full"
+          class="h-full transition-transform duration-300 ease-out hover:-translate-y-0.5"
           :ui="{
             body: 'flex flex-col gap-3 p-5'
           }"
@@ -103,7 +103,7 @@ defineProps<{
       >
         <UCard
           variant="subtle"
-          class="h-full border border-dashed border-primary/20 bg-primary/[0.02]"
+          class="h-full border border-dashed border-primary/20 bg-primary/[0.02] transition-transform duration-300 ease-out hover:-translate-y-0.5"
           :ui="{
             body: 'flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5'
           }"
