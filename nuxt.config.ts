@@ -102,7 +102,7 @@ export default defineNuxtConfig({
     ],
     langDir: 'locales',
     defaultLocale: 'fr',
-    strategy: 'prefix_except_default',
+    strategy: 'no_prefix',
     baseUrl: 'https://portfolio.aplix.nl',
     detectBrowserLanguage: {
       useCookie: true,

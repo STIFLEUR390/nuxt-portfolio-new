@@ -97,6 +97,7 @@ const animate = {
             size="sm"
             color="neutral"
             icon="i-lucide-download"
+            external
           />
         </div>
       </Motion>
