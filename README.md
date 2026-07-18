@@ -1,62 +1,77 @@
-# Nuxt Portfolio Template
+# Portfolio — Franck Hérold TAMTO TAMKO
 
 [![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
 
-Use this template to create your own portfolio with [Nuxt UI](https://ui.nuxt.com).
+Portfolio personnel de développeur full-stack. Construit avec **Nuxt 4**, **Nuxt UI v4**, **Tailwind CSS v4**.
 
-- [Live demo](https://portfolio-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+## Stack
 
-<a href="https://portfolio-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/portfolio-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/portfolio-light.png">
-    <img alt="Nuxt Portfolio Template" src="https://ui.nuxt.com/assets/templates/nuxt/portfolio-light.png">
-  </picture>
-</a>
+| Couche | Technologie |
+|--------|-------------|
+| Framework | Nuxt 4 + Vue 3 |
+| UI | Nuxt UI v4 + Tailwind CSS v4 |
+| i18n | `@nuxtjs/i18n` (FR par défaut, EN sans préfixe) |
+| Animations | `motion-v` (framer-motion Vue wrapper) |
+| Contact | `usesend-js` (formulaire → email) |
+| SEO | Sitemap automatique + OG Images + i18n |
+| Tests | Vitest + `@nuxt/test-utils` |
 
-## Quick Start
+## Fonctionnalités
 
-```bash [Terminal]
-npm create nuxt@latest -- -t ui/portfolio
-```
+- **Landing page** — Hero, services, expérience, stack technique, témoignages, FAQ, blog
+- **Projets** — 8 projets détaillés avec tags, liens GitHub et démos
+- **Blog** — 12 articles tech avec markdown, pagination, search
+- **Page À propos** — Parcours, compétences, software
+- **Contact** — Formulaire → email via useSend
+- **Mode sombre** — Toggle avec transition View API
+- **i18n** — Français (défaut) / Anglais
 
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=portfolio&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fportfolio&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fportfolio-dark.png&demo-url=https%3A%2F%2Fportfolio-template.nuxt.dev%2F&demo-title=Nuxt%20Portfolio%20Template&demo-description=A%20sleek%20portfolio%20template%20to%20showcase%20your%20work%2C%20skills%20and%20blog%20powered%20by%20Nuxt%20Content.)
-
-## Setup
-
-Make sure to install the dependencies:
+## Démarrer
 
 ```bash
 pnpm install
+pnpm dev        # localhost:3000
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Commandes
 
 ```bash
-pnpm dev
+pnpm build      # production
+pnpm generate   # static export
+pnpm preview    # preview production build
+pnpm lint       # ESLint
+pnpm typecheck  # vue-tsc (blocke la compilation)
+pnpm test       # Vitest
 ```
 
-## Production
+## Pages
 
-Build the application for production:
+Tout le contenu est **data-driven** depuis `app/data/*.ts` :
+
+- `index.ts` — landing page
+- `projects.ts` — projets
+- `about.ts` — à propos
+- `blog.ts` — articles (12 posts, markdown body)
+- `types.ts` — interfaces TypeScript
+
+Éditez ces fichiers pour changer le contenu — pas de CMS, pas de `nuxt/content`.
+
+## Déploiement
+
+Déployé sur [Vercel](https://vercel.com) (ou tout host Node supportant Nitro).
 
 ```bash
 pnpm build
 ```
 
-Locally preview production build:
+Variables d'environnement requises pour le formulaire de contact :
 
-```bash
-pnpm preview
+```
+NUXT_USESEND_API_KEY=us_...
+NUXT_FROM_EMAIL=...
+NUXT_CONTACT_EMAIL=...
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Licence
 
-## Renovate integration
-
-Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
+Projet personnel — tous droits réservés.
