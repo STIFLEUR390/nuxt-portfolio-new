@@ -12,8 +12,6 @@ export default defineNuxtConfig({
   ],
 
   sitemap: {
-    sources: ['/api/__sitemap__'],
-
     urls: [
       { loc: '/', changefreq: 'monthly', priority: 1 },
       { loc: '/projects', changefreq: 'monthly', priority: 0.8 },
