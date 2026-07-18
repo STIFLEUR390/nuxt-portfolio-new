@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { aboutPage } from '~/data/about'
+import { aboutPage as staticAboutPage } from '~/data/about'
 
-const page = aboutPage
+const { data: aboutData, status, error } = useAboutPage()
+
+const page = computed(() => aboutData.value?.page || staticAboutPage)
 const { global } = useAppConfig()
 
-const title = page.seo?.title || page.title
-const description = page.seo?.description || page.description
+const title = page.value?.seo?.title || page.value?.title || ''
+const description = page.value?.seo?.description || page.value?.description || ''
 
 useSeoMeta({
   title,

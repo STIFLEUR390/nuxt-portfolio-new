@@ -1,13 +1,73 @@
 # Schema Directus — Portfolio Nuxt
 
 > Modèle de données pour remplacer les fichiers `app/data/*.ts` statiques par un headless CMS Directus.
-> Architecture pensé pour Nuxt 4, i18n (fr/en), et réutilisation dans `app/pages/`.
+> Utilise **nuxt-directus-sdk** (session auth, types auto-générés, proxy, visual editor).
+> Stack : Nuxt 4 + i18n (fr/en) + Nuxt UI v4.
 
 ---
 
-## 1. Collections principales
+## 1. Installation & configuration
 
-### 1.1 `global_settings` — Singleton
+### 1.1 Ajouter le module
+
+```bash
+pnpm add nuxt-directus-sdk
+```
+
+### 1.2 `nuxt.config.ts`
+
+```ts
+export default defineNuxtConfig({
+  modules: [
+    'nuxt-directus-sdk',
+    // autres modules…
+  ],
+
+  directus: {
+    url: process.env.DIRECTUS_URL,
+    // Types auto-générés depuis le schema Directus
+    types: { prefix: 'App' },
+    // Proxy dev (CORS + cookies)
+    proxy: { enabled: true },
+    // Visual editor (édition inline depuis Directus)
+    visualEditor: true
+  }
+})
+```
+
+### 1.3 `.env`
+
+```dotenv
+DIRECTUS_URL=https://directus.aplix.nl
+DIRECTUS_ADMIN_TOKEN=<admin_token>
+```
+
+> `DIRECTUS_ADMIN_TOKEN` est nécessaire pour la **génération automatique des types TypeScript** et les opérations admin.
+
+### 1.4 Configuration Directus (côté serveur)
+
+```dotenv
+# Directus .env
+AUTH_LOCAL_MODE=session
+CORS_ENABLED=true
+CORS_ORIGIN=http://localhost:3000
+SESSION_COOKIE_SECURE=false     # true en prod
+SESSION_COOKIE_SAME_SITE=Lax
+WEBSOCKETS_ENABLED=true
+```
+
+---
+
+## 2. Collections principales
+
+Les types sont **auto-générés** par le module à chaque build.  
+Le préfixe `App` est configuré dans `nuxt.config.ts` → les interfaces deviennent `AppProject`, `AppBlogPost`, etc.
+
+> Les collections système Directus (`DirectusUser`, `DirectusFile`) ne sont **jamais préfixées**.
+
+---
+
+### 2.1 `global_settings` — Singleton
 
 Configuration globale du site.
 
@@ -26,11 +86,17 @@ Configuration globale du site.
 
 **Règles** :
 - Singleton — un seul enregistrement.
-- Les liens sociaux (GitHub, LinkedIn, X) seront gérés dans une collection dédiée `social_links`.
+- Les liens sociaux (GitHub, LinkedIn, X) sont dans `social_links`.
+
+**Requête SDK** :
+```ts
+const directus = useDirectus()
+const settings = await directus.request(readSingleton('global_settings'))
+```
 
 ---
 
-### 1.2 `social_links` — Plusieurs
+### 2.2 `social_links` — Plusieurs
 
 Liens sociaux du footer.
 
@@ -47,9 +113,17 @@ Liens sociaux du footer.
 - Triable via `sort`.
 - `status` permet de masquer temporairement un lien.
 
+**Requête SDK** :
+```ts
+const links = await directus.request(readItems('social_links', {
+  sort: ['sort'],
+  filter: { status: { _eq: 'published' } }
+}))
+```
+
 ---
 
-### 1.3 `pages` — Plusieurs
+### 2.3 `pages` — Plusieurs
 
 SEO et métadonnées de chaque page statique.
 
@@ -75,9 +149,18 @@ SEO et métadonnées de chaque page statique.
 - Le slug est fixe : `index`, `projects`, `about`, `contact`, `blog`.
 - i18n gérée par le système de translations Directus.
 
+**Requête SDK** :
+```ts
+const page = await directus.request(readItems('pages', {
+  filter: { slug: { _eq: 'index' } },
+  fields: ['*', { translations: ['*'] }]
+}))
+// → typé avec DirectusSchema['pages'][0]
+```
+
 ---
 
-### 1.4 `projects` — Plusieurs
+### 2.4 `projects` — Plusieurs
 
 Projets du portfolio.
 
@@ -104,9 +187,23 @@ Projets du portfolio.
 - Trié par `sort` puis par `date` descendante.
 - `status = draft` caché du frontend.
 
+**Requête SDK** :
+```ts
+const projects = await directus.request(readItems('projects', {
+  filter: { status: { _eq: 'published' } },
+  sort: ['-date'],
+  fields: ['*', { tags: [{ project_tag_assignments_id: [{ project_tags_id: ['*'] }] }] }]
+}))
+
+// Un seul projet par slug ou id
+const project = await directus.request(readItem('projects', id, {
+  fields: ['*', { tags: ['*'] }]
+}))
+```
+
 ---
 
-### 1.5 `project_tags` — Plusieurs
+### 2.5 `project_tags` — Plusieurs
 
 Tags de technologie pour les projets.
 
@@ -122,7 +219,7 @@ Tags de technologie pour les projets.
 
 ---
 
-### 1.6 `project_tag_assignments` — Jonction M2M
+### 2.6 `project_tag_assignments` — Jonction M2M
 
 | Champ | Type | Notes |
 |-------|------|-------|
@@ -133,7 +230,7 @@ Tags de technologie pour les projets.
 
 ---
 
-### 1.7 `blog_posts` — Plusieurs
+### 2.7 `blog_posts` — Plusieurs
 
 Articles de blog.
 
@@ -163,23 +260,38 @@ Articles de blog.
 - Pagination : 6 articles par page.
 - `slug` sert de clé pour le routing Nuxt `blog/[...slug].vue`.
 
+**Requête SDK** :
+```ts
+// Liste paginée
+const posts = await directus.request(readItems('blog_posts', {
+  filter: { status: { _eq: 'published' } },
+  sort: ['-date'],
+  limit: 6,
+  page: 1,
+  fields: ['*', { tags: ['*'] }]
+}))
+
+// Article par slug
+const post = await directus.request(readItems('blog_posts', {
+  filter: { slug: { _eq: route.params.slug } },
+  fields: ['*', { tags: ['*'] }]
+}))
+// → typé avec AppBlogPost[]
+```
+
 ---
 
-### 1.8 `blog_tags` — Plusieurs
+### 2.8 `blog_tag_assignments` — Jonction M2M
 
-Tags pour les articles.
-
-| Champ | Type | Interface | Notes |
-|-------|------|-----------|-------|
-| `id` | uuid | PK | |
-| `name` | string | input | |
-
-**Relations** :
-- Jonction M2M via `blog_tag_assignments`.
+| Champ | Type | Notes |
+|-------|------|-------|
+| `id` | uuid | PK |
+| `blog_post_id` | uuid | FK → `blog_posts.id` |
+| `tag_id` | uuid | FK → `blog_tags.id` |
 
 ---
 
-### 1.9 `services` — Plusieurs
+### 2.9 `services` — Plusieurs
 
 Services proposés (section landing).
 
@@ -195,9 +307,17 @@ Services proposés (section landing).
 - `title` (fr/en)
 - `description` (fr/en)
 
+**Requête SDK** :
+```ts
+const services = await directus.request(readItems('services', {
+  sort: ['sort'],
+  fields: ['*', { translations: ['*'] }]
+}))
+```
+
 ---
 
-### 1.10 `stack_categories` — Plusieurs
+### 2.10 `stack_categories` — Plusieurs
 
 Catégories de technologies (section landing).
 
@@ -211,9 +331,17 @@ Catégories de technologies (section landing).
 **Relations** :
 - O2M vers `stack_items`.
 
+**Requête SDK** :
+```ts
+const categories = await directus.request(readItems('stack_categories', {
+  sort: ['sort'],
+  fields: ['*', { items: ['*'] }]
+}))
+```
+
 ---
 
-### 1.11 `stack_items` — Plusieurs
+### 2.11 `stack_items` — Plusieurs
 
 Technologies individuelles.
 
@@ -227,7 +355,7 @@ Technologies individuelles.
 
 ---
 
-### 1.12 `experience` — Plusieurs
+### 2.12 `experience` — Plusieurs
 
 Expériences professionnelles.
 
@@ -249,9 +377,17 @@ Expériences professionnelles.
 - `position` (fr/en)
 - `date_range` (fr/en)
 
+**Requête SDK** :
+```ts
+const experience = await directus.request(readItems('experience', {
+  sort: ['sort'],
+  fields: ['*', { highlights: ['*'] }]
+}))
+```
+
 ---
 
-### 1.13 `experience_highlights` — Plusieurs
+### 2.13 `experience_highlights` — Plusieurs
 
 Points clés d'une expérience.
 
@@ -267,7 +403,7 @@ Points clés d'une expérience.
 
 ---
 
-### 1.14 `testimonials` — Plusieurs
+### 2.14 `testimonials` — Plusieurs
 
 Témoignages clients (section landing).
 
@@ -285,7 +421,7 @@ Témoignages clients (section landing).
 
 ---
 
-### 1.15 `faq_categories` — Plusieurs
+### 2.15 `faq_categories` — Plusieurs
 
 Catégories de FAQ.
 
@@ -301,9 +437,17 @@ Catégories de FAQ.
 **Traductions** :
 - `title` (fr/en)
 
+**Requête SDK** :
+```ts
+const faq = await directus.request(readItems('faq_categories', {
+  sort: ['sort'],
+  fields: ['*', { items: ['*', { translations: ['*'] }] }]
+}))
+```
+
 ---
 
-### 1.16 `faq_items` — Plusieurs
+### 2.16 `faq_items` — Plusieurs
 
 Questions/réponses individuelles.
 
@@ -321,7 +465,7 @@ Questions/réponses individuelles.
 
 ---
 
-### 1.17 `about_content` — Singleton
+### 2.17 `about_content` — Singleton
 
 Contenu de la page "À propos".
 
@@ -334,9 +478,16 @@ Contenu de la page "À propos".
 **Traductions** :
 - `body` (fr/en)
 
+**Requête SDK** :
+```ts
+const about = await directus.request(readSingleton('about_content', {
+  fields: ['*', { images: ['*'] }]
+}))
+```
+
 ---
 
-### 1.18 `profile_images` — Jonction pour les images de la page about
+### 2.18 `profile_images` — Jonction pour les images de la page about
 
 | Champ | Type | Notes |
 |-------|------|-------|
@@ -347,7 +498,7 @@ Contenu de la page "À propos".
 
 ---
 
-## 2. Résumé des relations
+## 3. Résumé des relations
 
 ```
 global_settings        (singleton)
@@ -388,31 +539,6 @@ about_content          (singleton)
 
 ---
 
-## 3. Règles générales
-
-### Statut / Publication
-- Les collections `projects`, `blog_posts` ont un champ `status` (`published`, `draft`).
-- Le frontend ne doit requêter que les éléments `status = published`.
-
-### Traductions (i18n)
-- Directus gère les traductions natif via `directus_translations`.
-- Chaque collection traduisible a une relation M2A vers `directus_translations`.
-- Le frontend envoie le header `Accept-Language: fr` ou `en`.
-
-### Images
-- Stockées dans `directus_files`.
-- Transforms via les presets Directus (thumbnail, webp).
-
-### Ordre d'affichage
-- `sort` champ présent sur toutes les collections ordonnables.
-- Le frontend trie par `sort` asc, puis par `date` desc si applicable.
-
-### Collections de jonction
-- `project_tag_assignments` — relation M2M entre `projects` et `project_tags`.
-- `blog_tag_assignments` — relation M2M entre `blog_posts` et `blog_tags`.
-
----
-
 ## 4. Mapping données statiques → Collections Directus
 
 | Fichier `app/data/` | Collection Directus |
@@ -425,45 +551,144 @@ about_content          (singleton)
 
 ---
 
-## 5. Endpoints API REST attendus
+## 5. Utilisation du SDK dans les pages Nuxt
 
-> Base : `https://directus.aplix.nl`
+Les composables et fonctions SDK sont **auto-importés** — pas besoin d'importer manuellement.
 
-```bash
-# Global
-GET  /items/global_settings
-GET  /items/social_links?sort=sort&filter[status][_eq]=published
+### 5.1 Composables disponibles
 
-# Pages
-GET  /items/pages?filter[slug][_eq]=index&fields=*,translations.*
+```ts
+// Client Directus (toutes les requêtes)
+const directus = useDirectus()
 
-# Projets
-GET  /items/projects?filter[status][_eq]=published&sort=-date
-GET  /items/projects/:id?fields=*,tags.*,translations.*
+// Auth
+const { user, loggedIn, login, logout } = useDirectusAuth()
 
-# Blog
-GET  /items/blog_posts?filter[status][_eq]=published&sort=-date&limit=6
-GET  /items/blog_posts?filter[slug][_eq]=:slug&fields=*,tags.*,translations.*
+// URLs fichiers
+const url = getDirectusFileUrl(fileId, { width: 800, format: 'webp' })
 
-# Landing sections
-GET  /items/services?sort=sort&fields=*,translations.*
-GET  /items/stack_categories?sort=sort&fields=*,items.*
-GET  /items/experience?sort=sort&fields=*,highlights.*,translations.*
-GET  /items/testimonials?sort=sort&fields=*,translations.*
-GET  /items/faq_categories?sort=sort&fields=*,items.*,translations.*
+// Upload
+const uploaded = await uploadDirectusFile({ file: myFile })
 
-# About
-GET  /items/about_content?fields=*,images.*,translations.*
+// URLs Directus
+const apiUrl = useDirectusUrl('items/projects')
+
+// Visual editor
+const isEditing = useDirectusVisualEditor()
+
+// Preview mode
+const isPreview = useDirectusPreview()
 ```
+
+### 5.2 Pattern recommandé par page
+
+```vue
+<script setup lang="ts">
+const directus = useDirectus()
+
+const { data: projects, status, error } = await useAsyncData('projects', () =>
+  directus.request(readItems('projects', {
+    filter: { status: { _eq: 'published' } },
+    sort: ['-date'],
+    fields: ['*', { tags: ['*'] }]
+  }))
+)
+
+const { data: pageMeta } = await useAsyncData('page-projects', () =>
+  directus.request(readItems('pages', {
+    filter: { slug: { _eq: 'projects' } },
+    fields: ['*', { translations: ['*'] }]
+  }))
+)
+
+// SEO
+const title = pageMeta.value?.[0]?.seo_title || 'Projets'
+const description = pageMeta.value?.[0]?.seo_description || ''
+
+useSeoMeta({ title, description })
+</script>
+
+<template>
+  <!-- loading -->
+  <UPageSkeleton v-if="status === 'pending'" />
+
+  <!-- error -->
+  <UPageError v-else-if="error" :error="error" />
+
+  <!-- empty -->
+  <UPageEmpty v-else-if="!projects?.length" title="Aucun projet" description="Revenez plus tard" />
+
+  <!-- data -->
+  <UPage v-else>
+    <UPageHero :title="pageMeta?.[0]?.title" :description="pageMeta?.[0]?.description" />
+    <!-- … -->
+  </UPage>
+</template>
+```
+
+### 5.3 Gestion des fichiers (images)
+
+```ts
+// Image de couverture d'un projet
+const coverUrl = getDirectusFileUrl(project.image, {
+  width: 800,
+  format: 'webp',
+  quality: 80,
+  fit: 'cover'
+})
+
+// Avec <NuxtImg> et le provider Directus
+// l'image src est le file.id
+// <NuxtImg provider="directus" :src="project.image" width="800" format="webp" />
+```
+
+### 5.4 Visual Editor (édition inline)
+
+```vue
+<DirectusVisualEditor
+  collection="projects"
+  :item="project.id"
+  fields="title"
+>
+  <h2>{{ project.title }}</h2>
+</DirectusVisualEditor>
+```
+
+> Activé automatiquement quand le site est chargé dans un iframe Directus.
+> Un `MutationObserver` détecte les attributs `data-directus` dans le DOM et applique le SDK d'édition visuelle (`@directus/visual-editing`).
 
 ---
 
-## 6. Prochaine étape
+## 6. Migration : fichiers statiques → SDK
 
-Une fois ces collections créées dans Directus :
+### 6.1 Exemple : remplacement de `app/data/projects.ts`
 
-1. **Importer les données** depuis `app/data/*.ts` via l'API REST Directus (script d'import).
-2. **Créer un composable Nuxt `useDirectus`** pour encapsuler les appels API.
-3. **Remplacer les imports statiques** dans chaque page par des appels au composable.
-4. **Ajouter la gestion d'états** (loading, error, empty) dans chaque page.
-5. **Supprimer les fichiers `app/data/*.ts`** une fois la migration validée.
+**Avant** (statique) :
+```ts
+import { projectsPage, projects } from '~/data/projects'
+const page = projectsPage    // données hardcodées
+```
+
+**Après** (SDK) :
+```ts
+const directus = useDirectus()
+
+const { data: projects } = await useAsyncData('projects', () =>
+  directus.request(readItems('projects', {
+    filter: { status: { _eq: 'published' } },
+    sort: ['-date'],
+    fields: ['*', { tags: ['*'] }]
+  }))
+)
+```
+
+### 6.2 Plan de migration
+
+1. **Installer** `nuxt-directus-sdk` + configurer `.env` + `nuxt.config.ts`
+2. **Créer les collections** dans Directus (via MCP ou UI)
+3. **Importer les données** depuis `app/data/*.ts` (script d'import)
+4. **Créer des composables** `useLandingData`, `useProjects`, `useBlog`, `useAbout` pour encapsuler les requêtes
+5. **Remplacer les imports statiques** page par page
+6. **Gérer les états** (loading / error / empty) dans chaque page
+7. **Vérifier le type** avec les types auto-générés (`pnpm typecheck`)
+8. **Supprimer** `app/data/*.ts` une fois la migration validée

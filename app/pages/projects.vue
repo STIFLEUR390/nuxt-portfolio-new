@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { projectsPage, projects } from '~/data/projects'
+import { projectsPage as staticProjectsPage, projects as staticProjects } from '~/data/projects'
 
-const page = projectsPage
+const { data: projectsData, status, error } = useProjects()
+
+const page = computed(() => projectsData.value?.page || staticProjectsPage)
+const projects = computed(() => projectsData.value?.projects || staticProjects)
 const { global } = useAppConfig()
 
-const title = page.seo?.title || page.title
-const description = page.seo?.description || page.description
+const title = page.value?.seo?.title || page.value?.title || ''
+const description = page.value?.seo?.description || page.value?.description || ''
 
 useSeoMeta({
   title,

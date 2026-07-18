@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { blogPageMeta, getPaginatedPosts } from '~/data/blog'
+import type { BlogPost } from '~/data/types'
+import { blogPageMeta as staticBlogMeta, getPaginatedPosts as staticPaginated } from '~/data/blog'
 
-const page = blogPageMeta
 const route = useRoute()
 const router = useRouter()
 
@@ -12,12 +12,33 @@ const currentPage = computed(() => {
 
 const perPage = 6
 
+const { data: blogData, status, error } = useBlog(currentPage.value)
+
+const page = computed(() => blogData.value?.page || staticBlogMeta)
 const paginated = computed(() => {
-  return getPaginatedPosts(currentPage.value, perPage)
+  if (blogData.value?.posts?.length) {
+    const posts = blogData.value.posts
+    const pagination = blogData.value.pagination
+    return {
+      items: posts.map(p => ({
+        title: p.title || '',
+        description: p.description || '',
+        date: p.date || '',
+        image: p.image || undefined,
+        minRead: p.min_read || undefined,
+        author: { name: 'Franck Hérold TAMTO TAMKO' },
+        body: '',
+        path: `/blog/${p.slug || ''}`
+      } as BlogPost)),
+      totalPages: pagination.totalPages,
+      currentPage: pagination.currentPage
+    }
+  }
+  return staticPaginated(currentPage.value, perPage)
 })
 
-const title = page.seo?.title || page.title
-const description = page.seo?.description || page.description
+const title = computed(() => (page.value as any)?.seo?.title || (page.value as any)?.title || '')
+const description = computed(() => (page.value as any)?.seo?.description || (page.value as any)?.description || '')
 
 useSeoMeta({
   title,
@@ -37,8 +58,8 @@ function goToPage(p: number) {
 <template>
   <UPage v-if="page">
     <UPageHero
-      :title="page.title"
-      :description="page.description"
+      :title="(page.title as string) || ''"
+      :description="(page.description as string) || ''"
       :ui="{
         title: 'mx-0! text-left text-balance',
         description: 'mx-0! text-left text-pretty',

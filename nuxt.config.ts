@@ -8,8 +8,25 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     'nuxt-og-image',
-    'motion-v/nuxt'
+    'motion-v/nuxt',
+    'nuxt-directus-sdk'
   ],
+
+  directus: {
+    url: process.env.DIRECTUS_URL || 'https://portfolio-directus.aplix.nl',
+    adminToken: process.env.DIRECTUS_ADMIN_TOKEN,
+    proxy: {
+      enabled: true,
+      path: '/directus'
+    },
+    types: {
+      prefix: 'App'
+    },
+    image: {
+      setDefaultProvider: true
+    },
+    visualEditor: false
+  },
 
   sitemap: {
     urls: [

@@ -1,94 +1,60 @@
-# Architecture
+# Architecture — Migration Directus
 
-## Stack
+## Contexte
 
-- **Framework**: Nuxt 4 + Nuxt UI v4 + Tailwind CSS v4
-- **Package manager**: pnpm (bun.lock aussi présent)
-- **TypeScript**: strict via vue-tsc
-- **Animations**: `motion-v` (wrapper Vue pour framer-motion)
-- **Erreurs**: Rustrak (codegraph daemon)
-- **i18n**: `@nuxtjs/i18n` (FR par défaut, EN sans préfixe)
-- **OG images**: `nuxt-og-image` + `@takumi-rs/core`
+Migration des données statiques (`app/data/*.ts`) vers Directus CMS (`portfolio-directus.aplix.nl`).
+Les pages utilisent des composables qui tentent Directus en premier, avec fallback statique.
 
-## Entrypoint
+## Collections Directus (19)
 
-```
-app/app.vue
-  └─ <UApp locale={locales[locale]} toaster={bottom-right, 5s, expandable}>
-       └─ <NuxtLayout>
-            └─ <MotionConfig reduced-motion="user">
-                 └─ <NuxtPage />
-  └─ <ClientOnly />
-```
+### Singletons
+- `global_settings` — config site (email, CV, disponibilité, footer)
+- `about_content` — contenu page "À propos" (body markdown)
 
-- `app.vue` : `useLocaleHead()` pour meta/links i18n, `useSeoMeta()` pour Twitter Card
-- Layout `default.vue` : `UContainer sm:border-x border-default`, skip-link, AppHeader + AppFooter
-- Error page `error.vue` : standalone (pas de layout), rend AppHeader + UError + AppFooter inline + UToaster
+### Collections avec traductions
+- `pages` — SEO/metadata par page (index, projects, about, contact, blog)
+- `projects` — projets avec tags (M2M)
+- `blog_posts` — articles de blog (M2M tags)
+- `services` — services landing
+- `experience` — expériences (O2M highlights)
+- `experience_highlights` — points clés
+- `testimonials` — témoignages
+- `faq_categories` — catégories FAQ (O2M items)
+- `faq_items` — questions/réponses
 
-## Data flow
+### Collections sans traductions
+- `social_links` — liens footer
+- `project_tags` / `blog_tags` — tags
+- `stack_categories` / `stack_items` — stack technique
+- `project_tag_assignments` / `blog_tag_assignments` — jonctions M2M
+- `profile_images` — jonction about_content ↔ images
 
-```
-app/data/*.ts  ──>  pages/*.vue  ──>  components/ (landing/*.vue, custom)
-```
+## Nuxt Config
 
-Tout le contenu vit dans `app/data/`. Les pages importent ces données et les passent aux composants.
+Module `nuxt-directus-sdk` dans nuxt.config.ts :
+- `url`: DIRECTUS_URL from .env
+- `proxy.enabled`: true (production)
+- `types.prefix`: 'App' (AppPage, AppProject, etc.)
+- `image.setDefaultProvider`: true
+- `visualEditor`: false (désactivé)
 
-### Fichiers data
+## Composables
 
-| Fichier | Contenu |
-|---|---|
-| `app/data/index.ts` | Hero, services, about, experience, stack, testimonials, FAQ, blog |
-| `app/data/projects.ts` | Projets |
-| `app/data/about.ts` | Page about |
-| `app/data/blog.ts` | Articles de blog (body markdown) |
-| `app/data/types.ts` | Interfaces TypeScript partagées |
+- `usePageMeta(slug)` — SEO metadata d'une page
+- `useGlobalSettings()` — settings + social links
+- `useLandingData()` — landing complète (services, stack, experience, testimonials, faq, blog)
+- `useProjects()` — projets page + liste
+- `useBlog(page)` / `useBlogPost(slug)` — blog paginé + article
+- `useAboutPage()` — about page content
 
-### Pages
+## Données statiques (fallback)
 
-| Route | Fichier |
-|---|---|
-| `/` | `app/pages/index.vue` |
-| `/projects` | `app/pages/projects.vue` |
-| `/about` | `app/pages/about.vue` |
-| `/contact` | `app/pages/contact.vue` |
-| `/blog` | `app/pages/blog/index.vue` |
-| `/blog/[...slug]` | `app/pages/blog/[...slug].vue` |
+Les fichiers dans `app/data/` servent de fallback si Directus n'est pas accessible.
+Les pages hybrides : `const { data } = useXxx()` avec `const page = computed(() => data.value || staticData)`.
 
-### Composants personnalisés
+## Pipeline
 
-- `PolaroidItem.vue`, `ProjectImage.vue`, `MarkdownRenderer.vue`, `ColorModeButton.vue`
-- `OgImage/Portfolio.takumi.vue` — template OG image personnalisé
-- `landing/` : Hero, Services, About, WorkExperience, Stack, Blog, Testimonials, FAQ
-
-## Composables & Utils
-
-- `useAppToast()` : wrapper autour de `useToast()` avec success/error/warning/info
-- `copyToClipboard()` : copie + toast feedback
-- `navLinks` : tableau `NavigationMenuItem[]` pour le header
-
-## Config
-
-| Fichier | Rôle |
-|---|---|
-| `nuxt.config.ts` | Modules, i18n, runtimeConfig, vite optimizeDeps, nitro prerender, OG |
-| `app/app.config.ts` | `ui.colors`, `global` (email, meetingLink, social), footer links |
-| `app/assets/css/main.css` | `@import "tailwindcss" "@nuxt/ui"`, fonts, safe-area-inset |
-
-## Contact form
-
-`POST /api/contact` → `usesend-js` → email via UseSend.
-Handler dans `server/api/contact.post.ts`.
-Variables d'env → `runtimeConfig` : `usesendApiKey`, `fromEmail`, `contactEmail`, `usesendBaseUrl`.
-
-## SEO
-
-- `useSeoMeta()` + `useLocaleHead()` via `@nuxtjs/i18n`
-- Title template : `%s - Franck Hérold TAMTO TAMKO · Full-Stack Developer`
-- OG image : `nuxt-og-image` avec `zeroRuntime: true`, template custom `OgImage/Portfolio.takumi.vue`
-
-## i18n
-
-- `@nuxtjs/i18n` module
-- FR par défaut, EN sans préfixe, stratégie `prefix_except_default`
-- Détection navigateur activée
-- Fichiers : `i18n/locales/fr.json`, `i18n/locales/en.json`
+1. `pnpm dev` / `pnpm build` → typegen Directus (`#build/types/directus.d.ts`)
+2. Pages → composables → `useAsyncData` → `directus.request(readItems(...))`
+3. Si Directus répond → utiliser les données CMS
+4. Si Directus échoue → fallback statique

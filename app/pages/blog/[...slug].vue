@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getPostByPath, getSurroundingPosts } from '~/data/blog'
+import { getPostByPath as staticGetPost, getSurroundingPosts as staticSurround } from '~/data/blog'
 
 const route = useRoute()
 
@@ -7,22 +7,47 @@ const postPath = computed(() => {
   return route.path.replace(/^\/(en|fr)(\/|$)/, '/')
 })
 
+const slug = computed(() => {
+  return postPath.value.replace(/^\/blog\//, '')
+})
+
+const { data: postData, status, error } = useBlogPost(slug.value)
+
 const page = computed(() => {
-  const post = getPostByPath(postPath.value)
-  if (!post) throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
-  return post
+  if (postData.value?.post) {
+    const p = postData.value.post as Record<string, unknown>
+    return {
+      title: p.title as string,
+      description: p.description as string,
+      date: p.date as string,
+      image: p.image as string,
+      minRead: p.min_read as number,
+      author: { name: 'Franck Hérold TAMTO TAMKO' },
+      body: p.body as string,
+      path: `/blog/${p.slug as string}`
+    }
+  }
+  return staticGetPost(postPath.value)
 })
 
 const surround = computed(() => {
-  const data = getSurroundingPosts(postPath.value, { fields: ['description'] })
+  if (postData.value?.surround?.length) {
+    const items = postData.value.surround.filter((s): s is NonNullable<typeof s> => s != null)
+    return items.map((s) => ({
+      title: s.title || '',
+      _path: `/blog/${s.slug || ''}`,
+      description: s.description || ''
+    }))
+  }
+  const data = staticSurround(postPath.value, { fields: ['description'] })
   const result: { title?: string, _path?: string, description?: string }[] = []
   if (data.prev) result.push({ title: data.prev.title, _path: data.prev.path, description: data.prev.description })
   if (data.next) result.push({ title: data.next.title, _path: data.next.path, description: data.next.description })
   return result
 })
 
-const title = computed(() => page.value.title)
-const description = computed(() => page.value.description)
+const title = computed(() => page.value!.title)
+const description = computed(() => page.value!.description)
 
 useSeoMeta({
   title,
@@ -31,8 +56,9 @@ useSeoMeta({
   ogTitle: title
 })
 
-if (page.value.image) {
-  useSeoMeta({ ogImage: page.value.image })
+const p = page.value!
+if (p.image) {
+  useSeoMeta({ ogImage: p.image })
 } else {
   defineOgImage('Portfolio', {
     title,

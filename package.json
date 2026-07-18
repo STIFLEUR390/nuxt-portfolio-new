@@ -31,6 +31,7 @@
     "marked": "^18.0.6",
     "motion-v": "^2.3.0",
     "nuxt": "^4.4.8",
+    "nuxt-directus-sdk": "^6.1.2",
     "nuxt-og-image": "^6.7.2",
     "tailwindcss": "^4.3.3",
     "usesend-js": "^1.6.3",
