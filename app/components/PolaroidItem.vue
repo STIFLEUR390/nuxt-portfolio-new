@@ -16,7 +16,7 @@ defineProps<{
       index % 2 === 0 ? 'hover:-translate-y-2' : 'hover:translate-y-2'
     ]"
   >
-    <img
+    <NuxtImg
       :src="image.src"
       :alt="image.alt"
       width="128"

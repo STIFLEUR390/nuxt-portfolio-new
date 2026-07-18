@@ -36,11 +36,12 @@ const animate = {
         v-bind="animate"
         :transition="{ duration: 0.5, delay: 0.1, ease: 'easeOut' }"
       >
-        <UColorModeAvatar
-          class="size-18 ring ring-default ring-offset-3 ring-offset-bg"
-          :light="global.picture?.light!"
-          :dark="global.picture?.dark!"
-          :alt="global.picture?.alt!"
+        <NuxtImg
+          :src="global.picture?.src || '/profile.png'"
+          :alt="global.picture?.alt || 'Franck Hérold TAMTO TAMKO'"
+          class="size-18 rounded-full ring ring-default ring-offset-3 ring-offset-bg object-cover"
+          width="72"
+          height="72"
         />
       </Motion>
     </template>

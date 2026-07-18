@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
     '@nuxt/eslint',
     '@nuxt/image',
     '@vueuse/nuxt',
@@ -10,11 +11,29 @@ export default defineNuxtConfig({
     'motion-v/nuxt'
   ],
 
+  sitemap: {
+    sources: ['/api/__sitemap__'],
+
+    urls: [
+      { loc: '/', changefreq: 'monthly', priority: 1 },
+      { loc: '/projects', changefreq: 'monthly', priority: 0.8 },
+      { loc: '/about', changefreq: 'monthly', priority: 0.8 },
+      { loc: '/contact', changefreq: 'monthly', priority: 0.6 },
+      { loc: '/blog', changefreq: 'weekly', priority: 0.7 }
+    ]
+  },
+
+
   devtools: {
     enabled: true
   },
 
   css: ['~/assets/css/main.css'],
+
+  image: {
+    domains: ['images.unsplash.com'],
+    format: ['webp']
+  },
 
   ui: {
     content: true

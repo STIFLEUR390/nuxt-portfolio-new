@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { blogPageMeta, getSortedPosts } from '~/data/blog'
+import { blogPageMeta, getPaginatedPosts } from '~/data/blog'
 
 const page = blogPageMeta
-const posts = getSortedPosts()
+const route = useRoute()
+const router = useRouter()
+
+const currentPage = computed(() => {
+  const p = Number(route.query.page) || 1
+  return Math.max(1, p)
+})
+
+const perPage = 6
+
+const paginated = computed(() => {
+  return getPaginatedPosts(currentPage.value, perPage)
+})
 
 const title = page.seo?.title || page.title
 const description = page.seo?.description || page.description
@@ -15,6 +27,11 @@ useSeoMeta({
 })
 
 defineOgImage('Portfolio', { title, description })
+
+function goToPage(p: number) {
+  router.push({ query: { page: p > 1 ? p : undefined } })
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -35,7 +52,7 @@ defineOgImage('Portfolio', { title, description })
     >
       <UBlogPosts orientation="vertical">
         <Motion
-          v-for="(post, index) in posts"
+          v-for="(post, index) in paginated.items"
           :key="post.path"
           :initial="{ opacity: 0, transform: 'translateY(10px)' }"
           :while-in-view="{ opacity: 1, transform: 'translateY(0)' }"
@@ -64,6 +81,29 @@ defineOgImage('Portfolio', { title, description })
           </UBlogPost>
         </Motion>
       </UBlogPosts>
+
+      <div
+        v-if="paginated.totalPages > 1"
+        class="flex items-center justify-center gap-2 mt-10"
+      >
+        <UButton
+          variant="ghost"
+          color="neutral"
+          icon="i-lucide-chevron-left"
+          :disabled="currentPage <= 1"
+          @click="goToPage(currentPage - 1)"
+        />
+        <span class="text-sm text-muted px-2">
+          Page {{ currentPage }} / {{ paginated.totalPages }}
+        </span>
+        <UButton
+          variant="ghost"
+          color="neutral"
+          icon="i-lucide-chevron-right"
+          :disabled="currentPage >= paginated.totalPages"
+          @click="goToPage(currentPage + 1)"
+        />
+      </div>
     </UPageSection>
   </UPage>
 </template>

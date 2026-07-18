@@ -1071,6 +1071,15 @@ export function getSortedPosts(): BlogPost[] {
   return [..._posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
+export function getPaginatedPosts(page: number, perPage: number = 6) {
+  const sorted = getSortedPosts()
+  const total = sorted.length
+  const totalPages = Math.ceil(total / perPage)
+  const start = (page - 1) * perPage
+  const items = sorted.slice(start, start + perPage)
+  return { items, total, totalPages, page, perPage }
+}
+
 export function getPostByPath(path: string): BlogPost | undefined {
   return _posts.find(p => p.path === path)
 }

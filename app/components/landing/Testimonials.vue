@@ -32,6 +32,8 @@ const autoplayConfig = computed(() => {
       aria-label="Témoignages clients"
       @mouseenter="autoplayEnabled = false"
       @mouseleave="autoplayEnabled = true"
+      @focusin="autoplayEnabled = false"
+      @focusout="autoplayEnabled = true"
     >
       <UPageCTA
         :description="item.quote"

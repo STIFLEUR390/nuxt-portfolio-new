@@ -14,7 +14,8 @@ const state = reactive({
   name: '',
   email: '',
   subject: '',
-  message: ''
+  message: '',
+  _hp: '' // honeypot — laissé vide par les humains
 })
 
 type Schema = typeof state
@@ -108,6 +109,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           class="space-y-6"
           @submit="onSubmit"
         >
+          <input
+            v-model="state._hp"
+            type="text"
+            name="_hp"
+            class="absolute -left-[9999px]"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          >
           <UFormField
             label="Nom"
             name="name"

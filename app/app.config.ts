@@ -1,13 +1,12 @@
 export default defineAppConfig({
   global: {
     picture: {
-      dark: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1480&auto=format&fit=crop',
-      light: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1480&auto=format&fit=crop',
+      src: '/profile.png',
       alt: 'Franck Hérold TAMTO TAMKO - Full-Stack Developer'
     },
     meetingLink: 'https://cal.com/heroldtamko',
     email: 'heroldtamko39@gmail.com',
-    cvUrl: '#',
+    cvUrl: '/cv.pdf',
     available: true
   },
   ui: {
