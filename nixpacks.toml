@@ -1,5 +1,8 @@
 # Nixpacks build configuration
 # https://nixpacks.com/docs/configuration/file
 
+[variables]
+NODE_OPTIONS = "--max-old-space-size=4096"
+
 [start]
 cmd = "node .output/server/index.mjs"
