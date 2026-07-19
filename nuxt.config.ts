@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     'motion-v/nuxt',
     'nuxt-directus-sdk',
-    'nuxt-umami'
+    'nuxt-umami',
+    '@pinia/nuxt'
   ],
 
   directus: {

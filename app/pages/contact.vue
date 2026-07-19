@@ -35,8 +35,10 @@ function validate(state: Partial<Schema>): FormError[] {
 }
 
 const toast = useAppToast()
+const feedback = useFeedbackStore()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   submitting.value = true
+  feedback.setSubmitting(true)
   try {
     await $fetch('/api/contact', {
       method: 'POST',
@@ -49,11 +51,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     state.subject = ''
     state.message = ''
 
+    feedback.setResult('success')
     toast.success('Message envoyé !', 'Merci, je vous répondrai rapidement.')
   } catch {
+    feedback.setResult('error')
     toast.error('Erreur', 'Échec de l\'envoi. Veuillez réessayer ou m\'écrire directement par email.')
   } finally {
     submitting.value = false
+    feedback.setSubmitting(false)
   }
 }
 </script>

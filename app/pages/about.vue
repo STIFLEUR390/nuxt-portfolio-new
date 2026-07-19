@@ -89,7 +89,7 @@ defineOgImage('Portfolio', { title, description })
         :while-in-view="{ opacity: 1 }"
         :transition="{ delay: 0.3 }"
         :in-view-options="{ once: true }"
-        class="flex flex-row justify-center items-center py-10 -space-x-6"
+        class="flex flex-row justify-center items-center py-10 gap-4 sm:gap-0 sm:-space-x-6"
       >
         <PolaroidItem
           v-for="(image, index) in page.images"

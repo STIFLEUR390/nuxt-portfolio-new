@@ -1,4 +1,6 @@
 import { UseSend } from 'usesend-js'
+import validator from 'validator'
+import disposableDomains from 'disposable-email-domains'
 
 const rateLimit = new Map<string, { count: number, resetAt: number }>()
 const RATE_MAX = 3
@@ -36,6 +38,15 @@ export default defineEventHandler(async (event) => {
 
   if (body._hp) {
     throw createError({ statusCode: 400, statusMessage: 'Spam detecté.' })
+  }
+
+  if (!validator.isEmail(body.email)) {
+    throw createError({ statusCode: 400, statusMessage: 'Format d\'email invalide.' })
+  }
+
+  const domain = body.email.split('@')[1]?.toLowerCase()
+  if (domain && (disposableDomains as string[]).includes(domain)) {
+    throw createError({ statusCode: 400, statusMessage: 'Les emails jetables ne sont pas acceptés.' })
   }
 
   const ip = getClientIp(event)
