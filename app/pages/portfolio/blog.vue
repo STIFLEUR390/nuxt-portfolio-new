@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { MdEditor } from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+
 definePageMeta({
   middleware: 'portfolio-auth',
   layout: 'portfolio'
@@ -295,7 +298,18 @@ function slugify(text: string) {
           </UFormField>
 
           <UFormField label="Contenu (Markdown)" name="body">
-            <UTextarea v-model="form.body" :rows="12" placeholder="Écrivez votre article en markdown..." class="w-full font-mono text-sm" />
+            <ClientOnly>
+              <MdEditor
+                v-model="form.body"
+                :id="'blog-editor'"
+                language="fr"
+                :toolbars="['bold', 'italic', 'strikeThrough', 'title', '-', 'quote', 'code', '-', 'unorderedList', 'orderedList', 'table', '-', 'link', 'image', '-', 'preview', 'catalog', 'fullscreen']"
+                class="w-full"
+              />
+              <template #fallback>
+                <div class="border border-default rounded-lg p-4 text-sm text-muted">Chargement de l'éditeur...</div>
+              </template>
+            </ClientOnly>
           </UFormField>
 
           <UFormField label="Image à la une" name="image">

@@ -87,7 +87,7 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ['motion-v', 'framer-motion', 'framer-motion/dom']
+      include: ['motion-v', 'framer-motion', 'framer-motion/dom', 'md-editor-v3']
     }
   },
 
