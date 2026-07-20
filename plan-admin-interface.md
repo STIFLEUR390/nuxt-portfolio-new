@@ -12,24 +12,24 @@ app/
 ├── middleware/
 │   └── portfolio-auth.ts          # [x] Redirige → /portfolio/login si !loggedIn
 ├── layouts/
-│   └── portfolio.vue              # [ ] Layout admin : sidebar + header + logout
+│   └── portfolio.vue              # [x] Layout admin : sidebar + header + logout
 ├── pages/portfolio/
-│   ├── login.vue                  # [ ] Formulaire email/password → Directus login
-│   ├── index.vue                  # [ ] Dashboard — stats + liens vers chaque section
-│   ├── projects.vue               # [ ] CRUD projets (liste + édition inline)
-│   ├── blog.vue                   # [ ] CRUD articles de blog
-│   ├── pages.vue                  # [ ] Édition meta SEO des pages (slug: index, projects…)
-│   ├── services.vue               # [ ] CRUD services
-│   ├── experience.vue             # [ ] CRUD expériences + highlights
-│   ├── stack.vue                  # [ ] CRUD catégories stack + items
-│   ├── testimonials.vue           # [ ] CRUD témoignages
-│   ├── faq.vue                    # [ ] CRUD FAQ catégories + questions
-│   └── settings.vue               # [ ] Global settings + social links
+│   ├── login.vue                  # [x] Formulaire email/password → Directus login
+│   ├── index.vue                  # [x] Dashboard — stats + liens vers chaque section
+│   ├── projects.vue               # [x] CRUD projets (liste + édition inline)
+│   ├── blog.vue                   # [x] CRUD articles de blog
+│   ├── pages.vue                  # [x] Édition meta SEO des pages (slug: index, projects…)
+│   ├── services.vue               # [x] CRUD services
+│   ├── experience.vue             # [x] CRUD expériences + highlights
+│   ├── stack.vue                  # [x] CRUD catégories stack + items
+│   ├── testimonials.vue           # [x] CRUD témoignages
+│   ├── faq.vue                    # [x] CRUD FAQ catégories + questions
+│   └── settings.vue               # [x] Global settings + social links
 └── components/portfolio/
-    ├── Sidebar.vue                # [ ] Navigation latérale admin
-    ├── DataTable.vue              # [ ] Tableau réutilisable (tri, pagination)
-    ├── FormField.vue              # [ ] Champ de formulaire réutilisable
-    └── EmptyState.vue             # [ ] État vide pour les listes
+    ├── Sidebar.vue                # [x] Navigation latérale admin
+    ├── DataTable.vue              # [ ] Tableau réutilisable (tri, pagination) — optionnel
+    ├── FormField.vue              # [ ] Champ de formulaire réutilisable — optionnel
+    └── EmptyState.vue             # [ ] État vide pour les listes — optionnel
 ```
 
 ---
@@ -40,11 +40,11 @@ app/
 
 | # | Tâche | Fichiers | Statut |
 |---|-------|----------|--------|
-| 1 | Middleware `portfolio-auth` — check `loggedIn`, redirect `/portfolio/login` | `app/middleware/portfolio-auth.ts` | ⏳ |
-| 2 | Login page — form email/password, Directus `login()`, redirect `/portfolio` | `app/pages/portfolio/login.vue` | ⏳ |
-| 3 | Portfolio layout — sidebar nav, header user info + logout | `app/layouts/portfolio.vue` + `app/components/portfolio/Sidebar.vue` | ⏳ |
-| 4 | Config `nuxt.config.ts` — ajout `directus.auth.redirect` | `nuxt.config.ts` | ⏳ |
-| 5 | Dashboard `/portfolio` — cartes stats + liens vers chaque section | `app/pages/portfolio/index.vue` | ⏳ |
+| 1 | Middleware `portfolio-auth` — check `loggedIn`, redirect `/portfolio/login` | `app/middleware/portfolio-auth.ts` | ✅ |
+| 2 | Login page — form email/password, Directus `login()`, redirect `/portfolio` | `app/pages/portfolio/login.vue` | ✅ |
+| 3 | Portfolio layout — sidebar nav, header user info + logout | `app/layouts/portfolio.vue` + `app/components/portfolio/Sidebar.vue` | ✅ |
+| 4 | Config `nuxt.config.ts` — ajout `directus.auth.redirect` | `nuxt.config.ts` | ✅ |
+| 5 | Dashboard `/portfolio` — cartes stats + liens vers chaque section | `app/pages/portfolio/index.vue` | ✅ |
 
 ### B.2 — CRUD Projects
 
@@ -87,7 +87,7 @@ app/
 | # | Tâche | Fichiers | Statut |
 |---|-------|----------|--------|
 | 20 | Affiner UX (toasts feedback, loading states, skeleton) | Multiples fichiers | ⏳ |
-| 21 | `pnpm lint` + `pnpm typecheck` | — | ⏳ |
+| 21 | `pnpm lint` + `pnpm typecheck` | — | ✅ |
 | 22 | Test manuel complet du flow auth + CRUD | — | ⏳ |
 
 ---
@@ -120,7 +120,8 @@ app/
 | B.4 | `faq.vue` — O2M expandable : catégories + questions | ✅ Fait, même pattern expandable. Réponse en markdown `UTextarea font-mono`. |
 | B.5 | `pages.vue` — Édition SEO par slug | ✅ Fait, pas de create/delete. Modal edit : title, description, seo_title, seo_description. |
 | B.5 | `settings.vue` — Singleton global_settings + CRUD social_links | ✅ Fait, `watch(settingsData, ..., { immediate: true })` pour remplir le formulaire. Upload photo profil. |
-| B.4/B.5 | Cast `(directus.request as any)` + `(readItems as any)` pour collections hors typegen | `dreq`/`dread`/`dcreate`/`dupdate`/`ddelete` alias pattern pour éviter erreurs TS. Les collections `projects`/`blog_posts` sont dans le typegen, mais pas `experience`/`faq_categories`/`stack_categories`/`global_settings`/`social_links` etc. |
+| B.4/B.5 | Cast `(directus.request as any)((readItems as any)('coll', ...))` pour collections hors typegen | ❌ `dreq = directus.request as any` perd le `this` binding → SSR renvoie `[]`. ✅ Fix : `(directus.request as any)((readItems as any)('coll', ...))` — ne JAMAIS extraire la méthode dans une variable. |
+| B.6 | `pnpm lint` + `pnpm typecheck` passent | typecheck clean, lint : warnings uniquement dans les `.mjs` tiers. |
 
 ---
 
