@@ -6,14 +6,17 @@ definePageMeta({
 
 const directus = useDirectus()
 const toast = useAppToast()
-const dreq = (directus.request as any)
 
 const { data: posts, status, refresh } = useAsyncData('admin-blog', async () => {
-  const result = await dreq((readItems as any)('blog_posts', {
-    sort: ['-date'],
-    fields: ['id', 'title', 'description', 'slug', 'image', 'body', 'date', 'min_read', 'featured', 'status']
-  }))
-  return (result || []) as any[]
+  try {
+    const result = await directus.request(readItems('blog_posts' as const, {
+      sort: ['-date'],
+      fields: ['id', 'title', 'description', 'slug', 'image', 'body', 'date', 'min_read', 'featured', 'status']
+    }))
+    return (result || []) as any[]
+  } catch {
+    return [] as any[]
+  }
 })
 
 const modalOpen = ref(false)
@@ -80,10 +83,10 @@ async function save() {
     }
 
     if (editingPost.value) {
-      await dreq((updateItem as any)('blog_posts', editingPost.value.id, payload))
+      await directus.request(updateItem('blog_posts' as const, editingPost.value.id, payload))
       toast.success('Article mis à jour')
     } else {
-      await dreq((createItem as any)('blog_posts', payload))
+      await directus.request(createItem('blog_posts' as const, payload))
       toast.success('Article créé')
     }
 
@@ -100,7 +103,7 @@ async function save() {
 async function confirmDelete(id: string) {
   deleting.value = id
   try {
-    await dreq((deleteItem as any)('blog_posts', id))
+    await directus.request(deleteItem('blog_posts' as const, id))
     toast.success('Article supprimé')
     await refresh()
   } catch (err: any) {

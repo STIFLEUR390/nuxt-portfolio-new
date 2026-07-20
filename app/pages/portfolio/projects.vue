@@ -6,14 +6,22 @@ definePageMeta({
 
 const directus = useDirectus()
 const toast = useAppToast()
-const dreq = (directus.request as any)
 
 const { data: projects, status, refresh } = useAsyncData('admin-projects', async () => {
-  const result = await dreq((readItems as any)('projects', {
-    sort: ['-date'],
-    fields: ['id', 'title', 'description', 'image', 'url', 'demo', 'date', 'status', 'sort']
-  }))
-  return (result || []) as any[]
+  try {
+    const result = await Promise.all([
+      directus.request(readItems('projects' as const, {
+        sort: ['-date'],
+        fields: ['id', 'title', 'description', 'image', 'url', 'demo', 'date', 'status', 'sort']
+      })),
+      directus.request(readItems('projects' as const, {
+        aggregate: { count: '*' }
+      }))
+    ])
+    return (result[0] || []) as any[]
+  } catch {
+    return [] as any[]
+  }
 })
 
 const modalOpen = ref(false)
@@ -77,10 +85,10 @@ async function save() {
     }
 
     if (editingProject.value) {
-      await dreq((updateItem as any)('projects', editingProject.value.id, payload))
+      await directus.request(updateItem('projects' as const, editingProject.value.id, payload))
       toast.success('Projet mis à jour')
     } else {
-      await dreq((createItem as any)('projects', payload))
+      await directus.request(createItem('projects' as const, payload))
       toast.success('Projet créé')
     }
 
@@ -97,7 +105,7 @@ async function save() {
 async function confirmDelete(id: string) {
   deleting.value = id
   try {
-    await dreq((deleteItem as any)('projects', id))
+    await directus.request(deleteItem('projects' as const, id))
     toast.success('Projet supprimé')
     await refresh()
   } catch (err: any) {
