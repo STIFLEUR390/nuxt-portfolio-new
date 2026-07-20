@@ -48,7 +48,7 @@ const cards = computed(() => [
 ])
 
 const sectionLinks = [
-  { label: 'Stack technique', icon: 'i-lucide-layer-stack', to: '/portfolio/stack', description: 'Catégories et technologies' },
+  { label: 'Stack technique', icon: 'i-lucide-layers', to: '/portfolio/stack', description: 'Catégories et technologies' },
   { label: 'Expériences', icon: 'i-lucide-briefcase', to: '/portfolio/experience', description: 'Parcours professionnel' },
   { label: 'FAQ', icon: 'i-lucide-circle-help', to: '/portfolio/faq', description: 'Questions fréquentes' },
   { label: 'Pages SEO', icon: 'i-lucide-search', to: '/portfolio/pages', description: 'Métadonnées des pages' },
