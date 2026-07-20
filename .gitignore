@@ -26,3 +26,5 @@ logs
 *.zip
 *.txt
 zip
+
+opencode.json

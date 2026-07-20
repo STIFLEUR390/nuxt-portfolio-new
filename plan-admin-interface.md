@@ -50,18 +50,20 @@ app/
 
 | # | Tâche | Fichiers | Statut |
 |---|-------|----------|--------|
-| 6 | Page liste projets — DataTable avec Directus `readItems('projects')` | `app/pages/portfolio/projects.vue` | ⏳ |
-| 7 | Modal/Inline edit projet — formulaire edit + Directus `updateItem()` | `app/pages/portfolio/projects.vue` | ⏳ |
-| 8 | Delete projet — confirmation + `deleteItem()` | `app/pages/portfolio/projects.vue` | ⏳ |
-| 9 | Create projet — formulaire + `createItem()` | `app/pages/portfolio/projects.vue` | ⏳ |
+| 6 | Page liste projets — tableau avec `readItems('projects')` | `app/pages/portfolio/projects.vue` | ✅ |
+| 7 | Modal create/edit projet — formulaire + `createItem()` / `updateItem()` | `app/pages/portfolio/projects.vue` | ✅ |
+| 8 | Delete projet — confirmation + `deleteItem()` | `app/pages/portfolio/projects.vue` | ✅ |
+| 9 | Upload image Directus via `UInput type="file"` + `uploadDirectusFile()` | `app/pages/portfolio/projects.vue` | ✅ |
+| 10 | États loading / empty / error | `app/pages/portfolio/projects.vue` | ✅ |
 
 ### B.3 — CRUD Blog
 
 | # | Tâche | Fichiers | Statut |
 |---|-------|----------|--------|
-| 10 | Page liste articles — DataTable + pagination | `app/pages/portfolio/blog.vue` | ⏳ |
-| 11 | Création/Édition article — form (title, description, slug, body markdown, image, date) | `app/pages/portfolio/blog.vue` | ⏳ |
-| 12 | Delete article + toggle status published/draft | `app/pages/portfolio/blog.vue` | ⏳ |
+| 11 | Page liste articles — tableau (image, titre, slug, lecture, date, statut, actions) | `app/pages/portfolio/blog.vue` | ✅ |
+| 12 | Modal create/edit — form (titre, slug, description, body markdown, image upload, date, lecture, statut, une) | `app/pages/portfolio/blog.vue` | ✅ |
+| 13 | Delete article + toggle status published/draft | `app/pages/portfolio/blog.vue` | ✅ |
+| 14 | États loading / empty / error | `app/pages/portfolio/blog.vue` | ✅ |
 
 ### B.4 — CRUD contenu du site
 
@@ -101,6 +103,12 @@ app/
 | B.1 | `app/components/portfolio/Sidebar.vue` — nav verticale avec 10 entrées, état actif basé sur `route.path`, bouton logout avec `useDirectusAuth().logout()` | Liens : Dashboard, Projets, Blog, Services, Stack, Expériences, Témoignages, FAQ, Pages SEO, Paramètres. |
 | B.1 | `app/pages/portfolio/index.vue` — Dashboard avec 4 cartes stats (projets, blog, services, témoignages) + 5 cartes liens sections | Les `aggregate` queries nécessitent un cast `as any` car le typegen Directus échoue (fetch failed). Problème pré-existant. |
 | B.1 | `directus: { auth: { redirect: { login: '/portfolio/login' } } }` NON ajouté à `nuxt.config.ts` | Pas nécessaire : le middleware custom `portfolio-auth` gère la redirection. Le module `auth` middleware global n'est pas activé. |
+| B.2 | `app/pages/portfolio/projects.vue` — CRUD complet : liste (tableau), create/edit (UModal), delete (inline) | ✅ Fait |
+| B.2 | Utilisation de `(directus.request as any)((readItems as any)(...))` pour contourner le typegen Directus qui échoue | Pattern identique aux composables existants. À garder pour toutes les pages admin. |
+| B.2 | `UTable` (TanStack) non utilisé — trop complexe pour un CRUD simple. Table HTML simple avec classes Tailwind. | Si on veut plus tard : tri, pagination, filtres → migrer vers `UTable` avec colonnes TanStack. |
+| B.2 | Upload image via `UInput type="file"` + `uploadDirectusFile()` | ✨ Nouveau : plus besoin de coller un ID Directus. Upload direct vers Directus, l'ID est automatiquement stocké dans le champ `image`. |
+| B.2 | `UModal` avec `v-model:open`, slots `#body` et `#footer` au lieu de wrapper `UCard` | Pattern Nuxt UI idiomatique. `title` prop utilisée pour le header. |
+| B.3 | `app/pages/portfolio/blog.vue` — CRUD complet articles | ✅ Fait, reprend le même pattern que projects. Slug auto-généré depuis le titre (au blur). `type="date"` pour le champ date. Body markdown en `UTextarea` monospace. |
 
 ---
 
