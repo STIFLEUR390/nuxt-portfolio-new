@@ -1,5 +1,29 @@
 # Erreurs fréquentes
 
+## Directus — `column projects.translations does not exist`
+
+**Symptôme**: Erreur 500 sur PATCH/POST `projects` ou `blog_posts`. SQL tente `SELECT "projects"."translations"`.
+
+**Cause**: Le champ `translations` (alias M2M vers `directus_translations`) est mal configuré. Directus le traite comme colonne physique.
+
+**Solution**: Supprimer le champ `translations` de la collection dans Directus. Portfolio monolingue FR, pas besoin de traductions.
+
+## Directus SDK SSR — `Cannot use 'in' operator to search for 'getToken' in undefined`
+
+**Symptôme**: SSR crash, page admin non hydratée, data vide.
+
+**Cause**: `(readItems as any)('collection', {...})` casse le runtime SDK. `as any` sur la fonction modifie son comportement interne.
+
+**Solution**: Toujours utiliser `readItems('collection' as const, {...})` — caster le paramètre string, pas la fonction. Même pattern : `(updateItem as any)` → `updateItem('collection' as const, ...)`.
+
+## md-editor-v3 — ToolbarNames type error
+
+**Symptôme**: `Type '"heading"' is not assignable to type 'ToolbarNames'`
+
+**Cause**: Les noms de toolbar md-editor-v3 sont les clés de `ToolbarTips` : `title` (pas `heading`), `unorderedList` (pas `list`), `-` (pas `|`).
+
+**Solution**: Utiliser les noms exacts : `['bold', 'italic', 'strikeThrough', 'title', '-', 'quote', 'code', '-', 'unorderedList', 'orderedList', 'table', '-', 'link', 'image', '-', 'preview', 'catalog', 'fullscreen']`
+
 ## motion-v introuvable au runtime
 
 **Symptôme**: Les animations ne fonctionnent pas, erreur console sur motion-v

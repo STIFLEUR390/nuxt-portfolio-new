@@ -110,6 +110,8 @@ app/
 | B.2 | `UModal` avec `v-model:open`, slots `#body` et `#footer` au lieu de wrapper `UCard` | Pattern Nuxt UI idiomatique. `title` prop utilisée pour le header. |
 | B.2 | ❌ BUG : `(readItems as any)(...)` casse le SDK en SSR — `Cannot use 'in' operator to search for 'getToken' in undefined` | ✅ Corrigé : utiliser `readItems('projects' as const, {...})` directement (casting de la collection string, pas de la fonction). Ajout de `try/catch` avec fallback `[]`. Tous les CRUD projects/blog doivent suivre ce pattern. |
 | B.2 | `i-lucide-layer-stack` n'existe pas dans lucide | Remplacé par `i-lucide-layers`. |
+| B.3 | Intégration `md-editor-v3` pour le body markdown du blog | ✅ `pnpm add md-editor-v3`, import `MdEditor` + CSS, wrapper `ClientOnly`, toolbar configurée. |
+| B.3 | `md-editor-v3` ajouté à `vite.optimizeDeps.include` | Évite les warnings Vite. |
 | B.3 | `app/pages/portfolio/blog.vue` — CRUD complet articles | ✅ Fait, reprend le même pattern que projects. Slug auto-généré depuis le titre (au blur). `type="date"` pour le champ date. Body markdown en `UTextarea` monospace. |
 
 ---

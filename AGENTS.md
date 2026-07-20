@@ -2,70 +2,115 @@
 
 ## Stack
 
-- **Framework**: Nuxt 4 + Nuxt UI v4 + Tailwind CSS v4
-- **Package manager**: pnpm (see `README.md`)
-- **TypeScript**: strict via vue-tsc
-- **Motion**: `motion-v` (framer-motion Vue wrapper)
+| Layer | Tech |
+|-------|------|
+| Framework | Nuxt 4 + Vue 3, Nitro `node-server` preset |
+| UI | Nuxt UI v4 + Tailwind CSS v4 |
+| i18n | `@nuxtjs/i18n` — FR default, EN prefix-less |
+| CMS | `nuxt-directus-sdk` v6.1.2 → `portfolio-directus.aplix.nl` |
+| Animations | `motion-v` (framer-motion wrapper) |
+| Contact | `usesend-js` |
+| Markdown | `marked` (render), `md-editor-v3` (admin editor) |
+| Analytics | `nuxt-umami` v3, proxy `cloak` |
+| Tests | Vitest + `@nuxt/test-utils` |
+| Node | >=22 (`.nvmrc`) |
+| Package | pnpm |
 
 ## Commands
 
 ```bash
-pnpm dev          # dev server on localhost:3000
-pnpm build        # production build
-pnpm lint         # ESLint (uses @nuxt/eslint)
-pnpm typecheck    # vue-tsc via nuxt typecheck
+pnpm dev          # localhost:3000
+pnpm build        # production (requires 2.5GB+ Node memory, see nixpacks.toml)
+pnpm lint         # ESLint — run before typecheck
+pnpm typecheck    # vue-tsc — BLOCKS compilation, fix before commit
+pnpm test         # Vitest
 pnpm generate     # static export
 pnpm preview      # preview production build
-pnpm postinstall  # nuxt prepare (auto-runs on install)
 ```
 
-Run `lint` then `typecheck` before committing. Fix typecheck errors — they block compilation.
+Run `pnpm lint` then `pnpm typecheck` before committing.
 
-## Contact form
+## Content Architecture
 
-The `/contact` page POSTs to `/api/contact` which sends email via `usesend-js`. Requires `.env`:
+Hybrid **Directus-first, static fallback** pattern:
 
 ```
-NUXT_USESEND_API_KEY=us_...
-NUXT_FROM_EMAIL=...        # verified sender on useSend
-NUXT_CONTACT_EMAIL=...     # recipient
+Pages → Composables (useAsyncData) → Directus SDK
+                                       ↕ (catch → null)
+                                       app/data/*.ts (fallback)
 ```
 
-## Architecture
+6 composables in `app/composables/`:
+- `useLandingData()` / `useProjects()` / `useBlog(page)` / `useBlogPost(slug)` / `useAboutPage()` / `useGlobalSettings()`
+- All use `readItems('collection' as const, { fields: [...], ... })` with explicit field lists
+- Mapped to `PageData` / `ProjectItem` / `BlogPost` types in `app/data/types.ts`
 
-All page content is **data-driven** from `app/data/*.ts` files — not from CMS or `nuxt/content`. Edit data there to change copy, services, projects, testimonials, FAQ, blog posts.
+Static fallbacks in `app/data/*.ts` — delete once Directus migration is validated.
 
-- `app/data/index.ts` — landing page (hero, services, about, experience, stack, testimonials, FAQ, blog)
-- `app/data/projects.ts` — projects page
-- `app/data/about.ts` — about page
-- `app/data/blog.ts` — 12 blog posts with full markdown body
-- `app/data/types.ts` — shared TypeScript interfaces
+## Admin Panel (`/portfolio`)
 
-**Pages**: `app/pages/` — index, about, contact, projects, blog/index, blog/[...slug]
-**Landing components**: `app/components/landing/` — Hero, Services, About, WorkExperience, Stack, Blog, Testimonials, FAQ
-**Custom components**: PolaroidItem, ProjectImage, MarkdownRenderer, ColorModeButton
-**Composables**: `useAppToast()` wraps `useToast()` with success/error/warning/info helpers
-**Utils**: `navLinks` (router-links array), `copyToClipboard()` (with toast feedback)
+Protected by middleware `portfolio-auth` (checks `useDirectusAuth().loggedIn`).
+Login credentials in `directus_info.txt`.
 
-## Styling conventions
+| Route | Content |
+|-------|---------|
+| `/portfolio` | Dashboard |
+| `/portfolio/login` | Login form, layout `false` |
+| `/portfolio/projects` | CRUD projects |
+| `/portfolio/blog` | CRUD blog (md-editor-v3 body) |
 
-- Fonts: Public Sans (`--font-sans`) for body, Instrument Serif (`--font-serif`) for hero display only
-- Colors: `primary="blue"`, `neutral="zinc"` (set in `app/app.config.ts`)
-- CSS entry: `app/assets/css/main.css` uses `@import "tailwindcss"` + `@import "@nuxt/ui"`
-- Container max-width: `--ui-container: var(--container-4xl)` (56rem)
-- Tokens used in templates: `text-highlighted`, `text-muted`, `text-primary`, `bg-elevated`, `bg-default`, `border-default`, etc. (Nuxt UI semantic tokens)
-- ESLint: `commaDangle: 'never'`, `braceStyle: '1tbs'`, `no-explicit-any: off`
+Layout `portfolio` in `app/layouts/portfolio.vue` — sidebar + top bar.
+Sidebar at `app/components/portfolio/Sidebar.vue` — 10 nav links + logout.
 
-## Key patterns
+### CRUD pattern
 
-- All reveal animations use `<Motion>` with `{ opacity: 0, transform: 'translateY(10px)' }` → `{ opacity: 1, transform: 'translateY(0)' }`, staggered by index
-- `UPage` → `UPageHero`/`UPageSection` is the standard page layout
-- `app/app.config.ts` holds global config: social links, email, calendar link, footer, UI theme overrides
-- Navigation links defined in `app/utils/links.ts` (6 items + locale toggle + color mode in header)
-- Layout: `UContainer` with `sm:border-x border-default`, fixed `UNavigationMenu` with `backdrop-blur-sm`
-- i18n: French default, English prefix-less, `prefix_except_default` strategy, detects browser language
-- ColorModeButton uses View Transition API for animated theme switch (circular clip-path reveal)
+```ts
+const FIELDS = ['id', 'title', ...] as const
+const dreq = directus.request as any  // only for aggregate queries
 
-## Testing
+// Read
+const { data, status, refresh } = useAsyncData('key', async () => {
+  try { return await directus.request(readItems('coll' as const, { fields: [...FIELDS], sort: ['-date'] })) }
+  catch { return [] }
+})
 
-No test suite exists. No CI/CD workflows.
+// Write — payload as any bypasses generated strict types
+await directus.request(createItem('coll' as const, payload as any, { fields: [...FIELDS] } as any))
+await directus.request(updateItem('coll' as const, id, payload as any, { fields: [...FIELDS] } as any))
+await directus.request(deleteItem('coll' as const, id))
+```
+
+## Directus SDK Gotchas
+
+- **`readItems('coll' as const, ...)`** — NEVER `(readItems as any)(...)`. The latter breaks SSR with `Cannot use 'in' operator to search for 'getToken' in undefined`.
+- **Explicit fields** — always list specific fields. Never `*`. The `translations` alias field causes `column X.translations does not exist` 500 on PATCH/POST if included.
+- **Payload cast** — generated types are strict. Cast payloads `as any` for `createItem`/`updateItem`.
+- **Typegen** — runs on dev/build; needs `DIRECTUS_URL` + `DIRECTUS_ADMIN_TOKEN` in `.env`. Types prefixed `App`.
+- **Aggregate** — not in generated schema types; cast query `as any`: `readItems('coll' as const, { aggregate: { count: '*' } } as any)`.
+
+## Critical Gotchas
+
+- **`motion-v` in `vite.optimizeDeps.include`** — never remove; runtime crash otherwise.
+- **No `content/` dir** — `ui.content: true` in config is an artifact. Do NOT create a `content/` folder.
+- **`@source "../../../content/**/*"`** in `main.css` — artifact, ignore.
+- **Build memory** — 3GB server; `NODE_OPTIONS=--max-old-space-size=2560` in `nixpacks.toml`.
+- **`UPage` → `UPageHero`/`UPageSection`** is the standard public page layout.
+- **`useAppToast()`** in `app/composables/useAppToast.ts` — `toast.success/error/warning/info` for feedback.
+- **`i-lucide-layer-stack` does NOT exist** — use `i-lucide-layers` instead.
+
+## Deployment (Nixpacks)
+
+```bash
+nixpacks build . --name nuxt-portfolio
+```
+
+Build in `nixpacks.toml`: `NITRO_PRESET=node-server`, start with `node .output/server/index.mjs`.
+Required env in production: `NUXT_USESEND_API_KEY`, `NUXT_FROM_EMAIL`, `NUXT_CONTACT_EMAIL`, `DIRECTUS_URL`, `DIRECTUS_ADMIN_TOKEN`, `NUXT_UMAMI_HOST`, `NUXT_UMAMI_ID`.
+
+## i18n
+
+- `strategy: 'no_prefix'` — FR default, EN via cookie detection, no URL prefix.
+- `app/utils/links.ts` — hardcoded FR nav labels, router-links array.
+- `useLocaleHead()` for meta/links.
+- Locale files in `i18n/locales/`.
+- Portfolio admin pages are FR only.

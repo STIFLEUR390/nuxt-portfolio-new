@@ -35,3 +35,43 @@ Site personnel de Franck Hérold TAMTO TAMKO, développeur Full-Stack (Laravel, 
 - **Typecheck failures** → souvent des imports manquants ou types incompatibles ; ne pas ignorer
 - **`content/` directory not found** → ne pas recréer ce dossier, c'est un artefact du template
 - **Umami pas de tracking** → vérifier `NUXT_UMAMI_HOST` et `NUXT_UMAMI_ID` dans `.env`, mode `cloak` nécessite un build (`pnpm dev` ne suffit pas si le endpoint n'est pas accessible)
+- **`column X.translations does not exist`** → champ `translations` alias mal configuré dans Directus. Solution : supprimer le champ `translations` de la collection dans Directus (portfolio monolingue FR).
+- **SSR `Cannot use 'in' operator to search for 'getToken' in undefined`** → ne pas utiliser `(readItems as any)(...)`. Utiliser `readItems('collection' as const, {...})` (caster le paramètre string, pas la fonction).
+- **`updateItem`/`createItem` erreur 500 avec `translations`** → pareil, retirer le champ de la collection Directus.
+
+## Interface d'administration
+
+- Route : `/portfolio` — accès protégé par middleware `portfolio-auth`
+- Login : `/portfolio/login` — utilise `useDirectusAuth().login()`, layout `false` (full-page)
+- Layout : `portfolio` (`app/layouts/portfolio.vue`) — sidebar fixe w-64 + top bar
+- Sidebar : `app/components/portfolio/Sidebar.vue` — 10 liens de navigation + logout
+- Dashboard : `/portfolio/index` — stats (projets, blog, services, témoignages) + cartes sections
+- CRUD Projets : `/portfolio/projects` (list, create, edit, delete, upload image Directus)
+- CRUD Blog : `/portfolio/blog` (list, create, edit, delete, upload image, éditeur markdown `md-editor-v3`)
+
+### Pattern CRUD admin
+
+```ts
+// Toujours spécifier fields explicitement pour éviter translations
+const FIELDS = ['id', 'title', '...'] as const
+
+// Read - try/catch avec fallback []
+const { data, status, refresh } = useAsyncData('key', async () => {
+  try {
+    return await directus.request(readItems('collection' as const, { fields: [...FIELDS], sort: ['-date'] }))
+  } catch { return [] }
+})
+
+// Create/Update - payload as any, fields dans opts
+await directus.request(createItem('collection' as const, payload as any, { fields: [...FIELDS] } as any))
+await directus.request(updateItem('collection' as const, id, payload as any, { fields: [...FIELDS] } as any))
+
+// Delete
+await directus.request(deleteItem('collection' as const, id))
+```
+
+### Composants Nuxt UI utilisés dans l'admin
+
+- `UModal` avec `v-model:open`, slots `#body` + `#footer`
+- `UCard`, `UInput`, `UTextarea`, `USelect`, `UButton`, `UBadge`, `UIcon`, `USkeleton`
+- `MdEditor` de `md-editor-v3` pour le body markdown (import + CSS séparé, `ClientOnly`)

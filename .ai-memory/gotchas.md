@@ -1,5 +1,15 @@
 # Gotchas
 
+## Admin Panel / Portfolio
+
+- Toutes les pages admin sont sous `app/pages/portfolio/` avec `middleware: 'portfolio-auth'`
+- Layout admin : `portfolio` (sidebar + top bar) — sauf login qui utilise `layout: false`
+- Les CRUD doivent utiliser `readItems('collection' as const, {...})` — NE PAS utiliser `(readItems as any)(...)` (casse le runtime SDK en SSR)
+- Le champ `translations` (alias Directus) des collections `projects` et `blog_posts` a été supprimé (plantait les PATCH/POST). Portfolio monolingue FR.
+- Toujours spécifier `fields: [...FIELDS]` dans les requêtes CRUD pour éviter que Directus n'ajoute `translations` automatiquement.
+- Les payloads `createItem`/`updateItem` doivent être castés `as any` (types générés stricts).
+- `md-editor-v3` : import du composant + CSS, wrapper `ClientOnly` pour SSR, toolbar names = clés de `ToolbarTips` (ex: `title` au lieu de `heading`, `-` comme séparateur).
+
 ## motion-v
 
 - `motion-v` est listé dans `vite.optimizeDeps.include` de `nuxt.config.ts`
