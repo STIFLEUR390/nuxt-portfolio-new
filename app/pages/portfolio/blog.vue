@@ -7,11 +7,13 @@ definePageMeta({
 const directus = useDirectus()
 const toast = useAppToast()
 
+const BF = ['id', 'title', 'description', 'slug', 'image', 'body', 'date', 'min_read', 'featured', 'status'] as const
+
 const { data: posts, status, refresh } = useAsyncData('admin-blog', async () => {
   try {
     const result = await directus.request(readItems('blog_posts' as const, {
       sort: ['-date'],
-      fields: ['id', 'title', 'description', 'slug', 'image', 'body', 'date', 'min_read', 'featured', 'status']
+      fields: [...BF]
     }))
     return (result || []) as any[]
   } catch {
@@ -82,11 +84,12 @@ async function save() {
       status: form.status
     }
 
+    const opts = { fields: [...BF] } as any
     if (editingPost.value) {
-      await directus.request(updateItem('blog_posts' as const, editingPost.value.id, payload))
+      await directus.request(updateItem('blog_posts' as const, editingPost.value.id, payload as any, opts))
       toast.success('Article mis à jour')
     } else {
-      await directus.request(createItem('blog_posts' as const, payload))
+      await directus.request(createItem('blog_posts' as const, payload as any, opts))
       toast.success('Article créé')
     }
 

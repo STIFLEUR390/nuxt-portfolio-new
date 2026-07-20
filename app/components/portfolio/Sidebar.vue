@@ -16,7 +16,7 @@ const links = [
   { label: 'Projets', icon: 'i-lucide-folder', to: '/portfolio/projects' },
   { label: 'Blog', icon: 'i-lucide-file-text', to: '/portfolio/blog' },
   { label: 'Services', icon: 'i-lucide-code', to: '/portfolio/services' },
-  { label: 'Stack', icon: 'i-lucide-layer-stack', to: '/portfolio/stack' },
+  { label: 'Stack', icon: 'i-lucide-layers', to: '/portfolio/stack' },
   { label: 'Expériences', icon: 'i-lucide-briefcase', to: '/portfolio/experience' },
   { label: 'Témoignages', icon: 'i-lucide-message-square-quote', to: '/portfolio/testimonials' },
   { label: 'FAQ', icon: 'i-lucide-circle-help', to: '/portfolio/faq' },

@@ -108,6 +108,8 @@ app/
 | B.2 | `UTable` (TanStack) non utilisé — trop complexe pour un CRUD simple. Table HTML simple avec classes Tailwind. | Si on veut plus tard : tri, pagination, filtres → migrer vers `UTable` avec colonnes TanStack. |
 | B.2 | Upload image via `UInput type="file"` + `uploadDirectusFile()` | ✨ Nouveau : plus besoin de coller un ID Directus. Upload direct vers Directus, l'ID est automatiquement stocké dans le champ `image`. |
 | B.2 | `UModal` avec `v-model:open`, slots `#body` et `#footer` au lieu de wrapper `UCard` | Pattern Nuxt UI idiomatique. `title` prop utilisée pour le header. |
+| B.2 | ❌ BUG : `(readItems as any)(...)` casse le SDK en SSR — `Cannot use 'in' operator to search for 'getToken' in undefined` | ✅ Corrigé : utiliser `readItems('projects' as const, {...})` directement (casting de la collection string, pas de la fonction). Ajout de `try/catch` avec fallback `[]`. Tous les CRUD projects/blog doivent suivre ce pattern. |
+| B.2 | `i-lucide-layer-stack` n'existe pas dans lucide | Remplacé par `i-lucide-layers`. |
 | B.3 | `app/pages/portfolio/blog.vue` — CRUD complet articles | ✅ Fait, reprend le même pattern que projects. Slug auto-généré depuis le titre (au blur). `type="date"` pour le champ date. Body markdown en `UTextarea` monospace. |
 
 ---

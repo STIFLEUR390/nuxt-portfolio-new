@@ -31,6 +31,7 @@
     "@vueuse/nuxt": "^14.3.0",
     "disposable-email-domains": "^1.0.62",
     "marked": "^18.0.6",
+    "md-editor-v3": "^6.5.4",
     "motion-v": "^2.3.0",
     "nuxt": "^4.4.8",
     "nuxt-directus-sdk": "^6.1.2",
