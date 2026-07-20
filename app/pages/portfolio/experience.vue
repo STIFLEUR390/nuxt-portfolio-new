@@ -12,11 +12,17 @@ const HL_FIELDS = ['id', 'text', 'experience_id', 'sort'] as const
 
 const { data: experiences, status, refresh } = useAsyncData('admin-experience', async () => {
   try {
-    const result = await (directus.request as any)(readItems('experience' as const, {
-      sort: ['sort'],
-      fields: [...EXP_FIELDS, { highlights: ['*'] }]
-    } as any))
-    return (result || []) as any[]
+    const [exps, hls] = await Promise.all([
+      (directus.request as any)((readItems as any)('experience', { sort: ['sort'], fields: [...EXP_FIELDS] })),
+      (directus.request as any)((readItems as any)('experience_highlights', { sort: ['sort'], fields: [...HL_FIELDS] }))
+    ])
+    const hlsByExp: Record<number, any[]> = {}
+    for (const hl of (hls || []) as any[]) {
+      const expId = hl.experience_id
+      if (!hlsByExp[expId]) hlsByExp[expId] = []
+      hlsByExp[expId].push(hl)
+    }
+    return ((exps || []) as any[]).map((exp: any) => ({ ...exp, highlights: hlsByExp[exp.id] || [] }))
   } catch {
     return [] as any[]
   }
@@ -66,11 +72,12 @@ async function saveExp() {
       company_color: expForm.company_color || null,
       sort: Number(expForm.sort)
     }
+    const opts = { fields: [...EXP_FIELDS] } as any
     if (editingExp.value) {
-      await directus.request(updateItem('experience' as const, editingExp.value.id, payload as any, { fields: [...EXP_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('experience', editingExp.value.id, payload as any, opts))
       toast.success('Expérience mise à jour')
     } else {
-      await directus.request(createItem('experience' as const, payload as any, { fields: [...EXP_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('experience', payload as any, opts))
       toast.success('Expérience créée')
     }
     expModalOpen.value = false
@@ -85,7 +92,7 @@ async function saveExp() {
 
 async function deleteExp(id: number) {
   try {
-    await (directus.request as any)(deleteItem('experience' as const, id))
+    await (directus.request as any)((deleteItem as any)('experience', id))
     toast.success('Expérience supprimée')
     await refresh()
   } catch (err: any) {
@@ -123,11 +130,12 @@ async function saveHl() {
   savingHl.value = true
   try {
     const payload = { text: hlForm.text, experience_id: currentExpId.value, sort: Number(hlForm.sort) }
+    const opts = { fields: [...HL_FIELDS] } as any
     if (editingHl.value) {
-      await directus.request(updateItem('experience_highlights' as const, editingHl.value.id, payload as any, { fields: [...HL_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('experience_highlights', editingHl.value.id, payload as any, opts))
       toast.success('Point clé mis à jour')
     } else {
-      await directus.request(createItem('experience_highlights' as const, payload as any, { fields: [...HL_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('experience_highlights', payload as any, opts))
       toast.success('Point clé ajouté')
     }
     hlModalOpen.value = false
@@ -142,7 +150,7 @@ async function saveHl() {
 
 async function deleteHl(id: number) {
   try {
-    await (directus.request as any)(deleteItem('experience_highlights' as const, id))
+    await (directus.request as any)((deleteItem as any)('experience_highlights', id))
     toast.success('Point clé supprimé')
     await refresh()
   } catch (err: any) {

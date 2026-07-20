@@ -68,19 +68,19 @@ app/
 ### B.4 — CRUD contenu du site
 
 | # | Tâche | Fichiers | Statut |
-|---|-------|----------|--------|
-| 13 | Services — liste + edit (title, description, icon, sort) | `app/pages/portfolio/services.vue` | ⏳ |
-| 14 | Stack — catégories + items imbriqués | `app/pages/portfolio/stack.vue` | ⏳ |
-| 15 | Experience — liste + highlights imbriqués | `app/pages/portfolio/experience.vue` | ⏳ |
-| 16 | Testimonials — liste + edit (quote, author, avatar) | `app/pages/portfolio/testimonials.vue` | ⏳ |
-| 17 | FAQ — catégories + questions imbriquées | `app/pages/portfolio/faq.vue` | ⏳ |
+|--:|-------|----------|--------|
+| 13 | Services — liste + edit (title, description, icon, sort) | `app/pages/portfolio/services.vue` | ✅ |
+| 14 | Stack — catégories + items imbriqués | `app/pages/portfolio/stack.vue` | ✅ |
+| 15 | Experience — liste + highlights imbriqués | `app/pages/portfolio/experience.vue` | ✅ |
+| 16 | Testimonials — liste + edit (quote, author, avatar) | `app/pages/portfolio/testimonials.vue` | ✅ |
+| 17 | FAQ — catégories + questions imbriquées | `app/pages/portfolio/faq.vue` | ✅ |
 
 ### B.5 — Pages SEO + Settings
 
 | # | Tâche | Fichiers | Statut |
-|---|-------|----------|--------|
-| 18 | Pages SEO — édition meta title/description par slug | `app/pages/portfolio/pages.vue` | ⏳ |
-| 19 | Global settings — édition singleton + social links | `app/pages/portfolio/settings.vue` | ⏳ |
+|--:|-------|----------|--------|
+| 18 | Pages SEO — édition meta title/description par slug | `app/pages/portfolio/pages.vue` | ✅ |
+| 19 | Global settings — édition singleton + social links | `app/pages/portfolio/settings.vue` | ✅ |
 
 ### B.6 — Finalisation
 
@@ -113,6 +113,14 @@ app/
 | B.3 | Intégration `md-editor-v3` pour le body markdown du blog | ✅ `pnpm add md-editor-v3`, import `MdEditor` + CSS, wrapper `ClientOnly`, toolbar configurée. |
 | B.3 | `md-editor-v3` ajouté à `vite.optimizeDeps.include` | Évite les warnings Vite. |
 | B.3 | `app/pages/portfolio/blog.vue` — CRUD complet articles | ✅ Fait, reprend le même pattern que projects. Slug auto-généré depuis le titre (au blur). `type="date"` pour le champ date. Body markdown en `UTextarea` monospace. |
+| B.4 | `services.vue` — CRUD simple (title, description, icon, sort) | ✅ Fait |
+| B.4 | `testimonials.vue` — CRUD avec upload avatar (quote, author_name, author_description, author_avatar, sort) | ✅ Fait, upload image via `UInput type="file"` + `uploadDirectusFile()` |
+| B.4 | `experience.vue` — O2M expandable : expériences + highlights | ✅ Fait, pattern UCard avec `toggleExpand`, 2 modals (exp + highlight). Couleur via `<input type="color">`. Cast `dreq/dread` pour collections hors typegen. |
+| B.4 | `stack.vue` — O2M expandable : catégories + items | ✅ Fait, même pattern expandable que experience. |
+| B.4 | `faq.vue` — O2M expandable : catégories + questions | ✅ Fait, même pattern expandable. Réponse en markdown `UTextarea font-mono`. |
+| B.5 | `pages.vue` — Édition SEO par slug | ✅ Fait, pas de create/delete. Modal edit : title, description, seo_title, seo_description. |
+| B.5 | `settings.vue` — Singleton global_settings + CRUD social_links | ✅ Fait, `watch(settingsData, ..., { immediate: true })` pour remplir le formulaire. Upload photo profil. |
+| B.4/B.5 | Cast `(directus.request as any)` + `(readItems as any)` pour collections hors typegen | `dreq`/`dread`/`dcreate`/`dupdate`/`ddelete` alias pattern pour éviter erreurs TS. Les collections `projects`/`blog_posts` sont dans le typegen, mais pas `experience`/`faq_categories`/`stack_categories`/`global_settings`/`social_links` etc. |
 
 ---
 

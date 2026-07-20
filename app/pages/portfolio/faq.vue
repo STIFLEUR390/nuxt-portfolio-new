@@ -12,11 +12,17 @@ const ITEM_FIELDS = ['id', 'label', 'content', 'category_id', 'sort'] as const
 
 const { data: categories, status, refresh } = useAsyncData('admin-faq', async () => {
   try {
-    const result = await (directus.request as any)(readItems('faq_categories' as const, {
-      sort: ['sort'],
-      fields: [...CAT_FIELDS, { items: ['*'] }]
-    } as any))
-    return (result || []) as any[]
+    const [cats, faqItems] = await Promise.all([
+      (directus.request as any)((readItems as any)('faq_categories', { sort: ['sort'], fields: [...CAT_FIELDS] })),
+      (directus.request as any)((readItems as any)('faq_items', { sort: ['sort'], fields: [...ITEM_FIELDS] }))
+    ])
+    const itemsByCat: Record<number, any[]> = {}
+    for (const item of (faqItems || []) as any[]) {
+      const catId = item.category_id
+      if (!itemsByCat[catId]) itemsByCat[catId] = []
+      itemsByCat[catId].push(item)
+    }
+    return ((cats || []) as any[]).map((cat: any) => ({ ...cat, items: itemsByCat[cat.id] || [] }))
   } catch {
     return [] as any[]
   }
@@ -48,11 +54,12 @@ async function saveCat() {
   savingCat.value = true
   try {
     const payload = { title: catForm.title, sort: Number(catForm.sort) }
+    const opts = { fields: [...CAT_FIELDS] } as any
     if (editingCat.value) {
-      await directus.request(updateItem('faq_categories' as const, editingCat.value.id, payload as any, { fields: [...CAT_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('faq_categories', editingCat.value.id, payload as any, opts))
       toast.success('Catégorie mise à jour')
     } else {
-      await directus.request(createItem('faq_categories' as const, payload as any, { fields: [...CAT_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('faq_categories', payload as any, opts))
       toast.success('Catégorie créée')
     }
     catModalOpen.value = false
@@ -67,7 +74,7 @@ async function saveCat() {
 
 async function deleteCat(id: number) {
   try {
-    await (directus.request as any)(deleteItem('faq_categories' as const, id))
+    await (directus.request as any)((deleteItem as any)('faq_categories', id))
     toast.success('Catégorie supprimée')
     await refresh()
   } catch (err: any) {
@@ -108,11 +115,12 @@ async function saveItem() {
   savingItem.value = true
   try {
     const payload = { label: itemForm.label, content: itemForm.content || null, category_id: currentCatId.value, sort: Number(itemForm.sort) }
+    const opts = { fields: [...ITEM_FIELDS] } as any
     if (editingItem.value) {
-      await directus.request(updateItem('faq_items' as const, editingItem.value.id, payload as any, { fields: [...ITEM_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('faq_items', editingItem.value.id, payload as any, opts))
       toast.success('Question mise à jour')
     } else {
-      await directus.request(createItem('faq_items' as const, payload as any, { fields: [...ITEM_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('faq_items', payload as any, opts))
       toast.success('Question ajoutée')
     }
     itemModalOpen.value = false
@@ -127,16 +135,13 @@ async function saveItem() {
 
 async function deleteFaqItem(id: number) {
   try {
-    await (directus.request as any)(deleteItem('faq_items' as const, id))
+    await (directus.request as any)((deleteItem as any)('faq_items', id))
     toast.success('Question supprimée')
     await refresh()
   } catch (err: any) {
     const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
     toast.error('Erreur', msg)
-  } finally {
-    deletingItem.value = false
   }
-}
 }
 </script>
 

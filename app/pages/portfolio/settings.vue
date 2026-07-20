@@ -13,7 +13,7 @@ const SOCIAL_FIELDS = ['id', 'label', 'icon', 'url', 'sort', 'status'] as const
 // Global settings (singleton)
 const { data: settingsData, refresh: refreshSettings } = useAsyncData('admin-settings', async () => {
   try {
-    const result = await (directus.request as any)(readItems('global_settings' as const, {
+    const result = await (directus.request as any)((readItems as any)('global_settings', {
       fields: [...SETTINGS_FIELDS]
     }))
     return (result?.[0] || null) as any
@@ -79,10 +79,11 @@ async function saveSettings() {
       footer_credits: settingsForm.footer_credits || null,
       locale: settingsForm.locale
     }
+    const opts = { fields: [...SETTINGS_FIELDS] } as any
     if (settingsData.value?.id) {
-      await (directus.request as any)(updateItem('global_settings' as const, settingsData.value.id, payload as any, { fields: [...SETTINGS_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('global_settings', settingsData.value.id, payload as any, opts))
     } else {
-      await (directus.request as any)(createItem('global_settings' as const, payload as any, { fields: [...SETTINGS_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('global_settings', payload as any, opts))
     }
     toast.success('Paramètres enregistrés')
     await refreshSettings()
@@ -97,7 +98,7 @@ async function saveSettings() {
 // Social links
 const { data: socialLinks, refresh: refreshSocial } = useAsyncData('admin-social', async () => {
   try {
-    const result = await directus.request(readItems('social_links' as const, {
+    const result = await (directus.request as any)((readItems as any)('social_links', {
       sort: ['sort'],
       fields: [...SOCIAL_FIELDS]
     }))
@@ -139,11 +140,12 @@ async function saveSocial() {
       status: socialForm.status,
       sort: Number(socialForm.sort)
     }
+    const opts = { fields: [...SOCIAL_FIELDS] } as any
     if (editingSocial.value) {
-      await directus.request(updateItem('social_links' as const, editingSocial.value.id, payload as any, { fields: [...SOCIAL_FIELDS] } as any))
+      await (directus.request as any)((updateItem as any)('social_links', editingSocial.value.id, payload as any, opts))
       toast.success('Lien mis à jour')
     } else {
-      await directus.request(createItem('social_links' as const, payload as any, { fields: [...SOCIAL_FIELDS] } as any))
+      await (directus.request as any)((createItem as any)('social_links', payload as any, opts))
       toast.success('Lien créé')
     }
     socialModalOpen.value = false
@@ -159,7 +161,7 @@ async function saveSocial() {
 async function deleteSocial(id: number) {
   deletingSocial.value = id
   try {
-    await (directus.request as any)(deleteItem('social_links' as const, id))
+    await (directus.request as any)((deleteItem as any)('social_links', id))
     toast.success('Lien supprimé')
     await refreshSocial()
   } catch (err: any) {
@@ -241,7 +243,7 @@ async function deleteSocial(id: number) {
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-default">
-              <th class="text-left py-3 px-4 text-muted font-medium">Icône</th>
+              <th class="text-left py-3 px-4 text-muted font-medium w-12">Icône</th>
               <th class="text-left py-3 px-4 text-muted font-medium">Label</th>
               <th class="text-left py-3 px-4 text-muted font-medium">URL</th>
               <th class="text-left py-3 px-4 text-muted font-medium w-20">Statut</th>
