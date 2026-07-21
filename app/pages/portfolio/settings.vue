@@ -111,7 +111,31 @@ const { data: socialLinks, refresh: refreshSocial } = useAsyncData('admin-social
 const socialModalOpen = ref(false)
 const editingSocial = ref<any>(null)
 const savingSocial = ref(false)
-const deletingSocial = ref<number | null>(null)
+
+const deleteConfirm = reactive({
+  open: false,
+  label: '',
+  loading: false,
+  run: null as (() => Promise<void>) | null,
+})
+
+function askDelete(label: string, fn: () => Promise<void>) {
+  deleteConfirm.label = label
+  deleteConfirm.loading = false
+  deleteConfirm.run = fn
+  deleteConfirm.open = true
+}
+
+async function execDelete() {
+  if (!deleteConfirm.run) return
+  deleteConfirm.loading = true
+  try {
+    await deleteConfirm.run()
+    deleteConfirm.open = false
+  } finally {
+    deleteConfirm.loading = false
+  }
+}
 
 const socialForm = reactive({
   label: '',
@@ -158,18 +182,10 @@ async function saveSocial() {
   }
 }
 
-async function deleteSocial(id: number) {
-  deletingSocial.value = id
-  try {
-    await (directus.request as any)((deleteItem as any)('social_links', id))
-    toast.success('Lien supprimé')
-    await refreshSocial()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  } finally {
-    deletingSocial.value = null
-  }
+async function doDeleteSocial(id: number) {
+  await (directus.request as any)((deleteItem as any)('social_links', id))
+  toast.success('Lien supprimé')
+  await refreshSocial()
 }
 </script>
 
@@ -268,8 +284,8 @@ async function deleteSocial(id: number) {
               <td class="py-3 px-4 text-right whitespace-nowrap">
                 <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-pencil"
                   @click="editingSocial = link; Object.assign(socialForm, { label: link.label, icon: link.icon, url: link.url, status: link.status, sort: link.sort }); socialModalOpen = true" />
-                <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2" :loading="deletingSocial === link.id"
-                  @click="deleteSocial(link.id)" />
+                <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2"
+                  @click="askDelete('le lien &laquo; ' + link.label + ' &raquo;', () => doDeleteSocial(link.id))" />
               </td>
             </tr>
           </tbody>
@@ -303,6 +319,18 @@ async function deleteSocial(id: number) {
         <div class="flex justify-end gap-3">
           <UButton label="Annuler" color="neutral" variant="outline" @click="socialModalOpen = false" />
           <UButton label="Enregistrer" color="primary" :loading="savingSocial" @click="saveSocial" />
+        </div>
+      </template>
+    </UModal>
+
+    <UModal v-model:open="deleteConfirm.open" title="Confirmer la suppression">
+      <template #body>
+        <p class="text-sm text-muted">Êtes-vous sûr de vouloir supprimer {{ deleteConfirm.label }} ? Cette action est irréversible.</p>
+      </template>
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <UButton label="Annuler" color="neutral" variant="outline" @click="deleteConfirm.open = false" />
+          <UButton label="Supprimer" color="error" :loading="deleteConfirm.loading" @click="execDelete" />
         </div>
       </template>
     </UModal>

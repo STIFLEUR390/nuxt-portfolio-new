@@ -34,6 +34,31 @@ function toggleExpand(id: number) {
   expandedId.value = expandedId.value === id ? null : id
 }
 
+const deleteConfirm = reactive({
+  open: false,
+  label: '',
+  loading: false,
+  run: null as (() => Promise<void>) | null,
+})
+
+function askDelete(label: string, fn: () => Promise<void>) {
+  deleteConfirm.label = label
+  deleteConfirm.loading = false
+  deleteConfirm.run = fn
+  deleteConfirm.open = true
+}
+
+async function execDelete() {
+  if (!deleteConfirm.run) return
+  deleteConfirm.loading = true
+  try {
+    await deleteConfirm.run()
+    deleteConfirm.open = false
+  } finally {
+    deleteConfirm.loading = false
+  }
+}
+
 // Experience modal
 const expModalOpen = ref(false)
 const editingExp = ref<any>(null)
@@ -90,15 +115,10 @@ async function saveExp() {
   }
 }
 
-async function deleteExp(id: number) {
-  try {
-    await (directus.request as any)((deleteItem as any)('experience', id))
-    toast.success('Expérience supprimée')
-    await refresh()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  }
+async function doDeleteExp(id: number) {
+  await (directus.request as any)((deleteItem as any)('experience', id))
+  toast.success('Expérience supprimée')
+  await refresh()
 }
 
 // Highlight modal
@@ -148,15 +168,10 @@ async function saveHl() {
   }
 }
 
-async function deleteHl(id: number) {
-  try {
-    await (directus.request as any)((deleteItem as any)('experience_highlights', id))
-    toast.success('Point clé supprimé')
-    await refresh()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  }
+async function doDeleteHl(id: number) {
+  await (directus.request as any)((deleteItem as any)('experience_highlights', id))
+  toast.success('Point clé supprimé')
+  await refresh()
 }
 </script>
 
@@ -202,7 +217,8 @@ async function deleteHl(id: number) {
             <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-plus" label="Point clé" @click="openHlModal(exp.id)" />
             <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-pencil"
               @click="editingExp = exp; Object.assign(expForm, { position: exp.position, date_range: exp.date_range, company_name: exp.company_name, company_logo: exp.company_logo, company_url: exp.company_url, company_color: exp.company_color, sort: exp.sort }); expModalOpen = true" />
-            <UButton size="xs" color="error" variant="ghost" icon="i-lucide-trash-2" @click="deleteExp(exp.id)" />
+            <UButton size="xs" color="error" variant="ghost" icon="i-lucide-trash-2"
+              @click="askDelete('l\'expérience &laquo; ' + exp.position + ' &raquo;', () => doDeleteExp(exp.id))" />
             <UIcon :name="expandedId === exp.id ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="size-4 text-muted ml-1" />
           </div>
         </div>
@@ -213,7 +229,8 @@ async function deleteHl(id: number) {
             <p class="text-sm text-muted flex-1">{{ hl.text }}</p>
             <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
               <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-pencil" @click="openHlModal(exp.id, hl)" />
-              <UButton size="xs" color="error" variant="ghost" icon="i-lucide-x" @click="deleteHl(hl.id)" />
+              <UButton size="xs" color="error" variant="ghost" icon="i-lucide-x"
+                @click="askDelete('ce point clé', () => doDeleteHl(hl.id))" />
             </div>
           </div>
         </div>
@@ -274,6 +291,18 @@ async function deleteHl(id: number) {
         <div class="flex justify-end gap-3">
           <UButton label="Annuler" color="neutral" variant="outline" @click="hlModalOpen = false" />
           <UButton label="Enregistrer" color="primary" :loading="savingHl" @click="saveHl" />
+        </div>
+      </template>
+    </UModal>
+
+    <UModal v-model:open="deleteConfirm.open" title="Confirmer la suppression">
+      <template #body>
+        <p class="text-sm text-muted">Êtes-vous sûr de vouloir supprimer {{ deleteConfirm.label }} ? Cette action est irréversible.</p>
+      </template>
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <UButton label="Annuler" color="neutral" variant="outline" @click="deleteConfirm.open = false" />
+          <UButton label="Supprimer" color="error" :loading="deleteConfirm.loading" @click="execDelete" />
         </div>
       </template>
     </UModal>

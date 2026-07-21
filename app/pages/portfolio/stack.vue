@@ -34,6 +34,31 @@ function toggleExpand(id: number) {
   expandedId.value = expandedId.value === id ? null : id
 }
 
+const deleteConfirm = reactive({
+  open: false,
+  label: '',
+  loading: false,
+  run: null as (() => Promise<void>) | null,
+})
+
+function askDelete(label: string, fn: () => Promise<void>) {
+  deleteConfirm.label = label
+  deleteConfirm.loading = false
+  deleteConfirm.run = fn
+  deleteConfirm.open = true
+}
+
+async function execDelete() {
+  if (!deleteConfirm.run) return
+  deleteConfirm.loading = true
+  try {
+    await deleteConfirm.run()
+    deleteConfirm.open = false
+  } finally {
+    deleteConfirm.loading = false
+  }
+}
+
 // Category modal
 const catModalOpen = ref(false)
 const editingCat = ref<any>(null)
@@ -74,15 +99,10 @@ async function saveCat() {
   }
 }
 
-async function deleteCat(id: number) {
-  try {
-    await (directus.request as any)((deleteItem as any)('stack_categories', id))
-    toast.success('Catégorie supprimée')
-    await refresh()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  }
+async function doDeleteCat(id: number) {
+  await (directus.request as any)((deleteItem as any)('stack_categories', id))
+  toast.success('Catégorie supprimée')
+  await refresh()
 }
 
 // Item modal
@@ -135,15 +155,10 @@ async function saveItem() {
   }
 }
 
-async function deleteStackItem(id: number) {
-  try {
-    await (directus.request as any)((deleteItem as any)('stack_items', id))
-    toast.success('Technologie supprimée')
-    await refresh()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  }
+async function doDeleteStackItem(id: number) {
+  await (directus.request as any)((deleteItem as any)('stack_items', id))
+  toast.success('Technologie supprimée')
+  await refresh()
 }
 </script>
 
@@ -188,7 +203,8 @@ async function deleteStackItem(id: number) {
             <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-plus" label="Techno" @click="openItemModal(cat.id)" />
             <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-pencil"
               @click="editingCat = cat; Object.assign(catForm, { label: cat.label, description: cat.description, sort: cat.sort }); catModalOpen = true" />
-            <UButton size="xs" color="error" variant="ghost" icon="i-lucide-trash-2" @click="deleteCat(cat.id)" />
+            <UButton size="xs" color="error" variant="ghost" icon="i-lucide-trash-2"
+              @click="askDelete('la catégorie &laquo; ' + cat.label + ' &raquo;', () => doDeleteCat(cat.id))" />
             <UIcon :name="expandedId === cat.id ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="size-4 text-muted ml-1" />
           </div>
         </div>
@@ -203,7 +219,8 @@ async function deleteStackItem(id: number) {
               </div>
               <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <UButton size="xs" color="neutral" variant="ghost" icon="i-lucide-pencil" @click="openItemModal(cat.id, item)" />
-                <UButton size="xs" color="error" variant="ghost" icon="i-lucide-x" @click="deleteStackItem(item.id)" />
+                <UButton size="xs" color="error" variant="ghost" icon="i-lucide-x"
+                  @click="askDelete('la techno &laquo; ' + item.name + ' &raquo;', () => doDeleteStackItem(item.id))" />
               </div>
             </div>
           </div>
@@ -252,6 +269,18 @@ async function deleteStackItem(id: number) {
         <div class="flex justify-end gap-3">
           <UButton label="Annuler" color="neutral" variant="outline" @click="itemModalOpen = false" />
           <UButton label="Enregistrer" color="primary" :loading="savingItem" @click="saveItem" />
+        </div>
+      </template>
+    </UModal>
+
+    <UModal v-model:open="deleteConfirm.open" title="Confirmer la suppression">
+      <template #body>
+        <p class="text-sm text-muted">Êtes-vous sûr de vouloir supprimer {{ deleteConfirm.label }} ? Cette action est irréversible.</p>
+      </template>
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <UButton label="Annuler" color="neutral" variant="outline" @click="deleteConfirm.open = false" />
+          <UButton label="Supprimer" color="error" :loading="deleteConfirm.loading" @click="execDelete" />
         </div>
       </template>
     </UModal>

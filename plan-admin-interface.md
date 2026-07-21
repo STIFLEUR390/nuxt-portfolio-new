@@ -86,7 +86,7 @@ app/
 
 | # | Tâche | Fichiers | Statut |
 |---|-------|----------|--------|
-| 20 | Affiner UX (toasts feedback, loading states, skeleton) | Multiples fichiers | ⏳ |
+| 20 | Affiner UX (toasts feedback, loading states, skeleton, confirmation delete) | Multiples fichiers | ✅ |
 | 21 | `pnpm lint` + `pnpm typecheck` | — | ✅ |
 | 22 | Test manuel complet du flow auth + CRUD | — | ⏳ |
 
@@ -122,6 +122,8 @@ app/
 | B.5 | `settings.vue` — Singleton global_settings + CRUD social_links | ✅ Fait, `watch(settingsData, ..., { immediate: true })` pour remplir le formulaire. Upload photo profil. |
 | B.4/B.5 | Cast `(directus.request as any)((readItems as any)('coll', ...))` pour collections hors typegen | ❌ `dreq = directus.request as any` perd le `this` binding → SSR renvoie `[]`. ✅ Fix : `(directus.request as any)((readItems as any)('coll', ...))` — ne JAMAIS extraire la méthode dans une variable. |
 | B.6 | `pnpm lint` + `pnpm typecheck` passent | typecheck clean, lint : warnings uniquement dans les `.mjs` tiers. |
+| B.6 | Delete confirmation modals ajoutées sur toutes les pages | Pattern `askDelete(label, fn)` + `execDelete()` + `UModal`. Couvre services, testimonials, experience (exp+hl), stack (cat+item), faq (cat+item), settings (social). |
+| B.6 | Issue GitHub #2 créée | Contient B.6 restant (test manuel) — voir https://github.com/STIFLEUR390/nuxt-portfolio-new/issues/2 |
 
 ---
 

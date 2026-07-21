@@ -24,7 +24,6 @@ const { data: testimonials, status, refresh } = useAsyncData('admin-testimonials
 const modalOpen = ref(false)
 const editingItem = ref<any>(null)
 const saving = ref(false)
-const deleting = ref<number | null>(null)
 const uploading = ref(false)
 
 const form = reactive({
@@ -34,6 +33,31 @@ const form = reactive({
   author_avatar: '',
   sort: 0
 })
+
+const deleteConfirm = reactive({
+  open: false,
+  label: '',
+  loading: false,
+  run: null as (() => Promise<void>) | null,
+})
+
+function askDelete(label: string, fn: () => Promise<void>) {
+  deleteConfirm.label = label
+  deleteConfirm.loading = false
+  deleteConfirm.run = fn
+  deleteConfirm.open = true
+}
+
+async function execDelete() {
+  if (!deleteConfirm.run) return
+  deleteConfirm.loading = true
+  try {
+    await deleteConfirm.run()
+    deleteConfirm.open = false
+  } finally {
+    deleteConfirm.loading = false
+  }
+}
 
 function resetForm() {
   editingItem.value = null
@@ -53,7 +77,6 @@ async function handleAvatarUpload(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (!file) return
-
   uploading.value = true
   try {
     const uploaded = await uploadDirectusFile({ file })
@@ -87,18 +110,10 @@ async function save() {
   }
 }
 
-async function confirmDelete(id: number) {
-  deleting.value = id
-  try {
-    await directus.request(deleteItem('testimonials' as const, id))
-    toast.success('Témoignage supprimé')
-    await refresh()
-  } catch (err: any) {
-    const msg = err?.response?.data?.errors?.[0]?.message || err?.message || 'Erreur'
-    toast.error('Erreur', msg)
-  } finally {
-    deleting.value = null
-  }
+async function doDelete(id: number) {
+  await directus.request(deleteItem('testimonials' as const, id))
+  toast.success('Témoignage supprimé')
+  await refresh()
 }
 </script>
 
@@ -157,8 +172,8 @@ async function confirmDelete(id: number) {
               <td class="py-3 px-4 text-right whitespace-nowrap">
                 <UButton color="neutral" variant="ghost" size="sm" icon="i-lucide-pencil"
                   @click="editingItem = t; Object.assign(form, { quote: t.quote, author_name: t.author_name, author_description: t.author_description, author_avatar: t.author_avatar, sort: t.sort }); modalOpen = true" />
-                <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2" :loading="deleting === t.id"
-                  @click="confirmDelete(t.id)" />
+                <UButton color="error" variant="ghost" size="sm" icon="i-lucide-trash-2"
+                  @click="askDelete('le témoignage de ' + t.author_name, () => doDelete(t.id))" />
               </td>
             </tr>
           </tbody>
@@ -195,6 +210,18 @@ async function confirmDelete(id: number) {
         <div class="flex justify-end gap-3">
           <UButton label="Annuler" color="neutral" variant="outline" @click="modalOpen = false" />
           <UButton label="Enregistrer" color="primary" :loading="saving" @click="save" />
+        </div>
+      </template>
+    </UModal>
+
+    <UModal v-model:open="deleteConfirm.open" title="Confirmer la suppression">
+      <template #body>
+        <p class="text-sm text-muted">Êtes-vous sûr de vouloir supprimer {{ deleteConfirm.label }} ? Cette action est irréversible.</p>
+      </template>
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <UButton label="Annuler" color="neutral" variant="outline" @click="deleteConfirm.open = false" />
+          <UButton label="Supprimer" color="error" :loading="deleteConfirm.loading" @click="execDelete" />
         </div>
       </template>
     </UModal>
